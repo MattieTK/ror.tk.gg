@@ -14,7 +14,7 @@ const WhiteItems = () => {
         image={`${encodeURI(
           item.name.replaceAll(" ", "_").replaceAll("'", "%27")
         )}.webp`}
-        description={item.description}
+        description={item.rawDescription}
       />
     );
   });

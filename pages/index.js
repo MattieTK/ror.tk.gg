@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { Grid, Box, Flex, Heading } from "theme-ui";
+import { Grid, Box, Flex, Heading, Paragraph } from "theme-ui";
 import WhiteItems from "../components/WhiteItems";
+import { Whisper, Popover } from "rsuite";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
         >
           What is your command?
         </Heading>
+
         <WhiteItems />
       </Flex>
     </div>
