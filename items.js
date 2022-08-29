@@ -563,20 +563,7 @@ const items = [
     name: "Shuriken",
     position: null,
   },
-  {
-    rawName:
-      "Survivors of the Void - DLC ContentRegenerating Scrap is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info.Regenerating ScrapSurvivors of the Void - DLC ContentRegenerating Scrap (Consumed) is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info.Regenerating Scrap (Consumed)",
-    rawRarity: "UncommonUtility",
-    rawDescription:
-      "Does nothing. Prioritized when used with Uncommon 3D Printers. At the start of each stage, it regenerates.\nRarityNoTier\n",
-    rawId: "",
-    rawCategory: "Utility\n",
-    category: ["Utility"],
-    rarity: "Uncommon",
-    expansion: "Survivors of the Void",
-    name: "Regenerating Scrap (Consumed)",
-    position: null,
-  },
+
   {
     rawName: "Squid Polyp",
     rawRarity: "Uncommon",
