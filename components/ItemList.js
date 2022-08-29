@@ -2,10 +2,9 @@ import Item from "./Item";
 import items from "../items";
 import ItemGrid from "./ItemGrid";
 
-const WhiteItems = () => {
-  const whiteItems = items.filter(item => item.rarity == "Common");
+const ItemList = ({ rarity, setHoveredItem }) => {
+  const whiteItems = items.filter(item => item.rarity == rarity);
   const sortedItems = whiteItems.sort((a, b) => a.position - b.position);
-  console.log(sortedItems);
   const itemElements = sortedItems.map((item, i) => {
     return (
       <Item
@@ -15,6 +14,7 @@ const WhiteItems = () => {
           item.name.replaceAll(" ", "_").replaceAll("'", "%27")
         )}.webp`}
         description={item.rawDescription}
+        setHoveredItem={setHoveredItem}
       />
     );
   });
@@ -22,4 +22,4 @@ const WhiteItems = () => {
   return <ItemGrid>{itemElements.map(item => item)}</ItemGrid>;
 };
 
-export default WhiteItems;
+export default ItemList;

@@ -1,3 +1,10 @@
+@font-face {
+  font-family: Bombardier-Regular;
+  src: url("./Bombardier-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
 html,
 body {
   padding: 0;
