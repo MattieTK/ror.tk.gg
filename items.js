@@ -2120,17 +2120,6 @@ const items = [
     position: 1,
   },
   {
-    name: "Queen's Gland",
-    expansion: "",
-    rarity: "Boss",
-    bossDrop: "Beetle Queen",
-    rawDescription:
-      "Every 30 seconds, summon a Beetle Guard with bonus 300% damage and 100% health. Can have up to 1 (+1 per stack) Guards at a time.",
-    category: ["Utility"],
-    id: 53,
-    position: 1,
-  },
-  {
     name: "Trophy Hunter's Tricorn",
     expansion: "Survivors of the Void",
     rarity: "Equipment",
