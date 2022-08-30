@@ -286,6 +286,7 @@ const items = [
     category: ["Utility"],
     rarity: "Common",
     expansion: "",
+    id: 1,
     name: "Tougher Times",
     position: 4,
   },
@@ -365,7 +366,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Bandolier",
-    position: null,
+    position: 2,
   },
   {
     rawName: "Death Mark",
@@ -378,7 +379,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Death Mark",
-    position: null,
+    position: 5,
   },
   {
     rawName: "Fuel Cell",
@@ -392,7 +393,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Fuel Cell",
-    position: null,
+    position: 7,
   },
   {
     rawName: "Warbanner",
@@ -418,7 +419,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Chronobauble",
-    position: null,
+    position: 23,
   },
   {
     rawName: "Infusion",
@@ -431,7 +432,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Infusion",
-    position: null,
+    position: 15,
   },
   {
     rawName: "Hopoo Feather",
@@ -443,7 +444,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Hopoo Feather",
-    position: null,
+    position: 10,
   },
   {
     rawName:
@@ -457,7 +458,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "Survivors of the Void",
     name: "Ignition Tank",
-    position: null,
+    position: 27,
   },
   {
     rawName: "Leeching Seed",
@@ -469,7 +470,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Leeching Seed",
-    position: null,
+    position: 22,
   },
   {
     rawName: "Lepton Daisy",
@@ -482,7 +483,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Lepton Daisy",
-    position: null,
+    position: 28,
   },
   {
     rawName: "Old War Stealthkit",
@@ -495,7 +496,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Old War Stealthkit",
-    position: null,
+    position: 19,
   },
   {
     rawName: "Old Guillotine",
@@ -508,7 +509,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Old Guillotine",
-    position: null,
+    position: 8,
   },
   {
     rawName: "Red Whip",
@@ -521,7 +522,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Red Whip",
-    position: null,
+    position: 25,
   },
   {
     rawName: "Predatory Instincts",
@@ -534,7 +535,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Predatory Instincts",
-    position: null,
+    position: 1,
   },
   {
     rawName: "Razorwire",
@@ -547,7 +548,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Razorwire",
-    position: null,
+    position: 29,
   },
   {
     rawName:
@@ -561,7 +562,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "Survivors of the Void",
     name: "Shuriken",
-    position: null,
+    position: 20,
   },
 
   {
@@ -575,7 +576,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Squid Polyp",
-    position: null,
+    position: 26,
   },
   {
     rawName:
@@ -589,7 +590,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "Survivors of the Void",
     name: "Shipping Request Form",
-    position: null,
+    position: 12,
   },
   {
     rawName: "Rose Buckler",
@@ -601,7 +602,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Rose Buckler",
-    position: null,
+    position: 24,
   },
   {
     rawName: "57 Leaf Clover",
@@ -615,7 +616,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "57 Leaf Clover",
-    position: null,
+    position: 6,
   },
   {
     rawName: "Ukulele",
@@ -628,7 +629,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Ukulele",
-    position: null,
+    position: 4,
   },
   {
     rawName: "Aegis",
@@ -641,7 +642,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Aegis",
-    position: null,
+    position: 3,
   },
   {
     rawName: "Wax Quail",
@@ -654,7 +655,7 @@ const items = [
     rarity: "Uncommon",
     expansion: "",
     name: "Wax Quail",
-    position: null,
+    position: 16,
   },
   {
     rawName: "Brainstalks",
@@ -667,7 +668,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Brainstalks",
-    position: null,
+    position: 17,
   },
   {
     rawName: "Brilliant Behemoth",
@@ -680,7 +681,8 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Brilliant Behemoth",
-    position: null,
+    position: 4,
+    id: 3,
   },
   {
     rawName:
@@ -694,7 +696,7 @@ const items = [
     rarity: "Legendary",
     expansion: "Survivors of the Void",
     name: "Bottled Chaos",
-    position: null,
+    position: 22,
   },
   {
     rawName: "Alien Head",
@@ -706,7 +708,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Alien Head",
-    position: null,
+    position: 1,
   },
   {
     rawName: "Ceremonial Dagger",
@@ -719,7 +721,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Ceremonial Dagger",
-    position: null,
+    position: 8,
   },
   {
     rawName: "Hardlight Afterburner",
@@ -732,7 +734,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Hardlight Afterburner",
-    position: null,
+    position: 31,
   },
   {
     rawName: "Happiest Mask",
@@ -745,7 +747,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Happiest Mask",
-    position: null,
+    position: 12,
   },
   {
     rawName: "Defensive Microbots",
@@ -758,7 +760,8 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Defensive Microbots",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName: "H3AD-5T v2",
@@ -771,7 +774,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "H3AD-5T v2",
-    position: null,
+    position: 11,
   },
   {
     rawName: "Frost Relic",
@@ -784,7 +787,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Frost Relic",
-    position: null,
+    position: 14,
   },
   {
     rawName: "Interstellar Desk Plant",
@@ -797,7 +800,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Interstellar Desk Plant",
-    position: null,
+    position: 21,
   },
   {
     rawName: "Resonance Disc",
@@ -810,7 +813,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Resonance Disc",
-    position: null,
+    position: 18,
   },
   {
     rawName: "Sentient Meat Hook",
@@ -823,7 +826,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Sentient Meat Hook",
-    position: null,
+    position: 5,
   },
   {
     rawName: "Rejuvenation Rack",
@@ -835,7 +838,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Rejuvenation Rack",
-    position: null,
+    position: 16,
   },
   {
     rawName:
@@ -849,7 +852,7 @@ const items = [
     rarity: "Legendary",
     expansion: "Survivors of the Void",
     name: "Laser Scope",
-    position: null,
+    position: 7,
   },
   {
     rawName:
@@ -863,7 +866,7 @@ const items = [
     rarity: "Legendary",
     expansion: "Survivors of the Void",
     name: "Spare Drone Parts",
-    position: null,
+    position: 9,
   },
   {
     rawName:
@@ -877,7 +880,7 @@ const items = [
     rarity: "Legendary",
     expansion: "Survivors of the Void",
     name: "Symbiotic Scorpion",
-    position: null,
+    position: 20,
   },
   {
     rawName: "Shattering Justice",
@@ -890,7 +893,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Shattering Justice",
-    position: null,
+    position: 2,
   },
   {
     rawName: "Soulbound Catalyst",
@@ -902,7 +905,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Soulbound Catalyst",
-    position: null,
+    position: 29,
   },
   {
     rawName: "Unstable Tesla Coil",
@@ -915,7 +918,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Unstable Tesla Coil",
-    position: null,
+    position: 24,
   },
   {
     rawName: "Wake of Vultures",
@@ -928,7 +931,7 @@ const items = [
     rarity: "Legendary",
     expansion: "",
     name: "Wake of Vultures",
-    position: null,
+    position: 13,
   },
   {
     rawName: "Artifact Key",
@@ -940,7 +943,8 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Artifact Key",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName:
@@ -952,9 +956,10 @@ const items = [
     rawCategory: "DamageOnKillEffect\n",
     category: ["Damage", "On Kill Effect"],
     rarity: "Boss",
+    bossDrop: "Xi Construct",
     expansion: "Survivors of the Void",
     name: "Defense Nucleus",
-    position: null,
+    position: 6,
   },
   {
     rawName: "Charged Perforator",
@@ -967,7 +972,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Charged Perforator",
-    position: null,
+    position: 5,
   },
   {
     rawName: "Empathy Cores",
@@ -980,7 +985,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Empathy Cores",
-    position: null,
+    position: 9,
   },
   {
     rawName: "Genesis Loop",
@@ -993,7 +998,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Genesis Loop",
-    position: null,
+    position: 7,
   },
   {
     rawName: "Irradiant Pearl",
@@ -1005,7 +1010,8 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Irradiant Pearl",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName: "Halcyon Seed",
@@ -1018,7 +1024,8 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Halcyon Seed",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName: "Little Disciple",
@@ -1031,7 +1038,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Little Disciple",
-    position: null,
+    position: 11,
   },
   {
     rawName: "Molten Perforator",
@@ -1044,7 +1051,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Molten Perforator",
-    position: null,
+    position: 3,
   },
   {
     rawName: "Mired Urn",
@@ -1057,7 +1064,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Mired Urn",
-    position: null,
+    position: 10,
   },
   {
     rawName: "Pearl",
@@ -1069,7 +1076,8 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Pearl",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName: "Planula",
@@ -1081,7 +1089,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Planula",
-    position: null,
+    position: 8,
   },
   {
     rawName: "Shatterspleen",
@@ -1094,7 +1102,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Shatterspleen",
-    position: null,
+    position: 2,
   },
   {
     rawName: "Titanic Knurl",
@@ -1107,7 +1115,7 @@ const items = [
     rarity: "Boss",
     expansion: "",
     name: "Titanic Knurl",
-    position: null,
+    position: 4,
   },
   {
     rawName: "Beads of Fealty",
@@ -1119,7 +1127,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Beads of Fealty",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Essence of Heresy",
@@ -1132,7 +1140,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Essence of Heresy",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1146,7 +1154,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Egocentrism",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Corpsebloom",
@@ -1159,7 +1167,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Corpsebloom",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Brittle Crown",
@@ -1172,7 +1180,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Brittle Crown",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Defiant Gouge",
@@ -1185,7 +1193,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Defiant Gouge",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Gesture of the Drowned",
@@ -1198,7 +1206,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Gesture of the Drowned",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Focused Convergence",
@@ -1211,7 +1219,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Focused Convergence",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1225,7 +1233,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Light Flux Pauldron",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1239,7 +1247,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Eulogy Zero",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Hooks of Heresy",
@@ -1252,7 +1260,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Hooks of Heresy",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Shaped Glass",
@@ -1265,7 +1273,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Shaped Glass",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Strides of Heresy",
@@ -1278,7 +1286,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Strides of Heresy",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1292,7 +1300,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Stone Flux Pauldron",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Mercurial Rachis",
@@ -1305,7 +1313,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Mercurial Rachis",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Purity",
@@ -1318,7 +1326,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Purity",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Transcendence",
@@ -1331,7 +1339,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Transcendence",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1345,7 +1353,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Lysate Cell",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1359,7 +1367,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Benthic Bloom",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Visions of Heresy",
@@ -1372,7 +1380,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Visions of Heresy",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1386,7 +1394,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Encrusted Key",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1400,7 +1408,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Polylute",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1414,7 +1422,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Needletick",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1428,7 +1436,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Newly Hatched Zoea",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1442,7 +1450,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Pluripotent Larva (Consumed)",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName:
@@ -1456,7 +1465,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Plasma Shrimp",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1470,7 +1479,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Voidsent Flame",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1484,7 +1493,7 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Tentabauble",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1512,7 +1521,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Weeping Fungus",
-    position: null,
+    corrupts: ["Bustling Fungus"],
+    position: 100,
   },
   {
     rawName:
@@ -1526,7 +1536,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Singularity Band",
-    position: null,
+    corrupts: ["Runald's Band", "Singularity Band"],
+    position: 100,
   },
   {
     rawName:
@@ -1537,10 +1548,10 @@ const items = [
     rawId: "",
     rawCategory: "0.1s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "Survivors of the Void",
     name: "Executive Card",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Blast Shower",
@@ -1550,10 +1561,10 @@ const items = [
     rawId: "",
     rawCategory: "20s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Blast Shower",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Disposable Missile Launcher",
@@ -1563,10 +1574,10 @@ const items = [
       "21  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Disposable Missile Launcher",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Foreign Fruit",
@@ -1575,10 +1586,10 @@ const items = [
     rawId: "",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Foreign Fruit",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Eccentric Vase",
@@ -1588,10 +1599,10 @@ const items = [
     rawId: "",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Eccentric Vase",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Fuel Array",
@@ -1601,10 +1612,11 @@ const items = [
     rawId: "",
     rawCategory: "",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Fuel Array",
-    position: null,
+    position: 100,
+    hide: true,
   },
   {
     rawName: "Gnarled Woodsprite",
@@ -1614,10 +1626,10 @@ const items = [
     rawId: "",
     rawCategory: "15s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Gnarled Woodsprite",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Jade Elephant",
@@ -1627,10 +1639,10 @@ const items = [
       "14  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Jade Elephant",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Lens-Maker's Glasses",
@@ -1657,7 +1669,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Forgive Me Please",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Milky Chrysalis",
@@ -1668,10 +1680,10 @@ const items = [
       "9  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "60s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Milky Chrysalis",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Ocular HUD",
@@ -1681,10 +1693,10 @@ const items = [
       "13  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "60s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Ocular HUD",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Primordial Cube",
@@ -1695,10 +1707,10 @@ const items = [
       "11  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "60s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Primordial Cube",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Preon Accumulator",
@@ -1708,10 +1720,10 @@ const items = [
     rawId: "",
     rawCategory: "140s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Preon Accumulator",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Radar Scanner",
@@ -1721,10 +1733,10 @@ const items = [
       "10  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Radar Scanner",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Recycler",
@@ -1737,7 +1749,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Recycler",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Super Massive Leech",
@@ -1750,7 +1762,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Super Massive Leech",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1764,7 +1776,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "Survivors of the Void",
     name: "Remote Caffeinator",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Sawmerang",
@@ -1777,7 +1789,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Sawmerang",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Royal Capacitor",
@@ -1790,7 +1802,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Royal Capacitor",
-    position: null,
+    position: 100,
   },
   {
     rawName: "The Back-up",
@@ -1804,7 +1816,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "The Back-up",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Glowing Meteorite",
@@ -1818,7 +1830,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Glowing Meteorite",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Effigy of Grief",
@@ -1831,7 +1843,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Effigy of Grief",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Helfire Tincture",
@@ -1845,7 +1857,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Helfire Tincture",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Volcanic Egg",
@@ -1859,7 +1871,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Volcanic Egg",
-    position: null,
+    position: 100,
   },
   {
     rawName: "The Crowdfunder",
@@ -1872,7 +1884,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "The Crowdfunder",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Silence Between Two Strikes",
@@ -1884,7 +1896,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Silence Between Two Strikes",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Shared Design",
@@ -1896,7 +1908,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Shared Design",
-    position: null,
+    position: 100,
   },
   {
     rawName:
@@ -1909,7 +1921,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "Survivors of the Void",
     name: "His Reassurance",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Her Biting Embrace",
@@ -1921,7 +1933,7 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Her Biting Embrace",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Spinel TonicTonic Affliction",
@@ -1935,7 +1947,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Spinel TonicTonic Affliction",
-    position: null,
+    position: 100,
   },
   {
     rawName: "Spectral Circlet",
@@ -1947,20 +1959,160 @@ const items = [
     rarity: "Lunar Equipment",
     expansion: "",
     name: "Spectral Circlet",
-    position: null,
+    position: 100,
+  },
+
+  {
+    name: "Ghor's Tome",
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "4% (+4% on stack) chance on kill to drop a treasure worth $25. Scales over time.",
+    category: ["Utility"],
+    id: 94,
+    position: 3,
   },
   {
-    rawName: "War Horn",
-    rawRarity: "Uncommon",
-    rawDescription:
-      "Activating your Equipment gives you +70% attack speed for 8s (+4s per stack).\n",
-    rawId: "79\n",
-    rawCategory: "DamageEquipmentRelated\n",
-    category: ["Damage", "Equipment Related"],
-    rarity: "Uncommon",
+    name: "Will-o'-the-wisp",
     expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "On killing an enemy, spawn a lava pillar in a 12m (+2.4m per stack) radius for 350% (+280% per stack) base damage.",
+    category: ["Damage", "OnKillEffect"],
+    id: 4,
+    position: 9,
+  },
+  {
     name: "War Horn",
-    position: null,
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "Activating your Equipment gives you +70% attack speed for 8s (+4s per stack).",
+    category: ["Damage"],
+    id: 79,
+    position: 6,
+  },
+  {
+    name: "Kjaro's Band",
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "Hits that deal more than 400% damage also blasts enemies with a runic flame tornado, dealing 300% (+300% per stack) TOTAL damage over time. Recharges every 10 seconds.",
+    category: ["Damage"],
+    id: 44,
+    position: 11,
+  },
+  {
+    name: "Runald's Band",
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "Hits that deal more than 400% damage also blasts enemies with a runic ice blast, slowing them by 80% for 3s (+3s per stack) and dealing 250% (+250% per stack) TOTAL damage. Recharges every 10 seconds.",
+    category: ["Damage"],
+    id: 63,
+    position: 14,
+  },
+  {
+    name: "Hunter's Harpoon",
+    expansion: "Survivors of the Void",
+    rarity: "Uncommon",
+    rawDescription:
+      "Killing an enemy increases movement speed by 125%, fading over 1 (+0.5 per stack) seconds.",
+    category: ["Utility", "OnKillEffect"],
+    id: null,
+    position: 18,
+  },
+  {
+    name: "Harvester's Scythe",
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "Gain 5% critical chance. Critical strikes heal for 8 (+4 per stack) health.",
+    category: ["Healing"],
+    id: 26,
+    position: 13,
+  },
+  {
+    name: "Berzerker's Pauldron",
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "Killing 4 enemies within 1 second sends you into a frenzy for 6s (+4s per stack). Increases movement speed by 50% and attack speed by 100%.",
+    category: ["Damage", "OnKillEffect"],
+    id: 46,
+    position: 30,
+  },
+  {
+    name: "AtG Missile Mk. 1",
+    expansion: "",
+    rarity: "Uncommon",
+    rawDescription:
+      "10% chance to fire a missile that deals 300% (+300% per stack) TOTAL damage.",
+    category: ["Damage"],
+    id: 3,
+    position: 17,
+  },
+  {
+    name: "Regenerating Scrap",
+    expansion: "Survivors of the Void",
+    rarity: "Uncommon",
+    rawDescription:
+      "Does nothing. Prioritized when used with Uncommon 3D Printers. At the start of each stage, it regenerates.",
+    category: ["Utility"],
+    id: null,
+    position: 21,
+  },
+  {
+    name: "Ben's Raincoat",
+    expansion: "Survivors of the Void",
+    rarity: "Legendary",
+    rawDescription:
+      "Prevents 1 (+1 per stack) debuff and instead grants a temporary barrier for 10% of maximum health. Recharges every 5 seconds.",
+    category: ["Utility", "Healing"],
+    id: null,
+    position: 15,
+  },
+  {
+    name: "Dio's Best Friend",
+    expansion: "",
+    rarity: "Legendary",
+    rawDescription:
+      "Upon death, this item will be consumed and you will return to life with 3 seconds of invulnerability.",
+    category: ["Utility"],
+    id: null,
+    position: 10,
+  },
+  {
+    name: "Pocket I.C.B.M.",
+    expansion: "",
+    rarity: "Legendary",
+    rawDescription:
+      "All missile items and equipment fire an additional 2 missiles. Increase missile damage by 0% (+50% per stack)",
+    category: ["Damage"],
+    id: null,
+    position: 19,
+  },
+  {
+    name: "N'kuhana's Opinion",
+    image: "N_Opinion.webp",
+    expansion: "",
+    rarity: "Legendary",
+    rawDescription:
+      "Store 100% (+100% per stack) of healing as Soul Energy. After your Soul Energy reaches 10% of your maximum health, fire a skull that deals 250% of your Soul Energy as damage.",
+    category: ["Damage"],
+    id: 31,
+    position: 19,
+  },
+  {
+    name: "Queen's Gland",
+    expansion: "",
+    rarity: "Boss",
+    bossDrop: "Beetle Queen",
+    rawDescription:
+      "Every 30 seconds, summon a Beetle Guard with bonus 300% damage and 100% health. Can have up to 1 (+1 per stack) Guards at a time.",
+    category: ["Utility"],
+    id: 53,
+    position: 1,
   },
 ];
 

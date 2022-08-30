@@ -1,7 +1,14 @@
 import { Box, Image } from "theme-ui";
 import { useState } from "react";
 
-const Item = ({ image, name, description, classes, setHoveredItem }) => {
+const Item = ({
+  image,
+  name,
+  description,
+  classes,
+  setHoveredItem,
+  position,
+}) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -20,7 +27,7 @@ const Item = ({ image, name, description, classes, setHoveredItem }) => {
           classes: classes,
           image: image,
         });
-        // console.log("enter", e);
+        console.log("enter", position);
       }}
       onMouseOut={e => {
         if (hover) {
