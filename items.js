@@ -1551,7 +1551,7 @@ const items = [
     rarity: "Equipment",
     expansion: "Survivors of the Void",
     name: "Executive Card",
-    position: 100,
+    position: 19,
   },
   {
     rawName: "Blast Shower",
@@ -1564,7 +1564,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Blast Shower",
-    position: 100,
+    position: 4,
   },
   {
     rawName: "Disposable Missile Launcher",
@@ -1577,7 +1577,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Disposable Missile Launcher",
-    position: 100,
+    position: 5,
   },
   {
     rawName: "Foreign Fruit",
@@ -1589,7 +1589,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Foreign Fruit",
-    position: 100,
+    position: 10,
   },
   {
     rawName: "Eccentric Vase",
@@ -1602,7 +1602,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Eccentric Vase",
-    position: 100,
+    position: 12,
   },
   {
     rawName: "Fuel Array",
@@ -1629,7 +1629,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Gnarled Woodsprite",
-    position: 100,
+    position: 20,
   },
   {
     rawName: "Jade Elephant",
@@ -1642,7 +1642,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Jade Elephant",
-    position: 100,
+    position: 11,
   },
   {
     rawName: "Lens-Maker's Glasses",
@@ -1666,10 +1666,10 @@ const items = [
       "11  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Forgive Me Please",
-    position: 100,
+    position: 7,
   },
   {
     rawName: "Milky Chrysalis",
@@ -1683,7 +1683,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Milky Chrysalis",
-    position: 100,
+    position: 15,
   },
   {
     rawName: "Ocular HUD",
@@ -1696,7 +1696,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Ocular HUD",
-    position: 100,
+    position: 6,
   },
   {
     rawName: "Primordial Cube",
@@ -1710,7 +1710,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Primordial Cube",
-    position: 100,
+    position: 2,
   },
   {
     rawName: "Preon Accumulator",
@@ -1723,7 +1723,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Preon Accumulator",
-    position: 100,
+    position: 1,
   },
   {
     rawName: "Radar Scanner",
@@ -1736,7 +1736,7 @@ const items = [
     rarity: "Equipment",
     expansion: "",
     name: "Radar Scanner",
-    position: 100,
+    position: 23,
   },
   {
     rawName: "Recycler",
@@ -1746,10 +1746,10 @@ const items = [
     rawId: "",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Recycler",
-    position: 100,
+    position: 21,
   },
   {
     rawName: "Super Massive Leech",
@@ -1759,10 +1759,10 @@ const items = [
       "13  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "60s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Super Massive Leech",
-    position: 100,
+    position: 16,
   },
   {
     rawName:
@@ -1773,10 +1773,10 @@ const items = [
     rawId: "",
     rawCategory: "60s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "Survivors of the Void",
     name: "Remote Caffeinator",
-    position: 100,
+    position: 25,
   },
   {
     rawName: "Sawmerang",
@@ -1786,10 +1786,10 @@ const items = [
     rawId: "",
     rawCategory: "45s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Sawmerang",
-    position: 100,
+    position: 22,
   },
   {
     rawName: "Royal Capacitor",
@@ -1799,10 +1799,10 @@ const items = [
     rawId: "",
     rawCategory: "20s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Royal Capacitor",
-    position: 100,
+    position: 17,
   },
   {
     rawName: "The Back-up",
@@ -1813,10 +1813,10 @@ const items = [
       "9  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "100s\n17 m/s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "The Back-up",
-    position: 100,
+    position: 8,
   },
   {
     rawName: "Glowing Meteorite",
@@ -1868,10 +1868,10 @@ const items = [
       "11  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "30s\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Volcanic Egg",
-    position: 100,
+    position: 9,
   },
   {
     rawName: "The Crowdfunder",
@@ -1881,10 +1881,10 @@ const items = [
     rawId: "",
     rawCategory: "Funded!\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "The Crowdfunder",
-    position: 100,
+    position: 13,
   },
   {
     rawName: "Silence Between Two Strikes",
@@ -1893,10 +1893,11 @@ const items = [
     rawId: "",
     rawCategory: "6\n",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Silence Between Two Strikes",
     position: 100,
+    hide: true,
   },
   {
     rawName: "Shared Design",
@@ -1905,10 +1906,11 @@ const items = [
     rawId: "",
     rawCategory: "",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Shared Design",
     position: 100,
+    hide: true,
   },
   {
     rawName:
@@ -1918,10 +1920,11 @@ const items = [
     rawId: "",
     rawCategory: "",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "Survivors of the Void",
     name: "His Reassurance",
     position: 100,
+    hide: true,
   },
   {
     rawName: "Her Biting Embrace",
@@ -1930,23 +1933,24 @@ const items = [
     rawId: "",
     rawCategory: "",
     category: [],
-    rarity: "Lunar Equipment",
+    rarity: "Equipment",
     expansion: "",
     name: "Her Biting Embrace",
     position: 100,
+    hide: true,
   },
   {
-    rawName: "Spinel TonicTonic Affliction",
+    rawName: "Spinel Tonic",
     rawRarity: "Lunar EquipmentNoTier",
     rawDescription:
-      "Drink the Tonic, gaining a boost for 20 seconds. Increases damage by +100%. Increases attack speed by +70%. Increases armor by +20. Increases maximum health by +50%. Increases passive health regeneration by +300%. Increases movespeed by +30%.When the Tonic wears off, you have a 20% chance to gain a Tonic Affliction, reducing all of your stats by -5% (-5% per stack).\nReduce ALL stats by -5% (-5% per stack).\n",
+      "Drink the Tonic, gaining a boost for 20 seconds. Increases damage by +100%. Increases attack speed by +70%. Increases armor by +20. Increases maximum health by +50%. Increases passive health regeneration by +300%. Increases movespeed by +30%. When the Tonic wears off, you have a 20% chance to gain a Tonic Affliction, reducing all of your stats by -5% (-5% per stack).",
     rawId:
       "7  Fuel CellFuel CellHold an additional equipment charge. Reduce equipment cooldown.Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
     rawCategory: "60s\nCleansable\n",
     category: [],
     rarity: "Lunar",
     expansion: "",
-    name: "Spinel TonicTonic Affliction",
+    name: "Spinel Tonic",
     position: 100,
   },
   {
@@ -1960,6 +1964,7 @@ const items = [
     expansion: "",
     name: "Spectral Circlet",
     position: 100,
+    hide: true,
   },
 
   {
@@ -2113,6 +2118,66 @@ const items = [
     category: ["Utility"],
     id: 53,
     position: 1,
+  },
+  {
+    name: "Queen's Gland",
+    expansion: "",
+    rarity: "Boss",
+    bossDrop: "Beetle Queen",
+    rawDescription:
+      "Every 30 seconds, summon a Beetle Guard with bonus 300% damage and 100% health. Can have up to 1 (+1 per stack) Guards at a time.",
+    category: ["Utility"],
+    id: 53,
+    position: 1,
+  },
+  {
+    name: "Trophy Hunter's Tricorn",
+    expansion: "Survivors of the Void",
+    rarity: "Equipment",
+    rawDescription:
+      "Execute any enemy capable of spawning a unique reward, and it will drop that item. Equipment is consumed on use.",
+    category: ["Utility"],
+    id: null,
+    position: 3,
+  },
+  {
+    name: "Goobo Jr.",
+    expansion: "Survivors of the Void",
+    rarity: "Equipment",
+    rawDescription:
+      "Spawn a gummy clone that has 300% damage and 300% health. Expires in 30 seconds.",
+    category: ["Utility"],
+    id: null,
+    position: 14,
+    permanentEffect: {
+      fuelCells: 8,
+      gestureOfTheDrowned: 5,
+    },
+  },
+  {
+    name: "Gorag's Opus",
+    expansion: "",
+    rarity: "Equipment",
+    rawDescription:
+      "All allies enter a frenzy for 7 seconds. Increases movement speed by 50% and attack speed by 100%.",
+    category: ["Utility"],
+    id: null,
+    position: 24,
+    permanentEffect: {
+      fuelCells: 12,
+      gestureOfTheDrowned: 9,
+    },
+  },
+  {
+    name: "Molotov (6-Pack)",
+    expansion: "Survivors of the Void",
+    rarity: "Equipment",
+    rawDescription:
+      "Throw 6 molotov cocktails that ignites enemies for 500% base damage. Each molotov leaves a burning area for 200% damage per second.",
+    category: ["Damage"],
+    image: "Molotov_29.webp",
+    id: null,
+    position: 18,
   },
 ];
 
