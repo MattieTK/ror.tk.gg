@@ -13,6 +13,8 @@ const RarityBox = ({ rarity, setRarity, active }) => {
         return "#f75b47";
       case "Boss":
         return "#b5cf29";
+      case "Void":
+        return "#c267a9";
     }
   };
   return (
@@ -28,6 +30,7 @@ const RarityBox = ({ rarity, setRarity, active }) => {
       onClick={() => {
         setRarity(rarity);
       }}
+      title={rarity}
     ></Box>
   );
 };

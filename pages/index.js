@@ -4,13 +4,26 @@ import styles from "../styles/Home.module.css";
 import { Grid, Box, Flex, Heading, Paragraph } from "theme-ui";
 import ItemList from "../components/ItemList";
 import useMousePosition from "../lib/useMousePosition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RarityBox from "../components/RarityBox";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const { x, y } = useMousePosition();
   const [hoveredItem, setHoveredItem] = useState({});
   const [rarityState, setRarityState] = useState("Common");
+
+  const setRarity = rarity => {
+    router.push({ query: { rarity: rarity } }, undefined, { shallow: true });
+    return;
+  };
+
+  useEffect(() => {
+    if (router.query.rarity !== undefined) {
+      setRarityState(router.query.rarity);
+    }
+  }, [router.query.rarity]);
 
   const HoverBox = () => {
     if (hoveredItem) {
@@ -58,29 +71,26 @@ export default function Home() {
       <Flex>
         <RarityBox
           rarity={"Common"}
-          setRarity={setRarityState}
+          setRarity={setRarity}
           active={rarityState}
         />
         <RarityBox
           rarity={"Uncommon"}
-          setRarity={setRarityState}
+          setRarity={setRarity}
           active={rarityState}
         />
         <RarityBox
           rarity={"Legendary"}
-          setRarity={setRarityState}
+          setRarity={setRarity}
           active={rarityState}
         />
-        <RarityBox
-          rarity={"Boss"}
-          setRarity={setRarityState}
-          active={rarityState}
-        />
+        <RarityBox rarity={"Boss"} setRarity={setRarity} active={rarityState} />
         <RarityBox
           rarity={"Equipment"}
-          setRarity={setRarityState}
+          setRarity={setRarity}
           active={rarityState}
         />
+        <RarityBox rarity={"Void"} setRarity={setRarity} active={rarityState} />
       </Flex>
       <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
         <Flex
