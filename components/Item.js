@@ -19,17 +19,17 @@ const Item = ({
       data-image={image}
       data-name={name}
       data-description={description}
-      onMouseEnter={e => {
+      onMouseEnter={(e) => {
         setHover(true);
         setHoveredItem({
-          name: name,
-          description: description,
-          classes: classes,
-          image: image,
+          name,
+          description,
+          classes,
+          image,
         });
         console.log("enter", position);
       }}
-      onMouseOut={e => {
+      onMouseOut={(e) => {
         if (hover) {
           setHoveredItem(null);
           // console.log("out!", e);
@@ -42,7 +42,7 @@ const Item = ({
         margin: "4px",
         padding: "2px",
         height: "128px",
-        backgroundImage: `url(images/${image})`,
+        backgroundImage: `url(/images/${image})`,
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
       }}

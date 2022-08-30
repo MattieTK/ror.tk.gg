@@ -1,7 +1,8 @@
-import { Box } from "theme-ui";
+import NextLink from "next/link";
+import { Link } from "theme-ui";
 
-const RarityBox = ({ rarity, setRarity, active }) => {
-  const rarityColor = rarity => {
+export const RarityBox = ({ rarity, active }) => {
+  const rarityColor = (rarity) => {
     switch (rarity) {
       case "Common":
         return "#c3c7ca";
@@ -17,22 +18,20 @@ const RarityBox = ({ rarity, setRarity, active }) => {
         return "#c267a9";
     }
   };
+
   return (
-    <Box
-      sx={{
-        height: "20px",
-        width: "20px",
-        margin: "4px",
-        backgroundColor: rarityColor(rarity),
-        border: active == rarity ? "1px white solid" : "",
-        cursor: "pointer",
-      }}
-      onClick={() => {
-        setRarity(rarity);
-      }}
-      title={rarity}
-    ></Box>
+    <NextLink href={`/items/${rarity}`} passHref>
+      <Link
+        sx={{
+          height: "20px",
+          width: "20px",
+          margin: "4px",
+          backgroundColor: rarityColor(rarity),
+          border: active == rarity ? "1px white solid" : "",
+          cursor: "pointer",
+        }}
+        title={rarity}
+      />
+    </NextLink>
   );
 };
-
-export default RarityBox;
