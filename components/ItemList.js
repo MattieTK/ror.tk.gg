@@ -4,7 +4,7 @@ import ItemGrid from "./ItemGrid";
 
 const ItemList = ({ rarity, setHoveredItem }) => {
   let rarityList = items.filter(
-    item => item.rarity == rarity && item.hide != true
+    (item) => item.rarity == rarity && item.hide != true
   );
   let sortedItems = rarityList.sort((a, b) => a.position - b.position);
   let itemElements = sortedItems.map((item, i) => {
@@ -16,7 +16,7 @@ const ItemList = ({ rarity, setHoveredItem }) => {
           item.image
             ? item.image
             : `${encodeURI(
-                item.name.replaceAll(" ", "_").replaceAll("'", "%27")
+                item.name.replace(/ /g, "_").replace(/'/g, "%27")
               )}.webp`
         }
         description={item.rawDescription}
@@ -26,7 +26,7 @@ const ItemList = ({ rarity, setHoveredItem }) => {
     );
   });
 
-  return <ItemGrid>{itemElements.map(item => item)}</ItemGrid>;
+  return <ItemGrid>{itemElements.map((item) => item)}</ItemGrid>;
 };
 
 export default ItemList;

@@ -8,13 +8,47 @@ import { useEffect, useState } from "react";
 import RarityBox from "../components/RarityBox";
 import { useRouter } from "next/router";
 
+const HoverBox = ({ item }) => {
+  const { x, y } = useMousePosition();
+
+  if (!item) {
+    return null;
+  }
+
+  return (
+    <Box
+      onMouseEnter={(e) => {
+        e.preventDefault();
+      }}
+      onMouseLeave={(e) => {
+        e.preventDefault();
+      }}
+      sx={{
+        position: "absolute",
+        color: "text",
+        width: "auto",
+        backgroundColor: "background",
+        padding: "4px",
+      }}
+      style={{
+        top: y + 10,
+        left: x + 10,
+      }}
+    >
+      <Box sx={{ fontSize: "22px", fontFamily: "Bombardier-Regular" }}>
+        {item.name}
+      </Box>
+      <Box sx={{ fontSize: "18px", maxWidth: "200px" }}>{item.description}</Box>
+    </Box>
+  );
+};
+
 export default function Home() {
   const router = useRouter();
-  const { x, y } = useMousePosition();
   const [hoveredItem, setHoveredItem] = useState({});
   const [rarityState, setRarityState] = useState("Common");
 
-  const setRarity = rarity => {
+  const setRarity = (rarity) => {
     router.push({ query: { rarity: rarity } }, undefined, { shallow: true });
     return;
   };
@@ -24,39 +58,6 @@ export default function Home() {
       setRarityState(router.query.rarity);
     }
   }, [router.query.rarity]);
-
-  const HoverBox = () => {
-    if (hoveredItem) {
-      return (
-        <Box
-          onMouseEnter={e => {
-            e.preventDefault();
-          }}
-          onMouseLeave={e => {
-            e.preventDefault();
-          }}
-          sx={{
-            position: "absolute",
-            top: y + 10,
-            left: x + 10,
-
-            color: "text",
-            width: "auto",
-            backgroundColor: "background",
-            padding: "4px",
-          }}
-        >
-          <Box sx={{ fontSize: "22px", fontFamily: "Bombardier-Regular" }}>
-            {hoveredItem.name}
-          </Box>
-          <Box sx={{ fontSize: "18px", maxWidth: "200px" }}>
-            {hoveredItem.description}
-          </Box>
-        </Box>
-      );
-    }
-    return null;
-  };
 
   return (
     <Box className={styles.container} sx={{ background: "#161d1d" }}>
@@ -113,7 +114,7 @@ export default function Home() {
           >
             What is your Command?
           </Heading>
-          <HoverBox />
+          <HoverBox item={hoveredItem} />
 
           <ItemList rarity={rarityState} setHoveredItem={setHoveredItem} />
         </Flex>
