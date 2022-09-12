@@ -253,8 +253,7 @@ const items = [
     rawRarity: "Common",
     rawDescription:
       "A hidden cache containing an item (80%/20%) will appear in a random location on each stage. Opening the cache consumes this item.\n",
-    rawId:
-      "Survivors of the Void - DLC ContentEncrusted Key is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info. Encrusted KeySurvivors of the Void - DLC ContentThis content is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info.Encrusted KeyGain access to an Encrusted Cache that contains a void item. Corrupts all Rusted Keys.A hidden cache containing an item (60%/30%/10%) will appear in a random location on each stage. Opening the cache consumes this item. Corrupts all Rusted Keys.\n",
+    rawId: "\n",
     rawCategory: "UtilityAIBlacklist\n",
     category: ["Utility"],
     rarity: "Common",
@@ -386,14 +385,14 @@ const items = [
     rawRarity: "Uncommon",
     rawDescription:
       "Hold an additional equipment charge (+1 per stack). Reduce equipment cooldown by 15% (+15% per stack).\n",
-    rawId:
-      "Survivors of the Void - DLC ContentLysate Cell is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info. Lysate CellSurvivors of the Void - DLC ContentThis content is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info.Lysate CellAdd an extra charge of your Special skill. Corrupts all Fuel Cells.Add +1 (+1 per stack) charge of your Special skill. Reduces Special skill cooldown by 33%. Corrupts all Fuel Cells.\n",
+    rawId: "",
     rawCategory: "UtilityEquipmentRelated\n",
     category: ["Utility", "Equipment Related"],
     rarity: "Uncommon",
     expansion: "",
     name: "Fuel Cell",
-    position: 7,
+    position: 3,
+    voidTier: 2,
   },
   {
     rawName: "Warbanner",
@@ -564,7 +563,6 @@ const items = [
     name: "Shuriken",
     position: 20,
   },
-
   {
     rawName: "Squid Polyp",
     rawRarity: "Uncommon",
@@ -603,20 +601,6 @@ const items = [
     expansion: "",
     name: "Rose Buckler",
     position: 24,
-  },
-  {
-    rawName: "57 Leaf Clover",
-    rawRarity: "Legendary",
-    rawDescription:
-      "All random effects are rolled +1 (+1 per stack) times for a favorable outcome.\n",
-    rawId:
-      "Survivors of the Void - DLC ContentBenthic Bloom is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info. Benthic BloomSurvivors of the Void - DLC ContentThis content is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info.Benthic BloomUpgrades your items at the start of each stage. Corrupts all 57 Leaf Clovers.Upgrades 3 (+3 per stack) random items to items of the next higher rarity at the start of each stage. Corrupts all 57 Leaf Clovers.\n",
-    rawCategory: "Utility\n",
-    category: ["Utility"],
-    rarity: "Legendary",
-    expansion: "",
-    name: "57 Leaf Clover",
-    position: 6,
   },
   {
     rawName: "Ukulele",
@@ -1127,7 +1111,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Beads of Fealty",
-    position: 100,
+    position: 12,
   },
   {
     rawName: "Essence of Heresy",
@@ -1140,7 +1124,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Essence of Heresy",
-    position: 100,
+    position: 10,
   },
   {
     rawName:
@@ -1154,7 +1138,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Egocentrism",
-    position: 100,
+    position: 11,
   },
   {
     rawName: "Corpsebloom",
@@ -1167,7 +1151,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Corpsebloom",
-    position: 100,
+    position: 17,
   },
   {
     rawName: "Brittle Crown",
@@ -1180,7 +1164,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Brittle Crown",
-    position: 100,
+    position: 3,
   },
   {
     rawName: "Defiant Gouge",
@@ -1193,7 +1177,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Defiant Gouge",
-    position: 100,
+    position: 15,
   },
   {
     rawName: "Gesture of the Drowned",
@@ -1206,7 +1190,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Gesture of the Drowned",
-    position: 100,
+    position: 1,
   },
   {
     rawName: "Focused Convergence",
@@ -1219,7 +1203,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Focused Convergence",
-    position: 100,
+    position: 2,
   },
   {
     rawName:
@@ -1233,7 +1217,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Light Flux Pauldron",
-    position: 100,
+    position: 4,
   },
   {
     rawName:
@@ -1247,7 +1231,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Eulogy Zero",
-    position: 100,
+    position: 16,
   },
   {
     rawName: "Hooks of Heresy",
@@ -1260,7 +1244,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Hooks of Heresy",
-    position: 100,
+    position: 9,
   },
   {
     rawName: "Shaped Glass",
@@ -1273,7 +1257,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Shaped Glass",
-    position: 100,
+    position: 7,
   },
   {
     rawName: "Strides of Heresy",
@@ -1286,7 +1270,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Strides of Heresy",
-    position: 100,
+    position: 13,
   },
   {
     rawName:
@@ -1300,7 +1284,7 @@ const items = [
     rarity: "Lunar",
     expansion: "Survivors of the Void",
     name: "Stone Flux Pauldron",
-    position: 100,
+    position: 5,
   },
   {
     rawName: "Mercurial Rachis",
@@ -1313,7 +1297,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Mercurial Rachis",
-    position: 100,
+    position: 15,
   },
   {
     rawName: "Purity",
@@ -1326,7 +1310,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Purity",
-    position: 100,
+    position: 6,
   },
   {
     rawName: "Transcendence",
@@ -1339,7 +1323,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Transcendence",
-    position: 100,
+    position: 17,
   },
   {
     rawName:
@@ -1353,7 +1337,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Lysate Cell",
-    position: 100,
+    position: 3,
+    voidTier: 2,
   },
   {
     rawName:
@@ -1367,7 +1352,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Benthic Bloom",
-    position: 100,
+    position: 1,
+    voidTier: 3,
   },
   {
     rawName: "Visions of Heresy",
@@ -1380,7 +1366,7 @@ const items = [
     rarity: "Lunar",
     expansion: "",
     name: "Visions of Heresy",
-    position: 100,
+    position: 8,
   },
   {
     rawName:
@@ -1394,7 +1380,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Encrusted Key",
-    position: 100,
+    position: 5,
+    voidTier: 1,
   },
   {
     rawName:
@@ -1408,7 +1395,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Polylute",
-    position: 100,
+    position: 1,
+    voidTier: 2,
   },
   {
     rawName:
@@ -1422,7 +1410,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Needletick",
-    position: 100,
+    position: 2,
+    voidTier: 1,
   },
   {
     rawName:
@@ -1465,7 +1454,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Plasma Shrimp",
-    position: 100,
+    position: 5,
+    voidTier: 2,
   },
   {
     rawName:
@@ -1479,7 +1469,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Voidsent Flame",
-    position: 100,
+    position: 4,
+    voidTier: 2,
   },
   {
     rawName:
@@ -1493,7 +1484,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Tentabauble",
-    position: 100,
+    position: 6,
+    voidTier: 2,
   },
   {
     rawName:
@@ -1507,7 +1499,8 @@ const items = [
     rarity: "Void",
     expansion: "Survivors of the Void",
     name: "Safer Spaces",
-    position: 4,
+    position: 1,
+    voidTier: 1,
   },
   {
     rawName:
@@ -1522,7 +1515,8 @@ const items = [
     expansion: "Survivors of the Void",
     name: "Weeping Fungus",
     corrupts: ["Bustling Fungus"],
-    position: 100,
+    position: 4,
+    voidTier: 1,
   },
   {
     rawName:
@@ -1537,7 +1531,8 @@ const items = [
     expansion: "Survivors of the Void",
     name: "Singularity Band",
     corrupts: ["Runald's Band", "Singularity Band"],
-    position: 100,
+    position: 2,
+    voidTier: 2,
   },
   {
     rawName:
@@ -1552,6 +1547,7 @@ const items = [
     expansion: "Survivors of the Void",
     name: "Executive Card",
     position: 19,
+    type: "Equipment",
   },
   {
     rawName: "Blast Shower",
@@ -1565,6 +1561,7 @@ const items = [
     expansion: "",
     name: "Blast Shower",
     position: 4,
+    type: "Equipment",
   },
   {
     rawName: "Disposable Missile Launcher",
@@ -1578,6 +1575,7 @@ const items = [
     expansion: "",
     name: "Disposable Missile Launcher",
     position: 5,
+    type: "Equipment",
   },
   {
     rawName: "Foreign Fruit",
@@ -1590,6 +1588,7 @@ const items = [
     expansion: "",
     name: "Foreign Fruit",
     position: 10,
+    type: "Equipment",
   },
   {
     rawName: "Eccentric Vase",
@@ -1603,6 +1602,7 @@ const items = [
     expansion: "",
     name: "Eccentric Vase",
     position: 12,
+    type: "Equipment",
   },
   {
     rawName: "Fuel Array",
@@ -1617,6 +1617,7 @@ const items = [
     name: "Fuel Array",
     position: 100,
     hide: true,
+    type: "Equipment",
   },
   {
     rawName: "Gnarled Woodsprite",
@@ -1630,6 +1631,7 @@ const items = [
     expansion: "",
     name: "Gnarled Woodsprite",
     position: 20,
+    type: "Equipment",
   },
   {
     rawName: "Jade Elephant",
@@ -1643,6 +1645,7 @@ const items = [
     expansion: "",
     name: "Jade Elephant",
     position: 11,
+    type: "Equipment",
   },
   {
     rawName: "Lens-Maker's Glasses",
@@ -1670,6 +1673,7 @@ const items = [
     expansion: "",
     name: "Forgive Me Please",
     position: 7,
+    type: "Equipment",
   },
   {
     rawName: "Milky Chrysalis",
@@ -1684,6 +1688,7 @@ const items = [
     expansion: "",
     name: "Milky Chrysalis",
     position: 15,
+    type: "Equipment",
   },
   {
     rawName: "Ocular HUD",
@@ -1697,6 +1702,7 @@ const items = [
     expansion: "",
     name: "Ocular HUD",
     position: 6,
+    type: "Equipment",
   },
   {
     rawName: "Primordial Cube",
@@ -1711,6 +1717,7 @@ const items = [
     expansion: "",
     name: "Primordial Cube",
     position: 2,
+    type: "Equipment",
   },
   {
     rawName: "Preon Accumulator",
@@ -1724,6 +1731,7 @@ const items = [
     expansion: "",
     name: "Preon Accumulator",
     position: 1,
+    type: "Equipment",
   },
   {
     rawName: "Radar Scanner",
@@ -1737,6 +1745,7 @@ const items = [
     expansion: "",
     name: "Radar Scanner",
     position: 23,
+    type: "Equipment",
   },
   {
     rawName: "Recycler",
@@ -1750,6 +1759,7 @@ const items = [
     expansion: "",
     name: "Recycler",
     position: 21,
+    type: "Equipment",
   },
   {
     rawName: "Super Massive Leech",
@@ -1763,6 +1773,7 @@ const items = [
     expansion: "",
     name: "Super Massive Leech",
     position: 16,
+    type: "Equipment",
   },
   {
     rawName:
@@ -1777,6 +1788,7 @@ const items = [
     expansion: "Survivors of the Void",
     name: "Remote Caffeinator",
     position: 25,
+    type: "Equipment",
   },
   {
     rawName: "Sawmerang",
@@ -1790,6 +1802,7 @@ const items = [
     expansion: "",
     name: "Sawmerang",
     position: 22,
+    type: "Equipment",
   },
   {
     rawName: "Royal Capacitor",
@@ -1803,6 +1816,7 @@ const items = [
     expansion: "",
     name: "Royal Capacitor",
     position: 17,
+    type: "Equipment",
   },
   {
     rawName: "The Back-up",
@@ -1817,6 +1831,7 @@ const items = [
     expansion: "",
     name: "The Back-up",
     position: 8,
+    type: "Equipment",
   },
   {
     rawName: "Glowing Meteorite",
@@ -1831,6 +1846,7 @@ const items = [
     expansion: "",
     name: "Glowing Meteorite",
     position: 100,
+    type: "Equipment",
   },
   {
     rawName: "Effigy of Grief",
@@ -1844,6 +1860,7 @@ const items = [
     expansion: "",
     name: "Effigy of Grief",
     position: 100,
+    type: "Equipment",
   },
   {
     rawName: "Helfire Tincture",
@@ -1858,6 +1875,7 @@ const items = [
     expansion: "",
     name: "Helfire Tincture",
     position: 100,
+    type: "Equipment",
   },
   {
     rawName: "Volcanic Egg",
@@ -1872,6 +1890,7 @@ const items = [
     expansion: "",
     name: "Volcanic Egg",
     position: 9,
+    type: "Equipment",
   },
   {
     rawName: "The Crowdfunder",
@@ -1885,6 +1904,7 @@ const items = [
     expansion: "",
     name: "The Crowdfunder",
     position: 13,
+    type: "Equipment",
   },
   {
     rawName: "Silence Between Two Strikes",
@@ -1898,6 +1918,7 @@ const items = [
     name: "Silence Between Two Strikes",
     position: 100,
     hide: true,
+    type: "Equipment",
   },
   {
     rawName: "Shared Design",
@@ -1911,6 +1932,7 @@ const items = [
     name: "Shared Design",
     position: 100,
     hide: true,
+    type: "Equipment",
   },
   {
     rawName:
@@ -1925,6 +1947,7 @@ const items = [
     name: "His Reassurance",
     position: 100,
     hide: true,
+    type: "Equipment",
   },
   {
     rawName: "Her Biting Embrace",
@@ -1938,6 +1961,7 @@ const items = [
     name: "Her Biting Embrace",
     position: 100,
     hide: true,
+    type: "Equipment",
   },
   {
     rawName: "Spinel Tonic",
@@ -1952,6 +1976,7 @@ const items = [
     expansion: "",
     name: "Spinel Tonic",
     position: 100,
+    type: "Equipment",
   },
   {
     rawName: "Spectral Circlet",
@@ -1966,7 +1991,6 @@ const items = [
     position: 100,
     hide: true,
   },
-
   {
     name: "Ghor's Tome",
     expansion: "",
@@ -2128,6 +2152,7 @@ const items = [
     category: ["Utility"],
     id: null,
     position: 3,
+    type: "Equipment",
   },
   {
     name: "Goobo Jr.",
@@ -2138,10 +2163,8 @@ const items = [
     category: ["Utility"],
     id: null,
     position: 14,
-    permanentEffect: {
-      fuelCells: 8,
-      gestureOfTheDrowned: 5,
-    },
+    permanentEffect: { fuelCells: 8, gestureOfTheDrowned: 5 },
+    type: "Equipment",
   },
   {
     name: "Gorag's Opus",
@@ -2152,10 +2175,8 @@ const items = [
     category: ["Utility"],
     id: null,
     position: 24,
-    permanentEffect: {
-      fuelCells: 12,
-      gestureOfTheDrowned: 9,
-    },
+    permanentEffect: { fuelCells: 12, gestureOfTheDrowned: 9 },
+    type: "Equipment",
   },
   {
     name: "Molotov (6-Pack)",
@@ -2167,6 +2188,29 @@ const items = [
     image: "Molotov_29.webp",
     id: null,
     position: 18,
+    type: "Equipment",
+  },
+  {
+    name: "Lost Seer's Lenses",
+    expansion: "Survivors of the Void",
+    rarity: "Void",
+    rawDescription:
+      "Your attacks have a 0.5% (+0.5% per stack) chance to instantly kill a non-Boss enemy. Corrupts all Lens-Maker's Glasses.",
+    category: ["Damage"],
+    id: null,
+    position: 3,
+    voidTier: 1,
+  },
+  {
+    name: "Pluripotent Larva",
+    expansion: "Survivors of the Void",
+    rarity: "Void",
+    rawDescription:
+      "Upon death, this item will be consumed and you will return to life with 3 seconds of invulnerability, and all of your items that can be corrupted will be. Corrupts all Dio's Best Friends.",
+    category: ["Utility"],
+    id: null,
+    position: 2,
+    voidTier: 3,
   },
 ];
 

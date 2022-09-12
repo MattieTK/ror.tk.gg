@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import { Link } from "theme-ui";
 
 export const RarityBox = ({ rarity, active }) => {
-  const rarityColor = (rarity) => {
+  const rarityColor = rarity => {
     switch (rarity) {
       case "Common":
         return "#c3c7ca";
@@ -14,6 +14,9 @@ export const RarityBox = ({ rarity, active }) => {
         return "#f75b47";
       case "Boss":
         return "#b5cf29";
+      case "Lunar":
+        return "#0066FF";
+
       case "Void":
         return "#c267a9";
     }

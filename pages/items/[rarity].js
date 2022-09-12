@@ -17,10 +17,10 @@ const HoverBox = ({ item }) => {
 
   return (
     <Box
-      onMouseEnter={(e) => {
+      onMouseEnter={e => {
         e.preventDefault();
       }}
-      onMouseLeave={(e) => {
+      onMouseLeave={e => {
         e.preventDefault();
       }}
       sx={{
@@ -31,8 +31,8 @@ const HoverBox = ({ item }) => {
         padding: "4px",
       }}
       style={{
-        top: y + 10,
-        left: x + 10,
+        top: y + 5,
+        left: x + 5,
       }}
     >
       <Box sx={{ fontSize: "22px", fontFamily: "Bombardier-Regular" }}>
@@ -62,6 +62,7 @@ export default function Rarity() {
         <RarityBox rarity={"Uncommon"} active={query.rarity} />
         <RarityBox rarity={"Legendary"} active={query.rarity} />
         <RarityBox rarity={"Boss"} active={query.rarity} />
+        <RarityBox rarity={"Lunar"} active={query.rarity} />
         <RarityBox rarity={"Equipment"} active={query.rarity} />
         <RarityBox rarity={"Void"} active={query.rarity} />
       </Flex>
@@ -87,8 +88,9 @@ export default function Rarity() {
             What is your Command?
           </Heading>
           <HoverBox item={hoveredItem} />
-
-          <ItemList rarity={query.rarity} setHoveredItem={setHoveredItem} />
+          <Box>
+            <ItemList rarity={query.rarity} setHoveredItem={setHoveredItem} />
+          </Box>
         </Flex>
       </Flex>
     </Box>

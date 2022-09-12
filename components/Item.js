@@ -12,14 +12,11 @@ const Item = ({
   const [hover, setHover] = useState(false);
 
   return (
-    // Stick a <Box> below and you get the overlay, but the performance falls apart. idk why the Popover doesn't stick with the mouse.
-    // I think perf requires this to be hoisted along with the data, hence the data- attrs...
-
     <Box
       data-image={image}
       data-name={name}
       data-description={description}
-      onMouseEnter={(e) => {
+      onMouseEnter={e => {
         setHover(true);
         setHoveredItem({
           name,
@@ -29,7 +26,7 @@ const Item = ({
         });
         console.log("enter", position);
       }}
-      onMouseOut={(e) => {
+      onMouseOut={e => {
         if (hover) {
           setHoveredItem(null);
           // console.log("out!", e);
