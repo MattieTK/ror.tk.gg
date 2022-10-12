@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { Box, Flex, Heading, Paragraph } from "theme-ui";
+import { Box, Flex, Heading, Paragraph, Link } from "theme-ui";
 
 import styles from "../../styles/Home.module.css";
 import ItemList from "../../components/ItemList";
@@ -92,6 +92,19 @@ export default function Rarity() {
             <ItemList rarity={query.rarity} setHoveredItem={setHoveredItem} />
           </Box>
         </Flex>
+      </Flex>
+      <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
+        <Box>
+          <Paragraph>
+            By{" "}
+            <Link
+              href="https://twitter.com/MattieTK"
+              style={{ textDecoration: "underline" }}
+            >
+              @MattieTK
+            </Link>
+          </Paragraph>
+        </Box>
       </Flex>
     </Box>
   );
