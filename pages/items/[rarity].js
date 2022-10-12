@@ -102,7 +102,14 @@ export default function Rarity() {
               href="https://twitter.com/MattieTK"
               style={{ textDecoration: "underline" }}
             >
-              @MattieTK.
+              @MattieTK
+            </Link>{" "}
+            and{" "}
+            <Link
+              href="https://twitter.com/chrishutchinson"
+              style={{ textDecoration: "underline" }}
+            >
+              @chrishutchinson
             </Link>
           </Paragraph>
 
