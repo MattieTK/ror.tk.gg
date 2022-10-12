@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Flex, Heading, Paragraph, Link } from "theme-ui";
+import GitHubButton from "react-github-btn";
 
 import styles from "../../styles/Home.module.css";
 import ItemList from "../../components/ItemList";
@@ -94,16 +95,24 @@ export default function Rarity() {
         </Flex>
       </Flex>
       <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Box>
-          <Paragraph>
+        <Box style={{ padding: "4px", textAlign: "center" }}>
+          <Paragraph style={{ marginBottom: "10px" }}>
             By{" "}
             <Link
               href="https://twitter.com/MattieTK"
               style={{ textDecoration: "underline" }}
             >
-              @MattieTK
+              @MattieTK.
             </Link>
           </Paragraph>
+
+          <GitHubButton
+            href="https://github.com/MattieTK/ror.tk.gg"
+            data-icon="octicon-star"
+            aria-label="Star MattieTK/ror.tk.gg on GitHub"
+          >
+            Star
+          </GitHubButton>
         </Box>
       </Flex>
     </Box>
