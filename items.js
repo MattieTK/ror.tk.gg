@@ -1341,6 +1341,15 @@ const items = [
     voidTier: 2,
   },
   {
+    id: 35,
+    rarity: "Legendary",
+    category: ["Utility"],
+    name: "57 Leaf Clover",
+    rawDescription:
+      "All random effects are rolled +1 (+1 per stack) times for a favorable outcome.",
+    position: 6,
+  },
+  {
     rawName:
       "Survivors of the Void - DLC ContentBenthic Bloom is part of the Survivors of the Void DLC. It is only available if the DLC is enabled when starting a run.Click for more info.Benthic Bloom",
     rawRarity: "Void",
