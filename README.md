@@ -6,8 +6,8 @@ This is a simulator to remember item locations and what they do for the game _Ri
 
 ## Running locally
 
-This is a NextJS app. Clone the repo, run `npm install` or `yarn` and then `npm run dev` or `yarn dev`.
+This is a NextJS app. Clone the repo, run `npm install` and then `npm run dev`.
 
 ## Items
 
-Items can be found in the root directory in `items.js`. 
+Items can be found in the root directory in `items.js`.
