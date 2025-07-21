@@ -1,55 +1,68 @@
-import { Box, Image } from "theme-ui";
-import { useState } from "react";
+import { useState } from 'react';
+import { itemBox, itemAccessible, itemInaccessible, positionText } from './Item.css';
 
 const Item = ({
-  image,
-  name,
-  description,
-  classes,
-  setHoveredItem,
-  position,
+	image,
+	name,
+	description,
+	classes,
+	setHoveredItem,
+	position,
+	accessible = true,
 }) => {
-  const [hover, setHover] = useState(false);
+	const [hover, setHover] = useState(false);
+	const [tapped, setTapped] = useState(false);
 
-  return (
-    <Box
-      data-image={image}
-      data-name={name}
-      data-description={description}
-      onMouseEnter={e => {
-        setHover(true);
-        setHoveredItem({
-          name,
-          description,
-          classes,
-          image,
-        });
-        console.log("enter", position);
-      }}
-      onMouseOut={e => {
-        if (hover) {
-          setHoveredItem(null);
-          // console.log("out!", e);
-          setHover(false);
-        } else {
-        }
-      }}
-      sx={{
-        border: "#7e7f7f 1px solid",
-        margin: "4px",
-        padding: "2px",
-        height: "128px",
-        backgroundImage: `url(/images/${image})`,
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      {/* <Image
-        sx={{ width: "inherit", height: "auto" }}
-        src={`images/${image}`}
-      ></Image> */}
-    </Box>
-  );
+	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible}`;
+	const backgroundImage = accessible 
+		? `url(/images/${image})`
+		: `url(/images/Locked_Item.png)`;
+
+	const showTooltip = () => {
+		if (accessible) {
+			setHover(true);
+			setHoveredItem({
+				name,
+				description,
+				classes,
+				image,
+			});
+		}
+	};
+
+	const hideTooltip = () => {
+		setHover(false);
+		setTapped(false);
+		setHoveredItem(null);
+	};
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		if (accessible) {
+			if (tapped) {
+				hideTooltip();
+			} else {
+				setTapped(true);
+				showTooltip();
+			}
+		}
+	};
+
+	return (
+		<div
+			className={itemClassName}
+			style={{ backgroundImage }}
+			data-image={image}
+			data-name={name}
+			data-description={description}
+			data-item-container
+			onMouseEnter={showTooltip}
+			onMouseLeave={hideTooltip}
+			onClick={handleClick}
+			onTouchStart={handleClick}
+		>
+		</div>
+	);
 };
 
 export default Item;

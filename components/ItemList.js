@@ -1,10 +1,18 @@
-import { Box, Heading } from "theme-ui";
 import Item from "./Item";
 import items from "../items";
 import ItemGrid from "./ItemGrid";
+import { container, heading, tierHeading } from "./ItemList.css";
 
-const ItemList = ({ rarity, setHoveredItem }) => {
+const ItemList = ({ rarity, setHoveredItem, enabledExpansions }) => {
+  const isItemAccessible = (item) => {
+    if (item.expansion === '') {
+      return enabledExpansions['base'];
+    }
+    return enabledExpansions[item.expansion];
+  };
+
   const buildItem = (item, i) => {
+    const accessible = isItemAccessible(item);
     return (
       <Item
         key={i}
@@ -19,6 +27,7 @@ const ItemList = ({ rarity, setHoveredItem }) => {
         description={item.rawDescription}
         setHoveredItem={setHoveredItem}
         position={item.position}
+        accessible={accessible}
       />
     );
   };
@@ -33,43 +42,43 @@ const ItemList = ({ rarity, setHoveredItem }) => {
 
   if (rarity == "Void") {
     return (
-      <Box>
-        <Heading>Tier 1</Heading>
+      <div className={container}>
+        <h2 className={heading}>Tier 1</h2>
         <ItemGrid>
           {sortedItems
             .filter(item => item.voidTier == 1)
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
-        <Heading>Tier 2</Heading>
+        <h2 className={heading}>Tier 2</h2>
         <ItemGrid>
           {sortedItems
             .filter(item => item.voidTier == 2)
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
-        <Heading>Tier 3</Heading>
-        <ItemGrid sx={{ marginTop: 4 }}>
+        <h2 className={tierHeading}>Tier 3</h2>
+        <ItemGrid>
           {sortedItems
             .filter(item => item.voidTier == 3)
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
-      </Box>
+      </div>
     );
   }
   if (rarity == "Lunar") {
     return (
-      <Box>
+      <div className={container}>
         <ItemGrid>
           {sortedItems
             .filter(item => item.type !== "Equipment")
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
-        <Heading>Equipment</Heading>
+        <h2 className={heading}>Equipment</h2>
         <ItemGrid>
           {sortedItems
             .filter(item => item.type == "Equipment")
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
-      </Box>
+      </div>
     );
   } else return <ItemGrid>{itemElements.map(item => item)}</ItemGrid>;
 };

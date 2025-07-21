@@ -1,127 +1,178 @@
-import Head from "next/head";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { Box, Flex, Heading, Paragraph, Link } from "theme-ui";
-import GitHubButton from "react-github-btn";
+import Head from 'next/head';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import GitHubButton from 'react-github-btn';
 
-import styles from "../../styles/Home.module.css";
-import ItemList from "../../components/ItemList";
-import useMousePosition from "../../lib/useMousePosition";
-import { RarityBox } from "../../components/RarityBox";
+import styles from '../../styles/Home.module.css';
+import ItemList from '../../components/ItemList';
+import useMousePosition from '../../lib/useMousePosition';
+import { RarityBox } from '../../components/RarityBox';
+import ExpansionToggle from '../../components/ExpansionToggle';
+import {
+	container,
+	flex,
+	flexRow,
+	flexColumn,
+	flexSpaceAround,
+	heading,
+	paragraph,
+	link,
+} from '../../styles/theme.css';
+import {
+	hoverBox,
+	hoverBoxTitle,
+	hoverBoxDescription,
+} from '../../styles/HoverBox.css';
 
 const HoverBox = ({ item }) => {
-  const { x, y } = useMousePosition();
+	const { x, y } = useMousePosition();
+	const [isClient, setIsClient] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 
-  if (!item) {
-    return null;
-  }
+	useEffect(() => {
+		setIsClient(true);
+		// Better mobile detection - check if it's primarily a touch device
+		const isTouchDevice =
+			'ontouchstart' in window &&
+			window.matchMedia('(pointer: coarse)').matches;
+		setIsMobile(isTouchDevice);
+	}, []);
 
-  return (
-    <Box
-      onMouseEnter={e => {
-        e.preventDefault();
-      }}
-      onMouseLeave={e => {
-        e.preventDefault();
-      }}
-      sx={{
-        position: "absolute",
-        color: "text",
-        width: "auto",
-        backgroundColor: "background",
-        padding: "4px",
-      }}
-      style={{
-        top: y + 5,
-        left: x + 5,
-      }}
-    >
-      <Box sx={{ fontSize: "22px", fontFamily: "Bombardier-Regular" }}>
-        {item.name}
-      </Box>
-      <Box sx={{ fontSize: "18px", maxWidth: "200px" }}>{item.description}</Box>
-    </Box>
-  );
+	if (!item || !isClient) {
+		return null;
+	}
+
+	// Smart positioning logic
+	const tooltipStyle = isMobile
+		? {
+				position: 'fixed',
+				top: '10px',
+				left: '50%',
+				transform: 'translateX(-50%)',
+				zIndex: 1000,
+				maxWidth: '90vw',
+		  }
+		: {
+				// On desktop, position above cursor if too close to bottom of screen
+				top: y > window.innerHeight - 150 ? y - 120 : y + 5,
+				left: x + 5,
+		  };
+
+	return (
+		<div
+			className={hoverBox}
+			style={tooltipStyle}
+			onMouseEnter={e => {
+				e.preventDefault();
+			}}
+			onMouseLeave={e => {
+				e.preventDefault();
+			}}
+		>
+			<div className={hoverBoxTitle}>{item.name}</div>
+			<div className={hoverBoxDescription}>{item.description}</div>
+		</div>
+	);
 };
 
 export default function Rarity() {
-  const { query } = useRouter();
-  const [hoveredItem, setHoveredItem] = useState({});
+	const { query } = useRouter();
+	const [hoveredItem, setHoveredItem] = useState({});
+	const [enabledExpansions, setEnabledExpansions] = useState({
+		base: true,
+		'Survivors of the Void': true,
+		'Seekers of the Storm': true,
+	});
 
-  return (
-    <Box className={styles.container} sx={{ background: "#161d1d" }}>
-      <Head>
-        <title>Risk of Rain - Artifact of Command</title>
-        <meta
-          name="description"
-          content="An artifact of command simulator for Risk of Rain 2"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Flex>
-        <RarityBox rarity={"Common"} active={query.rarity} />
-        <RarityBox rarity={"Uncommon"} active={query.rarity} />
-        <RarityBox rarity={"Legendary"} active={query.rarity} />
-        <RarityBox rarity={"Boss"} active={query.rarity} />
-        <RarityBox rarity={"Lunar"} active={query.rarity} />
-        <RarityBox rarity={"Equipment"} active={query.rarity} />
-        <RarityBox rarity={"Void"} active={query.rarity} />
-      </Flex>
-      <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Flex
-          sx={{
-            alignContent: "center",
-            width: "min-content",
-            justifyContent: "space-around",
-            flexDirection: "column",
-          }}
-        >
-          <Heading
-            as="h1"
-            sx={{
-              textAlign: "center",
-              fontStyle: "italic",
-              fontFamily: "Bombardier-Regular",
-              padding: "2",
-              letterSpacing: "1px",
-            }}
-          >
-            What is your Command?
-          </Heading>
-          <HoverBox item={hoveredItem} />
-          <Box>
-            <ItemList rarity={query.rarity} setHoveredItem={setHoveredItem} />
-          </Box>
-        </Flex>
-      </Flex>
-      <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Box style={{ padding: "4px", textAlign: "center" }}>
-          <Paragraph style={{ marginBottom: "10px" }}>
-            By{" "}
-            <Link
-              href="https://twitter.com/MattieTK"
-              style={{ textDecoration: "underline" }}
-            >
-              @MattieTK
-            </Link>{" "}
-            and{" "}
-            <Link
-              href="https://twitter.com/chrishutchinson"
-              style={{ textDecoration: "underline" }}
-            >
-              @chrishutchinson
-            </Link>
-          </Paragraph>
+	// Close tooltip when clicking outside on mobile
+	useEffect(() => {
+		const handleClickOutside = e => {
+			if (hoveredItem && !e.target.closest('[data-item-container]')) {
+				setHoveredItem(null);
+			}
+		};
 
-          <GitHubButton
-            href="https://github.com/MattieTK/ror.tk.gg"
-            data-icon="octicon-star"
-            aria-label="Star MattieTK/ror.tk.gg on GitHub"
-          >
-            Star
-          </GitHubButton>
-        </Box>
-      </Flex>
-    </Box>
-  );
+		if ('ontouchstart' in window) {
+			document.addEventListener('touchstart', handleClickOutside);
+			return () =>
+				document.removeEventListener('touchstart', handleClickOutside);
+		}
+	}, [hoveredItem]);
+
+	return (
+		<div className={`${styles.container} ${container}`}>
+			<Head>
+				<title>Risk of Rain - Artifact of Command</title>
+				<meta
+					name="description"
+					content="An artifact of command simulator for Risk of Rain 2"
+				/>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+			<div
+				className={flex}
+				style={{
+					justifyContent: 'space-between',
+					alignItems: 'flex-start',
+					width: '100%',
+					marginBottom: '20px',
+				}}
+			>
+				<div className={flex}>
+					<RarityBox rarity={'Common'} active={query.rarity} />
+					<RarityBox rarity={'Uncommon'} active={query.rarity} />
+					<RarityBox rarity={'Legendary'} active={query.rarity} />
+					<RarityBox rarity={'Boss'} active={query.rarity} />
+					<RarityBox rarity={'Lunar'} active={query.rarity} />
+					<RarityBox rarity={'Equipment'} active={query.rarity} />
+					<RarityBox rarity={'Void'} active={query.rarity} />
+				</div>
+				<div>
+					<ExpansionToggle onExpansionChange={setEnabledExpansions} />
+				</div>
+			</div>
+			<div className={flexSpaceAround}>
+				<div
+					className={flexColumn}
+					style={{
+						alignContent: 'center',
+						width: 'min-content',
+						justifyContent: 'space-around',
+					}}
+				>
+					<h1 className={heading}>What is your Command?</h1>
+					<HoverBox item={hoveredItem} />
+					<div>
+						<ItemList
+							rarity={query.rarity}
+							setHoveredItem={setHoveredItem}
+							enabledExpansions={enabledExpansions}
+						/>
+					</div>
+				</div>
+			</div>
+			<div className={flexSpaceAround}>
+				<div style={{ padding: '4px', textAlign: 'center' }}>
+					<p className={paragraph} style={{ marginBottom: '10px' }}>
+						By{' '}
+						<a href="https://bsky.app/profile/tk.gg" className={link}>
+							@MattieTK
+						</a>{' '}
+						and{' '}
+						<a href="https://bsky.app/profile/hutch.tf" className={link}>
+							@chrishutchinson
+						</a>
+					</p>
+
+					<GitHubButton
+						href="https://github.com/MattieTK/ror.tk.gg"
+						data-icon="octicon-star"
+						aria-label="Star MattieTK/ror.tk.gg on GitHub"
+					>
+						Star
+					</GitHubButton>
+				</div>
+			</div>
+		</div>
+	);
 }
