@@ -155,11 +155,11 @@ export default function Rarity() {
 				<div style={{ padding: '4px', textAlign: 'center' }}>
 					<p className={paragraph} style={{ marginBottom: '10px' }}>
 						By{' '}
-						<a href="https://twitter.com/MattieTK" className={link}>
+						<a href="https://bsky.app/profile/tk.gg" className={link}>
 							@MattieTK
 						</a>{' '}
 						and{' '}
-						<a href="https://twitter.com/chrishutchinson" className={link}>
+						<a href="https://bsky.app/profile/hutch.tf" className={link}>
 							@chrishutchinson
 						</a>
 					</p>
