@@ -11,11 +11,42 @@ const Item = ({
 	accessible = true,
 }) => {
 	const [hover, setHover] = useState(false);
+	const [tapped, setTapped] = useState(false);
 
 	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible}`;
 	const backgroundImage = accessible 
 		? `url(/images/${image})`
 		: `url(/images/Locked_Item.png)`;
+
+	const showTooltip = () => {
+		if (accessible) {
+			setHover(true);
+			setHoveredItem({
+				name,
+				description,
+				classes,
+				image,
+			});
+		}
+	};
+
+	const hideTooltip = () => {
+		setHover(false);
+		setTapped(false);
+		setHoveredItem(null);
+	};
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		if (accessible) {
+			if (tapped) {
+				hideTooltip();
+			} else {
+				setTapped(true);
+				showTooltip();
+			}
+		}
+	};
 
 	return (
 		<div
@@ -24,26 +55,11 @@ const Item = ({
 			data-image={image}
 			data-name={name}
 			data-description={description}
-			onMouseEnter={e => {
-				if (accessible) {
-					setHover(true);
-					setHoveredItem({
-						name,
-						description,
-						classes,
-						image,
-					});
-					console.log('enter', position);
-				}
-			}}
-			onMouseOut={e => {
-				if (hover) {
-					setHoveredItem(null);
-					// console.log("out!", e);
-					setHover(false);
-				} else {
-				}
-			}}
+			data-item-container
+			onMouseEnter={showTooltip}
+			onMouseLeave={hideTooltip}
+			onClick={handleClick}
+			onTouchStart={handleClick}
 		>
 		</div>
 	);
