@@ -99,13 +99,18 @@ export default function Rarity() {
 		}
 	}, [hoveredItem]);
 
+    const rarity = query.rarity;
+    const capitalizedRarity = rarity ? rarity.charAt(0).toUpperCase() + rarity.slice(1) : '';
+    const title = capitalizedRarity ? `${capitalizedRarity} Items - Risk of Rain 2 | ror.tk.gg` : 'Risk of Rain 2 Items | ror.tk.gg';
+    const description = capitalizedRarity ? `A complete list of all ${capitalizedRarity} items in Risk of Rain 2. Find all ${capitalizedRarity} items and view their stats and effects.` : 'A complete list of all Risk of Rain 2 items. Find items by rarity and view their stats and effects.';
+
 	return (
 		<div className={`${styles.container} ${container}`}>
 			<Head>
-				<title>Risk of Rain - Artifact of Command</title>
+				<title>{title}</title>
 				<meta
 					name="description"
-					content="An artifact of command simulator for Risk of Rain 2"
+					content={description}
 				/>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
