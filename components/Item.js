@@ -1,5 +1,5 @@
-import { Box, Image } from 'theme-ui';
 import { useState } from 'react';
+import { itemBox, itemAccessible, itemInaccessible, positionText } from './Item.css';
 
 const Item = ({
 	image,
@@ -8,23 +8,33 @@ const Item = ({
 	classes,
 	setHoveredItem,
 	position,
+	accessible = true,
 }) => {
 	const [hover, setHover] = useState(false);
 
+	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible}`;
+	const backgroundImage = accessible 
+		? `url(/images/${image})`
+		: `url(/images/Locked_Item.png)`;
+
 	return (
-		<Box
+		<div
+			className={itemClassName}
+			style={{ backgroundImage }}
 			data-image={image}
 			data-name={name}
 			data-description={description}
 			onMouseEnter={e => {
-				setHover(true);
-				setHoveredItem({
-					name,
-					description,
-					classes,
-					image,
-				});
-				console.log('enter', position);
+				if (accessible) {
+					setHover(true);
+					setHoveredItem({
+						name,
+						description,
+						classes,
+						image,
+					});
+					console.log('enter', position);
+				}
 			}}
 			onMouseOut={e => {
 				if (hover) {
@@ -34,22 +44,8 @@ const Item = ({
 				} else {
 				}
 			}}
-			sx={{
-				border: '#7e7f7f 1px solid',
-				margin: '4px',
-				padding: '2px',
-				height: '128px',
-				backgroundImage: `url(/images/${image})`,
-				backgroundSize: 'contain',
-				backgroundRepeat: 'no-repeat',
-			}}
 		>
-			{/* <Image
-        sx={{ width: "inherit", height: "auto" }}
-        src={`images/${image}`}
-      ></Image> */}
-			<p>{position}</p>
-		</Box>
+		</div>
 	);
 };
 

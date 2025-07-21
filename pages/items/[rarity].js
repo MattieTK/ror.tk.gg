@@ -1,55 +1,61 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Box, Flex, Heading, Paragraph, Link } from "theme-ui";
 import GitHubButton from "react-github-btn";
 
 import styles from "../../styles/Home.module.css";
 import ItemList from "../../components/ItemList";
 import useMousePosition from "../../lib/useMousePosition";
 import { RarityBox } from "../../components/RarityBox";
+import ExpansionToggle from "../../components/ExpansionToggle";
+import { container, flex, flexRow, flexColumn, flexSpaceAround, heading, paragraph, link } from "../../styles/theme.css";
+import { hoverBox, hoverBoxTitle, hoverBoxDescription } from "../../styles/HoverBox.css";
 
 const HoverBox = ({ item }) => {
   const { x, y } = useMousePosition();
+  const [isClient, setIsClient] = useState(false);
 
-  if (!item) {
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!item || !isClient) {
     return null;
   }
 
   return (
-    <Box
+    <div
+      className={hoverBox}
+      style={{
+        top: y + 5,
+        left: x + 5,
+      }}
       onMouseEnter={e => {
         e.preventDefault();
       }}
       onMouseLeave={e => {
         e.preventDefault();
       }}
-      sx={{
-        position: "absolute",
-        color: "text",
-        width: "auto",
-        backgroundColor: "background",
-        padding: "4px",
-      }}
-      style={{
-        top: y + 5,
-        left: x + 5,
-      }}
     >
-      <Box sx={{ fontSize: "22px", fontFamily: "Bombardier-Regular" }}>
+      <div className={hoverBoxTitle}>
         {item.name}
-      </Box>
-      <Box sx={{ fontSize: "18px", maxWidth: "200px" }}>{item.description}</Box>
-    </Box>
+      </div>
+      <div className={hoverBoxDescription}>{item.description}</div>
+    </div>
   );
 };
 
 export default function Rarity() {
   const { query } = useRouter();
   const [hoveredItem, setHoveredItem] = useState({});
+  const [enabledExpansions, setEnabledExpansions] = useState({
+    'base': true,
+    'Survivors of the Void': true,
+    'Seekers of the Storm': true,
+  });
 
   return (
-    <Box className={styles.container} sx={{ background: "#161d1d" }}>
+    <div className={`${styles.container} ${container}`}>
       <Head>
         <title>Risk of Rain - Artifact of Command</title>
         <meta
@@ -58,60 +64,56 @@ export default function Rarity() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Flex>
-        <RarityBox rarity={"Common"} active={query.rarity} />
-        <RarityBox rarity={"Uncommon"} active={query.rarity} />
-        <RarityBox rarity={"Legendary"} active={query.rarity} />
-        <RarityBox rarity={"Boss"} active={query.rarity} />
-        <RarityBox rarity={"Lunar"} active={query.rarity} />
-        <RarityBox rarity={"Equipment"} active={query.rarity} />
-        <RarityBox rarity={"Void"} active={query.rarity} />
-      </Flex>
-      <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Flex
-          sx={{
+      <div className={flex} style={{ justifyContent: "space-between", alignItems: "flex-start", width: "100%", marginBottom: "20px" }}>
+        <div className={flex}>
+          <RarityBox rarity={"Common"} active={query.rarity} />
+          <RarityBox rarity={"Uncommon"} active={query.rarity} />
+          <RarityBox rarity={"Legendary"} active={query.rarity} />
+          <RarityBox rarity={"Boss"} active={query.rarity} />
+          <RarityBox rarity={"Lunar"} active={query.rarity} />
+          <RarityBox rarity={"Equipment"} active={query.rarity} />
+          <RarityBox rarity={"Void"} active={query.rarity} />
+        </div>
+        <div>
+          <ExpansionToggle onExpansionChange={setEnabledExpansions} />
+        </div>
+      </div>
+      <div className={flexSpaceAround}>
+        <div
+          className={flexColumn}
+          style={{
             alignContent: "center",
             width: "min-content",
             justifyContent: "space-around",
-            flexDirection: "column",
           }}
         >
-          <Heading
-            as="h1"
-            sx={{
-              textAlign: "center",
-              fontStyle: "italic",
-              fontFamily: "Bombardier-Regular",
-              padding: "2",
-              letterSpacing: "1px",
-            }}
-          >
+          <h1 className={heading}>
             What is your Command?
-          </Heading>
+          </h1>
           <HoverBox item={hoveredItem} />
-          <Box>
-            <ItemList rarity={query.rarity} setHoveredItem={setHoveredItem} />
-          </Box>
-        </Flex>
-      </Flex>
-      <Flex sx={{ flexDirection: "row", justifyContent: "space-around" }}>
-        <Box style={{ padding: "4px", textAlign: "center" }}>
-          <Paragraph style={{ marginBottom: "10px" }}>
+          <div>
+            <ItemList rarity={query.rarity} setHoveredItem={setHoveredItem} enabledExpansions={enabledExpansions} />
+          </div>
+        </div>
+      </div>
+      <div className={flexSpaceAround}>
+        <div style={{ padding: "4px", textAlign: "center" }}>
+          <p className={paragraph} style={{ marginBottom: "10px" }}>
             By{" "}
-            <Link
+            <a
               href="https://twitter.com/MattieTK"
-              style={{ textDecoration: "underline" }}
+              className={link}
             >
               @MattieTK
-            </Link>{" "}
+            </a>{" "}
             and{" "}
-            <Link
+            <a
               href="https://twitter.com/chrishutchinson"
-              style={{ textDecoration: "underline" }}
+              className={link}
             >
               @chrishutchinson
-            </Link>
-          </Paragraph>
+            </a>
+          </p>
 
           <GitHubButton
             href="https://github.com/MattieTK/ror.tk.gg"
@@ -120,8 +122,8 @@ export default function Rarity() {
           >
             Star
           </GitHubButton>
-        </Box>
-      </Flex>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 }
