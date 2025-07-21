@@ -54,7 +54,7 @@ const HoverBox = ({ item }) => {
 		  }
 		: {
 				// On desktop, position above cursor if too close to bottom of screen
-				top: y > window.innerHeight - 150 ? y - 12Can you0 : y + 5,
+				top: y > window.innerHeight - 150 ? y - 120 : y + 5,
 				left: x + 5,
 		  };
 
