@@ -1,15 +1,15 @@
-import Item from "./Item";
-import items, { ItemType } from "../items";
-import ItemGrid from "./ItemGrid";
-import { container, heading, tierHeading } from "./ItemList.css";
-import { SearchField } from "./SearchField";
-import { useState } from "react";
+import Item from './Item';
+import items, { ItemType } from '../items';
+import ItemGrid from './ItemGrid';
+import { container, heading, tierHeading } from './ItemList.css';
+import { SearchField } from './SearchField';
+import { useState } from 'react';
 
 const shouldHighlightItem = (item: ItemType, searchTerm: string) => {
   const lowercaseSearchTerm = searchTerm.toLowerCase();
 
   // No search term, highlight everything
-  if (lowercaseSearchTerm === "") {
+  if (lowercaseSearchTerm === '') {
     return true;
   }
 
@@ -42,11 +42,11 @@ const shouldHighlightItem = (item: ItemType, searchTerm: string) => {
 };
 
 const ItemList = ({ rarity, setHoveredItem, enabledExpansions }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
   const isItemAccessible = (item) => {
-    if (item.expansion === "") {
-      return enabledExpansions["base"];
+    if (item.expansion === '') {
+      return enabledExpansions['base'];
     }
     return enabledExpansions[item.expansion];
   };
@@ -61,7 +61,7 @@ const ItemList = ({ rarity, setHoveredItem, enabledExpansions }) => {
           item.image
             ? item.image
             : `${encodeURI(
-                item.name.replace(/ /g, "_").replace(/'/g, "%27")
+                item.name.replace(/ /g, '_').replace(/'/g, '%27')
               )}.webp`
         }
         description={item.rawDescription}
@@ -81,7 +81,7 @@ const ItemList = ({ rarity, setHoveredItem, enabledExpansions }) => {
     return buildItem(item, i);
   });
 
-  if (rarity == "Void") {
+  if (rarity == 'Void') {
     return (
       <div className={container}>
         <SearchField value={searchTerm} onChange={setSearchTerm} />
@@ -106,19 +106,19 @@ const ItemList = ({ rarity, setHoveredItem, enabledExpansions }) => {
       </div>
     );
   }
-  if (rarity == "Lunar") {
+  if (rarity == 'Lunar') {
     return (
       <div className={container}>
         <SearchField value={searchTerm} onChange={setSearchTerm} />
         <ItemGrid>
           {sortedItems
-            .filter((item) => item.type !== "Equipment")
+            .filter((item) => item.type !== 'Equipment')
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
         <h2 className={heading}>Equipment</h2>
         <ItemGrid>
           {sortedItems
-            .filter((item) => item.type == "Equipment")
+            .filter((item) => item.type == 'Equipment')
             .map((item, i) => buildItem(item, i))}
         </ItemGrid>
       </div>

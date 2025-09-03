@@ -1,13 +1,13 @@
-import Head from "next/head";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import GitHubButton from "react-github-btn";
+import Head from 'next/head';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import GitHubButton from 'react-github-btn';
 
-import styles from "../../styles/Home.module.css";
-import ItemList from "../../components/ItemList";
-import useMousePosition from "../../lib/useMousePosition";
-import { RarityBox } from "../../components/RarityBox";
-import ExpansionToggle from "../../components/ExpansionToggle";
+import styles from '../../styles/Home.module.css';
+import ItemList from '../../components/ItemList';
+import useMousePosition from '../../lib/useMousePosition';
+import { RarityBox } from '../../components/RarityBox';
+import ExpansionToggle from '../../components/ExpansionToggle';
 import {
   container,
   flex,
@@ -17,21 +17,21 @@ import {
   heading,
   paragraph,
   link,
-} from "../../styles/theme.css";
+} from '../../styles/theme.css';
 import {
   hoverBox,
   hoverBoxTitle,
   hoverBoxDescription,
-} from "../../styles/HoverBox.css";
+} from '../../styles/HoverBox.css';
 
 const rarities = [
-  "Common",
-  "Uncommon",
-  "Legendary",
-  "Boss",
-  "Lunar",
-  "Equipment",
-  "Void",
+  'Common',
+  'Uncommon',
+  'Legendary',
+  'Boss',
+  'Lunar',
+  'Equipment',
+  'Void',
 ];
 
 const HoverBox = ({ item }) => {
@@ -43,8 +43,8 @@ const HoverBox = ({ item }) => {
     setIsClient(true);
     // Better mobile detection - check if it's primarily a touch device
     const isTouchDevice =
-      "ontouchstart" in window &&
-      window.matchMedia("(pointer: coarse)").matches;
+      'ontouchstart' in window &&
+      window.matchMedia('(pointer: coarse)').matches;
     setIsMobile(isTouchDevice);
   }, []);
 
@@ -55,12 +55,12 @@ const HoverBox = ({ item }) => {
   // Smart positioning logic
   const tooltipStyle = isMobile
     ? {
-        position: "fixed",
-        top: "10px",
-        left: "50%",
-        transform: "translateX(-50%)",
+        position: 'fixed',
+        top: '10px',
+        left: '50%',
+        transform: 'translateX(-50%)',
         zIndex: 1000,
-        maxWidth: "90vw",
+        maxWidth: '90vw',
       }
     : {
         // On desktop, position above cursor if too close to bottom of screen
@@ -90,30 +90,30 @@ export default function Rarity() {
   const [hoveredItem, setHoveredItem] = useState({});
   const [enabledExpansions, setEnabledExpansions] = useState({
     base: true,
-    "Survivors of the Void": true,
-    "Seekers of the Storm": true,
+    'Survivors of the Void': true,
+    'Seekers of the Storm': true,
   });
 
   // Close tooltip when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (hoveredItem && !e.target.closest("[data-item-container]")) {
+      if (hoveredItem && !e.target.closest('[data-item-container]')) {
         setHoveredItem(null);
       }
     };
 
-    if ("ontouchstart" in window) {
-      document.addEventListener("touchstart", handleClickOutside);
+    if ('ontouchstart' in window) {
+      document.addEventListener('touchstart', handleClickOutside);
       return () =>
-        document.removeEventListener("touchstart", handleClickOutside);
+        document.removeEventListener('touchstart', handleClickOutside);
     }
   }, [hoveredItem]);
 
   useEffect(() => {
     const keydownHandler = (e) => {
       if (
-        e.target.tagName === "INPUT" ||
-        e.target.tagName === "TEXTAREA" ||
+        e.target.tagName === 'INPUT' ||
+        e.target.tagName === 'TEXTAREA' ||
         e.target.isContentEditable
       ) {
         return; // Ignore key presses when focused on input or textarea
@@ -123,37 +123,37 @@ export default function Rarity() {
       const prevRarity = rarities.indexOf(query.rarity) - 1;
 
       // Right arrow
-      if (e.key === "ArrowRight") {
+      if (e.key === 'ArrowRight') {
         if (nextRarity < rarities.length) {
           push(`/items/${rarities[nextRarity]}`);
         }
       }
 
       // Left arrow
-      if (e.key === "ArrowLeft") {
+      if (e.key === 'ArrowLeft') {
         if (prevRarity >= 0) {
           push(`/items/${rarities[prevRarity]}`);
         }
       }
     };
 
-    window.addEventListener("keydown", keydownHandler);
+    window.addEventListener('keydown', keydownHandler);
 
     return () => {
-      window.removeEventListener("keydown", keydownHandler);
+      window.removeEventListener('keydown', keydownHandler);
     };
   });
 
   const rarity = query.rarity;
   const capitalizedRarity = rarity
     ? rarity.charAt(0).toUpperCase() + rarity.slice(1)
-    : "";
+    : '';
   const title = capitalizedRarity
     ? `${capitalizedRarity} Items - Risk of Rain 2 | ror.tk.gg`
-    : "Risk of Rain 2 Items | ror.tk.gg";
+    : 'Risk of Rain 2 Items | ror.tk.gg';
   const description = capitalizedRarity
     ? `A complete list of all ${capitalizedRarity} items in Risk of Rain 2. Find all ${capitalizedRarity} items and view their stats and effects.`
-    : "A complete list of all Risk of Rain 2 items. Find items by rarity and view their stats and effects.";
+    : 'A complete list of all Risk of Rain 2 items. Find items by rarity and view their stats and effects.';
 
   return (
     <div className={`${styles.container} ${container}`}>
@@ -165,10 +165,10 @@ export default function Rarity() {
       <div
         className={flex}
         style={{
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          width: "100%",
-          marginBottom: "20px",
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          width: '100%',
+          marginBottom: '20px',
         }}
       >
         <div className={flex}>
@@ -184,9 +184,9 @@ export default function Rarity() {
         <div
           className={flexColumn}
           style={{
-            alignContent: "center",
-            width: "min-content",
-            justifyContent: "space-around",
+            alignContent: 'center',
+            width: 'min-content',
+            justifyContent: 'space-around',
           }}
         >
           <h1 className={heading}>What is your Command?</h1>
@@ -201,13 +201,13 @@ export default function Rarity() {
         </div>
       </div>
       <div className={flexSpaceAround}>
-        <div style={{ padding: "4px", textAlign: "center" }}>
-          <p className={paragraph} style={{ marginBottom: "10px" }}>
-            By{" "}
+        <div style={{ padding: '4px', textAlign: 'center' }}>
+          <p className={paragraph} style={{ marginBottom: '10px' }}>
+            By{' '}
             <a href="https://bsky.app/profile/tk.gg" className={link}>
               @MattieTK
-            </a>{" "}
-            and{" "}
+            </a>{' '}
+            and{' '}
             <a href="https://bsky.app/profile/hutch.tf" className={link}>
               @chrishutchinson
             </a>

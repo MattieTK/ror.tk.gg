@@ -1,6 +1,6 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent } from 'react';
 
-import * as styles from "./SearchField.css";
+import * as styles from './SearchField.css';
 
 export const SearchField: FunctionComponent<{
   value: string;

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState } from 'react';
 import {
   itemBox,
   itemAccessible,
@@ -6,8 +6,8 @@ import {
   positionText,
   itemDisabled,
   itemEnabled,
-} from "./Item.css";
-import { ItemType } from "../items";
+} from './Item.css';
+import { ItemType } from '../items';
 
 const Item: FunctionComponent<{
   image: string;
