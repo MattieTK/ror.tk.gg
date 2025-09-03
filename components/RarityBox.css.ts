@@ -2,8 +2,8 @@ import { style } from '@vanilla-extract/css';
 
 export const rarityBox = style({
   display: 'block',
-  height: 'clamp(12px, 3vw, 20px)',
-  width: 'clamp(12px, 3vw, 20px)',
+  height: 'clamp(12px, 3vw, 30px)',
+  width: 'clamp(12px, 3vw, 30px)',
   margin: 'clamp(2px, 0.5vw, 4px)',
   cursor: 'pointer',
   textDecoration: 'none',

@@ -8,8 +8,8 @@ export const container = style({
 
 export const expansionIcon = style({
   cursor: 'pointer',
-  width: 'clamp(12px, 3vw, 20px)',
-  height: 'clamp(12px, 3vw, 20px)',
+  width: 'clamp(12px, 3vw, 30px)',
+  height: 'clamp(12px, 3vw, 30px)',
   margin: 'clamp(2px, 0.5vw, 4px)',
   display: 'flex',
   alignItems: 'center',
