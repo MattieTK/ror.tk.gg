@@ -142,7 +142,7 @@ export default function Rarity() {
     return () => {
       window.removeEventListener('keydown', keydownHandler);
     };
-  });
+  }, [query.rarity, push]);
 
   const rarity = query.rarity;
   const capitalizedRarity = rarity
