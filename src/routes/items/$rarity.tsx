@@ -1,28 +1,25 @@
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import GitHubButton from 'react-github-btn';
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { useState, useEffect } from 'react'
+import GitHubButton from 'react-github-btn'
 
-import styles from '../../styles/Home.module.css';
-import ItemList from '../../components/ItemList';
-import useMousePosition from '../../lib/useMousePosition';
-import { RarityBox } from '../../components/RarityBox';
-import ExpansionToggle from '../../components/ExpansionToggle';
+import ItemList from '../../components/ItemList'
+import useMousePosition from '../../lib/useMousePosition'
+import { RarityBox } from '../../components/RarityBox'
+import ExpansionToggle from '../../components/ExpansionToggle'
 import {
   container,
   flex,
-  flexRow,
   flexColumn,
   flexSpaceAround,
   heading,
   paragraph,
   link,
-} from '../../styles/theme.css';
+} from '../../styles/theme.css'
 import {
   hoverBox,
   hoverBoxTitle,
   hoverBoxDescription,
-} from '../../styles/HoverBox.css';
+} from '../../styles/HoverBox.css'
 
 const rarities = [
   'Common',
@@ -32,30 +29,28 @@ const rarities = [
   'Lunar',
   'Equipment',
   'Void',
-];
+]
 
 const HoverBox = ({ item }) => {
-  const { x, y } = useMousePosition();
-  const [isClient, setIsClient] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const { x, y } = useMousePosition()
+  const [isClient, setIsClient] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    setIsClient(true);
-    // Better mobile detection - check if it's primarily a touch device
+    setIsClient(true)
     const isTouchDevice =
       'ontouchstart' in window &&
-      window.matchMedia('(pointer: coarse)').matches;
-    setIsMobile(isTouchDevice);
-  }, []);
+      window.matchMedia('(pointer: coarse)').matches
+    setIsMobile(isTouchDevice)
+  }, [])
 
   if (!item || !isClient) {
-    return null;
+    return null
   }
 
-  // Smart positioning logic
   const tooltipStyle = isMobile
     ? {
-        position: 'fixed',
+        position: 'fixed' as const,
         top: '10px',
         left: '50%',
         transform: 'translateX(-50%)',
@@ -63,51 +58,54 @@ const HoverBox = ({ item }) => {
         maxWidth: '90vw',
       }
     : {
-        // On desktop, position above cursor if too close to bottom of screen
-        top: y > window.innerHeight - 150 ? y - 120 : y + 5,
-        left: x + 5,
-      };
+        top: (y ?? 0) > window.innerHeight - 150 ? (y ?? 0) - 120 : (y ?? 0) + 5,
+        left: (x ?? 0) + 5,
+      }
 
   return (
     <div
       className={hoverBox}
       style={tooltipStyle}
       onMouseEnter={(e) => {
-        e.preventDefault();
+        e.preventDefault()
       }}
       onMouseLeave={(e) => {
-        e.preventDefault();
+        e.preventDefault()
       }}
     >
       <div className={hoverBoxTitle}>{item.name}</div>
       <div className={hoverBoxDescription}>{item.description}</div>
     </div>
-  );
-};
+  )
+}
 
-export default function Rarity() {
-  const { query, push } = useRouter();
-  const [hoveredItem, setHoveredItem] = useState({});
+export const Route = createFileRoute('/items/$rarity')({
+  component: RarityPage,
+})
+
+function RarityPage() {
+  const { rarity } = Route.useParams()
+  const navigate = useNavigate()
+  const [hoveredItem, setHoveredItem] = useState<any>(null)
   const [enabledExpansions, setEnabledExpansions] = useState({
     base: true,
     'Survivors of the Void': true,
     'Seekers of the Storm': true,
-  });
+  })
 
-  // Close tooltip when clicking outside on mobile
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (hoveredItem && !e.target.closest('[data-item-container]')) {
-        setHoveredItem(null);
+        setHoveredItem(null)
       }
-    };
+    }
 
     if ('ontouchstart' in window) {
-      document.addEventListener('touchstart', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside)
       return () =>
-        document.removeEventListener('touchstart', handleClickOutside);
+        document.removeEventListener('touchstart', handleClickOutside)
     }
-  }, [hoveredItem]);
+  }, [hoveredItem])
 
   useEffect(() => {
     const keydownHandler = (e) => {
@@ -116,52 +114,50 @@ export default function Rarity() {
         e.target.tagName === 'TEXTAREA' ||
         e.target.isContentEditable
       ) {
-        return; // Ignore key presses when focused on input or textarea
+        return
       }
 
-      const nextRarity = rarities.indexOf(query.rarity) + 1;
-      const prevRarity = rarities.indexOf(query.rarity) - 1;
+      const nextRarity = rarities.indexOf(rarity) + 1
+      const prevRarity = rarities.indexOf(rarity) - 1
 
-      // Right arrow
       if (e.key === 'ArrowRight') {
         if (nextRarity < rarities.length) {
-          push(`/items/${rarities[nextRarity]}`);
+          navigate({ to: '/items/$rarity', params: { rarity: rarities[nextRarity] } })
         }
       }
 
-      // Left arrow
       if (e.key === 'ArrowLeft') {
         if (prevRarity >= 0) {
-          push(`/items/${rarities[prevRarity]}`);
+          navigate({ to: '/items/$rarity', params: { rarity: rarities[prevRarity] } })
         }
       }
-    };
+    }
 
-    window.addEventListener('keydown', keydownHandler);
+    window.addEventListener('keydown', keydownHandler)
 
     return () => {
-      window.removeEventListener('keydown', keydownHandler);
-    };
-  }, [query.rarity, push]);
+      window.removeEventListener('keydown', keydownHandler)
+    }
+  }, [rarity, navigate])
 
-  const rarity = query.rarity;
   const capitalizedRarity = rarity
     ? rarity.charAt(0).toUpperCase() + rarity.slice(1)
-    : '';
+    : ''
   const title = capitalizedRarity
     ? `${capitalizedRarity} Items - Risk of Rain 2 | ror.tk.gg`
-    : 'Risk of Rain 2 Items | ror.tk.gg';
+    : 'Risk of Rain 2 Items | ror.tk.gg'
   const description = capitalizedRarity
     ? `A complete list of all ${capitalizedRarity} items in Risk of Rain 2. Find all ${capitalizedRarity} items and view their stats and effects.`
-    : 'A complete list of all Risk of Rain 2 items. Find items by rarity and view their stats and effects.';
+    : 'A complete list of all Risk of Rain 2 items. Find items by rarity and view their stats and effects.'
+
+  useEffect(() => {
+    document.title = title
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) metaDesc.setAttribute('content', description)
+  }, [title, description])
 
   return (
-    <div className={`${styles.container} ${container}`}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className={container} style={{ padding: '1rem' }}>
       <div
         className={flex}
         style={{
@@ -173,7 +169,7 @@ export default function Rarity() {
       >
         <div className={flex}>
           {rarities.map((r) => (
-            <RarityBox key={r} rarity={r} active={query.rarity} />
+            <RarityBox key={r} rarity={r} active={rarity} />
           ))}
         </div>
         <div>
@@ -193,7 +189,7 @@ export default function Rarity() {
           <HoverBox item={hoveredItem} />
           <div>
             <ItemList
-              rarity={query.rarity}
+              rarity={rarity}
               setHoveredItem={setHoveredItem}
               enabledExpansions={enabledExpansions}
             />
@@ -223,5 +219,5 @@ export default function Rarity() {
         </div>
       </div>
     </div>
-  );
+  )
 }

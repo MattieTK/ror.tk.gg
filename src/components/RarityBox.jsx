@@ -1,10 +1,11 @@
-import NextLink from "next/link";
+import { Link } from "@tanstack/react-router";
 import { rarityBox, rarityBoxActive, rarityColors } from './RarityBox.css';
 
 export const RarityBox = ({ rarity, active }) => {
   return (
-    <NextLink
-      href={`/items/${rarity}`}
+    <Link
+      to="/items/$rarity"
+      params={{ rarity }}
       className={`${rarityBox} ${active === rarity ? rarityBoxActive : ''}`}
       style={{
         backgroundColor: rarityColors[rarity],

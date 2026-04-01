@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { container, expansionIcon, expansionIconEnabled, expansionIconDisabled } from './ExpansionToggle.css';
 
-const ExpansionToggle = ({ expansions, onExpansionChange }) => {
+const ExpansionToggle = ({ onExpansionChange }) => {
   const [enabledExpansions, setEnabledExpansions] = useState({
     'base': true,
     'Survivors of the Void': true,

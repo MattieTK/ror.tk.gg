@@ -1,0 +1,5 @@
+name = "ror-tk-gg"
+compatibility_date = "2026-03-15"
+
+[pages]
+build_output_dir = "dist"
