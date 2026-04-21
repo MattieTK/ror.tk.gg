@@ -27,3 +27,11 @@ export const itemInaccessible = style({
 export const positionText = style({
   margin: 0,
 });
+
+export const itemEnabled = style({
+  opacity: 1,
+});
+
+export const itemDisabled = style({
+  opacity: 0.2,
+});

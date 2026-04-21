@@ -2,6 +2,8 @@ import { useState } from 'react';
 import {
 	itemAccessible,
 	itemBox,
+	itemDisabled,
+	itemEnabled,
 	itemInaccessible,
 } from './Item.css';
 
@@ -17,6 +19,7 @@ interface ItemProps {
 	description: string;
 	position?: number;
 	accessible?: boolean;
+	highlight?: boolean;
 	setHoveredItem: (item: HoveredItem | null) => void;
 }
 
@@ -26,10 +29,11 @@ export function Item({
 	description,
 	setHoveredItem,
 	accessible = true,
+	highlight = true,
 }: ItemProps) {
 	const [tapped, setTapped] = useState(false);
 
-	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible}`;
+	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible} ${highlight ? itemEnabled : itemDisabled}`;
 	const backgroundImage = accessible
 		? `url(/images/${image})`
 		: `url(/images/Locked_Item.png)`;

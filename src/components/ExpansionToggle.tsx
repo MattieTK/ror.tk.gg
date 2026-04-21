@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { EXPANSIONS } from '~/expansions';
+import type { Expansion } from '~/items';
 import {
 	container,
 	expansionIcon,
@@ -6,35 +8,35 @@ import {
 	expansionIconEnabled,
 } from './ExpansionToggle.css';
 
-export type ExpansionState = {
-	base: boolean;
-	'Survivors of the Void': boolean;
-	'Seekers of the Storm': boolean;
-};
+// Any non-base expansion string from Item.expansion gets a boolean toggle,
+// plus a 'base' entry for the original game. Adding a new expansion to the
+// Expansion union in items.ts automatically requires an entry here.
+export type ExpansionState = { base: boolean } & Record<
+	Exclude<Expansion, ''>,
+	boolean
+>;
 
 interface ExpansionToggleProps {
 	onExpansionChange: (state: ExpansionState) => void;
 }
 
-const expansionData = [
-	{
-		key: 'Survivors of the Void' as const,
-		name: 'Survivors of the Void',
-		icon: '/images/SotV_Icon.png',
-	},
-	{
-		key: 'Seekers of the Storm' as const,
-		name: 'Seekers of the Storm',
-		icon: '/images/SotS_Icon.png',
-	},
-];
+// Build the default "everything enabled" state from the expansions config.
+// Inactive expansions still get a true default so they work once activated
+// without a code change.
+function initialExpansionState(): ExpansionState {
+	const state = { base: true } as ExpansionState;
+	for (const exp of EXPANSIONS) {
+		if (exp.key !== '') {
+			(state as Record<string, boolean>)[exp.key] = true;
+		}
+	}
+	return state;
+}
 
 export function ExpansionToggle({ onExpansionChange }: ExpansionToggleProps) {
-	const [enabledExpansions, setEnabledExpansions] = useState<ExpansionState>({
-		base: true,
-		'Survivors of the Void': true,
-		'Seekers of the Storm': true,
-	});
+	const [enabledExpansions, setEnabledExpansions] = useState<ExpansionState>(
+		initialExpansionState,
+	);
 
 	useEffect(() => {
 		onExpansionChange(enabledExpansions);
@@ -47,19 +49,25 @@ export function ExpansionToggle({ onExpansionChange }: ExpansionToggleProps) {
 		}));
 	};
 
+	// Only render toggles for non-base, active expansions with an icon.
+	const toggleable = EXPANSIONS.filter(
+		exp => exp.active && exp.key !== '' && exp.icon,
+	);
+
 	return (
 		<div className={container}>
-			{expansionData.map(expansion => {
-				const isEnabled = enabledExpansions[expansion.key];
+			{toggleable.map(exp => {
+				const key = exp.key as Exclude<Expansion, ''>;
+				const isEnabled = enabledExpansions[key];
 				const iconClassName = `${expansionIcon} ${isEnabled ? expansionIconEnabled : expansionIconDisabled}`;
 
 				return (
 					<div
-						key={expansion.key}
+						key={key}
 						className={iconClassName}
-						style={{ backgroundImage: `url(${expansion.icon})` }}
-						onClick={() => toggleExpansion(expansion.key)}
-						title={`${expansion.name} - Click to ${isEnabled ? 'disable' : 'enable'}`}
+						style={{ backgroundImage: `url(${exp.icon})` }}
+						onClick={() => toggleExpansion(key)}
+						title={`${exp.name} - Click to ${isEnabled ? 'disable' : 'enable'}`}
 					/>
 				);
 			})}

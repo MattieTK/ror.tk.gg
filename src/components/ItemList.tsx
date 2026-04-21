@@ -1,8 +1,11 @@
+import { useState } from 'react';
+import { isExpansionActive } from '~/expansions';
 import items, { type Item as ItemData, type Rarity } from '~/items';
 import type { ExpansionState } from './ExpansionToggle';
 import Item, { type HoveredItem } from './Item';
 import ItemGrid from './ItemGrid';
 import { container, heading, tierHeading } from './ItemList.css';
+import SearchField from './SearchField';
 
 interface ItemListProps {
 	rarity: Rarity;
@@ -10,11 +13,24 @@ interface ItemListProps {
 	enabledExpansions: ExpansionState;
 }
 
+function matchesSearch(item: ItemData, searchTerm: string): boolean {
+	const term = searchTerm.toLowerCase();
+	if (term === '') return true;
+	if (item.name.toLowerCase().includes(term)) return true;
+	const desc = String(item.rawDescription ?? '').toLowerCase();
+	if (desc.includes(term)) return true;
+	if (item.category.some(c => c.toLowerCase().includes(term))) return true;
+	if (item.expansion && item.expansion.toLowerCase().includes(term)) return true;
+	return false;
+}
+
 export function ItemList({
 	rarity,
 	setHoveredItem,
 	enabledExpansions,
 }: ItemListProps) {
+	const [searchTerm, setSearchTerm] = useState('');
+
 	const isItemAccessible = (item: ItemData) => {
 		if (item.expansion === '') {
 			return enabledExpansions.base;
@@ -39,18 +55,23 @@ export function ItemList({
 				setHoveredItem={setHoveredItem}
 				position={item.position}
 				accessible={accessible}
+				highlight={matchesSearch(item, searchTerm)}
 			/>
 		);
 	};
 
 	const rarityList = items.filter(
-		item => item.rarity === rarity && item.hide !== true,
+		item =>
+			item.rarity === rarity &&
+			item.hide !== true &&
+			isExpansionActive(item.expansion),
 	);
 	const sortedItems = [...rarityList].sort((a, b) => a.position - b.position);
 
 	if (rarity === 'Void') {
 		return (
 			<div className={container}>
+				<SearchField value={searchTerm} onChange={setSearchTerm} />
 				<h2 className={heading}>Tier 1</h2>
 				<ItemGrid>
 					{sortedItems
@@ -76,6 +97,7 @@ export function ItemList({
 	if (rarity === 'Lunar') {
 		return (
 			<div className={container}>
+				<SearchField value={searchTerm} onChange={setSearchTerm} />
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.type !== 'Equipment')
@@ -91,7 +113,12 @@ export function ItemList({
 		);
 	}
 
-	return <ItemGrid>{sortedItems.map((item, i) => buildItem(item, i))}</ItemGrid>;
+	return (
+		<div className={container}>
+			<SearchField value={searchTerm} onChange={setSearchTerm} />
+			<ItemGrid>{sortedItems.map((item, i) => buildItem(item, i))}</ItemGrid>
+		</div>
+	);
 }
 
 export default ItemList;

@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import GitHubButton from 'react-github-btn';
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import {
+	createFileRoute,
+	redirect,
+	useNavigate,
+} from '@tanstack/react-router';
 
 import ExpansionToggle, {
 	type ExpansionState,
@@ -112,11 +116,13 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 
 function RarityPage() {
 	const { rarity } = Route.useParams();
+	const navigate = useNavigate();
 	const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null);
 	const [enabledExpansions, setEnabledExpansions] = useState<ExpansionState>({
 		base: true,
 		'Survivors of the Void': true,
 		'Seekers of the Storm': true,
+		'Alloyed Collective': true,
 	});
 
 	useEffect(() => {
@@ -133,6 +139,34 @@ function RarityPage() {
 				document.removeEventListener('touchstart', handleClickOutside);
 		}
 	}, [hoveredItem]);
+
+	useEffect(() => {
+		const keydownHandler = (e: KeyboardEvent) => {
+			const target = e.target as HTMLElement | null;
+			if (
+				target &&
+				(target.tagName === 'INPUT' ||
+					target.tagName === 'TEXTAREA' ||
+					target.isContentEditable)
+			) {
+				return;
+			}
+
+			const currentIndex = VALID_RARITIES.indexOf(rarity as NavigableRarity);
+			if (currentIndex === -1) return;
+
+			if (e.key === 'ArrowRight') {
+				const next = VALID_RARITIES[currentIndex + 1];
+				if (next) navigate({ to: '/items/$rarity', params: { rarity: next } });
+			} else if (e.key === 'ArrowLeft') {
+				const prev = VALID_RARITIES[currentIndex - 1];
+				if (prev) navigate({ to: '/items/$rarity', params: { rarity: prev } });
+			}
+		};
+
+		window.addEventListener('keydown', keydownHandler);
+		return () => window.removeEventListener('keydown', keydownHandler);
+	}, [rarity, navigate]);
 
 	return (
 		<div className={`${homeStyles.container} ${container}`}>
