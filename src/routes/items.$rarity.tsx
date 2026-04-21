@@ -1,49 +1,89 @@
-import Head from 'next/head';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import GitHubButton from 'react-github-btn';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import styles from '../../styles/Home.module.css';
-import ItemList from '../../components/ItemList';
-import useMousePosition from '../../lib/useMousePosition';
-import { RarityBox } from '../../components/RarityBox';
-import ExpansionToggle from '../../components/ExpansionToggle';
+import ExpansionToggle, {
+	type ExpansionState,
+} from '~/components/ExpansionToggle';
+import type { HoveredItem } from '~/components/Item';
+import ItemList from '~/components/ItemList';
+import { type NavigableRarity, RarityBox } from '~/components/RarityBox';
+import useMousePosition from '~/lib/useMousePosition';
+import homeStyles from '~/styles/Home.module.css';
+import {
+	hoverBox,
+	hoverBoxDescription,
+	hoverBoxTitle,
+} from '~/styles/HoverBox.css';
 import {
 	container,
 	flex,
-	flexRow,
 	flexColumn,
 	flexSpaceAround,
 	heading,
-	paragraph,
 	link,
-} from '../../styles/theme.css';
-import {
-	hoverBox,
-	hoverBoxTitle,
-	hoverBoxDescription,
-} from '../../styles/HoverBox.css';
+	paragraph,
+} from '~/styles/theme.css';
 
-const HoverBox = ({ item }) => {
+const VALID_RARITIES: NavigableRarity[] = [
+	'Common',
+	'Uncommon',
+	'Legendary',
+	'Boss',
+	'Lunar',
+	'Equipment',
+	'Void',
+];
+
+function isNavigableRarity(value: string): value is NavigableRarity {
+	return (VALID_RARITIES as string[]).includes(value);
+}
+
+export const Route = createFileRoute('/items/$rarity')({
+	beforeLoad: ({ params }) => {
+		if (!isNavigableRarity(params.rarity)) {
+			throw redirect({
+				to: '/items/$rarity',
+				params: { rarity: 'Common' },
+			});
+		}
+	},
+	head: ({ params }) => {
+		const rarity = params.rarity;
+		const title = `${rarity} Items - Risk of Rain 2 | ror.tk.gg`;
+		const description = `A complete list of all ${rarity} items in Risk of Rain 2. Find all ${rarity} items and view their stats and effects.`;
+		return {
+			meta: [
+				{ title },
+				{ name: 'description', content: description },
+				{ property: 'og:title', content: title },
+				{ property: 'og:description', content: description },
+				{ name: 'twitter:title', content: title },
+				{ name: 'twitter:description', content: description },
+			],
+		};
+	},
+	component: RarityPage,
+});
+
+function HoverBox({ item }: { item: HoveredItem | null }) {
 	const { x, y } = useMousePosition();
 	const [isClient, setIsClient] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
 		setIsClient(true);
-		// Better mobile detection - check if it's primarily a touch device
 		const isTouchDevice =
 			'ontouchstart' in window &&
 			window.matchMedia('(pointer: coarse)').matches;
 		setIsMobile(isTouchDevice);
 	}, []);
 
-	if (!item || !isClient) {
+	if (!item || !isClient || x === null || y === null) {
 		return null;
 	}
 
-	// Smart positioning logic
-	const tooltipStyle = isMobile
+	const tooltipStyle: React.CSSProperties = isMobile
 		? {
 				position: 'fixed',
 				top: '10px',
@@ -51,43 +91,38 @@ const HoverBox = ({ item }) => {
 				transform: 'translateX(-50%)',
 				zIndex: 1000,
 				maxWidth: '90vw',
-		  }
+			}
 		: {
-				// On desktop, position above cursor if too close to bottom of screen
 				top: y > window.innerHeight - 150 ? y - 120 : y + 5,
 				left: x + 5,
-		  };
+			};
 
 	return (
 		<div
 			className={hoverBox}
 			style={tooltipStyle}
-			onMouseEnter={e => {
-				e.preventDefault();
-			}}
-			onMouseLeave={e => {
-				e.preventDefault();
-			}}
+			onMouseEnter={e => e.preventDefault()}
+			onMouseLeave={e => e.preventDefault()}
 		>
 			<div className={hoverBoxTitle}>{item.name}</div>
 			<div className={hoverBoxDescription}>{item.description}</div>
 		</div>
 	);
-};
+}
 
-export default function Rarity() {
-	const { query } = useRouter();
-	const [hoveredItem, setHoveredItem] = useState({});
-	const [enabledExpansions, setEnabledExpansions] = useState({
+function RarityPage() {
+	const { rarity } = Route.useParams();
+	const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null);
+	const [enabledExpansions, setEnabledExpansions] = useState<ExpansionState>({
 		base: true,
 		'Survivors of the Void': true,
 		'Seekers of the Storm': true,
 	});
 
-	// Close tooltip when clicking outside on mobile
 	useEffect(() => {
-		const handleClickOutside = e => {
-			if (hoveredItem && !e.target.closest('[data-item-container]')) {
+		const handleClickOutside = (e: TouchEvent) => {
+			const target = e.target as Element | null;
+			if (hoveredItem && target && !target.closest('[data-item-container]')) {
 				setHoveredItem(null);
 			}
 		};
@@ -99,21 +134,8 @@ export default function Rarity() {
 		}
 	}, [hoveredItem]);
 
-    const rarity = query.rarity;
-    const capitalizedRarity = rarity ? rarity.charAt(0).toUpperCase() + rarity.slice(1) : '';
-    const title = capitalizedRarity ? `${capitalizedRarity} Items - Risk of Rain 2 | ror.tk.gg` : 'Risk of Rain 2 Items | ror.tk.gg';
-    const description = capitalizedRarity ? `A complete list of all ${capitalizedRarity} items in Risk of Rain 2. Find all ${capitalizedRarity} items and view their stats and effects.` : 'A complete list of all Risk of Rain 2 items. Find items by rarity and view their stats and effects.';
-
 	return (
-		<div className={`${styles.container} ${container}`}>
-			<Head>
-				<title>{title}</title>
-				<meta
-					name="description"
-					content={description}
-				/>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
+		<div className={`${homeStyles.container} ${container}`}>
 			<div
 				className={flex}
 				style={{
@@ -124,13 +146,9 @@ export default function Rarity() {
 				}}
 			>
 				<div className={flex}>
-					<RarityBox rarity={'Common'} active={query.rarity} />
-					<RarityBox rarity={'Uncommon'} active={query.rarity} />
-					<RarityBox rarity={'Legendary'} active={query.rarity} />
-					<RarityBox rarity={'Boss'} active={query.rarity} />
-					<RarityBox rarity={'Lunar'} active={query.rarity} />
-					<RarityBox rarity={'Equipment'} active={query.rarity} />
-					<RarityBox rarity={'Void'} active={query.rarity} />
+					{VALID_RARITIES.map(r => (
+						<RarityBox key={r} rarity={r} active={rarity} />
+					))}
 				</div>
 				<div>
 					<ExpansionToggle onExpansionChange={setEnabledExpansions} />
@@ -149,7 +167,7 @@ export default function Rarity() {
 					<HoverBox item={hoveredItem} />
 					<div>
 						<ItemList
-							rarity={query.rarity}
+							rarity={rarity as NavigableRarity}
 							setHoveredItem={setHoveredItem}
 							enabledExpansions={enabledExpansions}
 						/>
@@ -168,7 +186,6 @@ export default function Rarity() {
 							@chrishutchinson
 						</a>
 					</p>
-
 					<GitHubButton
 						href="https://github.com/MattieTK/ror.tk.gg"
 						data-icon="octicon-star"

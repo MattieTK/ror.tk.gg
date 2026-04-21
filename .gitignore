@@ -8,11 +8,11 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
-# production
+# build output
+/dist
+/.output
+/.tanstack
+/.wrangler
 /build
 
 # misc
@@ -33,7 +33,8 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
+src/routeTree.gen.ts
+worker-configuration.d.ts
 
 edit.ts
 newitems.js

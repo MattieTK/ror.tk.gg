@@ -1,4 +1,40 @@
-const items = [
+export type Rarity =
+	| 'Common'
+	| 'Uncommon'
+	| 'Legendary'
+	| 'Boss'
+	| 'Lunar'
+	| 'Lunar Equipment'
+	| 'Equipment'
+	| 'Void';
+
+export type Expansion = '' | 'Survivors of the Void' | 'Seekers of the Storm' | 'Alloyed Collective';
+
+// The source data is hand-curated and loose in places (numeric raw IDs,
+// object-form permanent effects, null images). Most fields are typed but
+// the raw/source fields fall back to `unknown` rather than lie.
+export interface Item {
+	rawName?: unknown;
+	rawRarity?: unknown;
+	rawDescription?: unknown;
+	rawId?: unknown;
+	rawCategory?: unknown;
+	category: string[];
+	rarity: Rarity;
+	expansion: Expansion;
+	name: string;
+	position: number;
+	hide?: boolean;
+	image?: string | null;
+	type?: string;
+	voidTier?: number;
+	corrupts?: string[];
+	bossDrop?: boolean | string;
+	permanentEffect?: unknown;
+	id?: string | number | null;
+}
+
+const items: Item[] = [
 	{
 		rawName: 'Armor-Piercing Rounds',
 		rawRarity: 'Common',
@@ -1343,6 +1379,7 @@ const items = [
 	{
 		id: 35,
 		rarity: 'Legendary',
+		expansion: '',
 		category: ['Utility'],
 		name: '57 Leaf Clover',
 		rawDescription:
