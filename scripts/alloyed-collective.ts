@@ -19,7 +19,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Gain Lt. Droneboy. While in combat, your drones drop sticks of dynamite that detonate for 240% damage (+85% per stack), stunning enemies. Recharges after 10 seconds.',
         image: 'Box_of_Dynamite.png',
-        position: 1000,
+        position: 55,
     },
     {
         name: "Collector's Compulsion",
@@ -36,7 +36,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Picking up an item or other collectible increases all stats by +3% for 20 seconds, up to 3 (+2 per stack) times. Barrels grant minor pickups.',
         image: 'Collector%27s_Compulsion.png',
-        position: 1010,
+        position: 235,
     },
     {
         name: 'Eclipse Lite',
@@ -110,7 +110,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Moving around builds up charge, granting up to +160% movement speed and +200% jump height at 100%. At 25% charge or higher, jumping triggers an explosive discharge for 400% (+280% per stack) damage in a 5m to 32.3m (+7.5m per stack) area.',
         image: 'Faraday_Spur.png',
-        position: 1050,
+        position: 162,
     },
     {
         name: 'Faulty Conductor',
@@ -123,7 +123,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Every 15 (-20% per stack) seconds, release a wave of electricity that energizes nearby allies for 7 seconds. Energized allies gain +30% attack and movement speed, and ALWAYS land critical strikes with electric items and attacks.',
         image: 'Faulty_Conductor.png',
-        position: 1060,
+        position: 95,
     },
     {
         name: 'Functional Coupler',
@@ -160,7 +160,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Striking enemies from a higher elevation grants +1% (+1% per stack) critical strike chance and critical strike damage, up to 10 times. Lasts 10 seconds.',
         image: 'Hiker%27s_Boots.png',
-        position: 1090,
+        position: 65,
     },
     {
         name: 'Kinetic Dampener',
@@ -172,7 +172,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Increases armor by 30 (+30 per stack) while you have a shield. When shield breaks, release a stunning pulse for 100% damage plus an amount equal to 100% (+10% per stack) of your max shield. Grants a shield for 4% of your max health.',
         image: 'Kinetic_Dampener.png',
-        position: 1100,
+        position: 225,
     },
     {
         name: 'Networked Suffering',
@@ -184,7 +184,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Infect up to 4 (+2 per stack) enemies with a computer virus that duplicates 45% of all damage taken and sends it to a global damage pool. Every 3 seconds, ALL infected enemies suffer 100% pooled damage.',
         image: 'Networked_Suffering.png',
-        position: 1110,
+        position: 230,
     },
     {
         name: 'Neutronium Weight',
@@ -205,7 +205,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             "Reduces your stats while in combat, but send this item to an enemy on hit. On death, this item will be sent to its holder's killer. Reduces damage by 30% (+10% per stack), attack speed by 30% (+10% per stack), movement speed by 30% (+10% per stack), and armor by 35 (+15 per stack).",
         image: 'Neutronium_Weight.png',
-        position: 1120,
+        position: 190,
     },
     {
         name: 'Of One Mind',
@@ -236,7 +236,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Gain a friendly Solus unit that launches itself at enemies for 400% (+400% per stack). The unit inherits your movement speed items and deals more damage the faster it moves. The unit can be pet to cleanse negative effects. Recharges after 15 seconds.',
         image: 'Orphaned_Core.png',
-        position: 1140,
+        position: 205,
     },
     {
         name: 'Prison Matrix',
@@ -320,7 +320,7 @@ export const scrapedItems: Item[] = [
         rawDescription:
             'Picking up an item gives you a temporary copy of itself. Temporary items last an additional 10 (+10 per stack) seconds',
         image: 'Substandard_Duplicator.png',
-        position: 1200,
+        position: 95,
     },
     {
         name: 'Ultimate Meal',
