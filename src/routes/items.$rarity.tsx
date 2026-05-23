@@ -7,23 +7,33 @@ import {
 } from '@tanstack/react-router';
 
 import ExpansionToggle, {
+	defaultExpansionState,
 	type ExpansionState,
 } from '~/components/ExpansionToggle';
+import { EXPANSIONS } from '~/expansions';
+import BuildSidebar from '~/components/BuildSidebar';
 import type { HoveredItem } from '~/components/Item';
 import ItemList from '~/components/ItemList';
 import { type NavigableRarity, RarityBox } from '~/components/RarityBox';
+import * as layout from '~/styles/layout.css';
 import useMousePosition from '~/lib/useMousePosition';
 import homeStyles from '~/styles/Home.module.css';
+import { rarityColors } from '~/components/RarityBox.css';
 import {
 	hoverBox,
 	hoverBoxDescription,
+	hoverBoxExpansion,
+	hoverBoxExpansionIcon,
+	hoverBoxReason,
 	hoverBoxTitle,
+	hoverBoxValue,
 } from '~/styles/HoverBox.css';
 import {
 	container,
 	flex,
 	flexColumn,
 	flexSpaceAround,
+	groupLabel,
 	heading,
 	link,
 	paragraph,
@@ -70,6 +80,28 @@ export const Route = createFileRoute('/items/$rarity')({
 	component: RarityPage,
 });
 
+const FALLBACK_RARITY_COLOR = '#7e7f7f';
+
+function rarityColor(rarity: string): string {
+	return (rarityColors as Record<string, string>)[rarity] ?? FALLBACK_RARITY_COLOR;
+}
+
+// Light up the numbers (and percentages) in a description the way the game
+// colours stat text. split() keeps the captured tokens, so we just wrap the
+// numeric ones.
+function renderDescription(text: string): React.ReactNode {
+	return text.split(/([+-]?\d+(?:\.\d+)?%?)/g).map((part, i) =>
+		/^[+-]?\d/.test(part) ? (
+			// biome-ignore lint/suspicious/noArrayIndexKey: stable split order
+			<span key={i} className={hoverBoxValue}>
+				{part}
+			</span>
+		) : (
+			part
+		),
+	);
+}
+
 function HoverBox({ item }: { item: HoveredItem | null }) {
 	const { x, y } = useMousePosition();
 	const [isClient, setIsClient] = useState(false);
@@ -87,6 +119,15 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 		return null;
 	}
 
+	const color = rarityColor(item.rarity);
+	const expansion = EXPANSIONS.find(e => e.key === item.expansion);
+
+	// Estimated panel size; used to flip the tooltip away from the right/bottom
+	// edges instead of letting it overflow, and to clamp it on-screen.
+	const TOOLTIP_W = 340;
+	const TOOLTIP_H = 180;
+	const margin = 12;
+
 	const tooltipStyle: React.CSSProperties = isMobile
 		? {
 				position: 'fixed',
@@ -95,21 +136,39 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 				transform: 'translateX(-50%)',
 				zIndex: 1000,
 				maxWidth: '90vw',
+				borderLeftColor: color,
 			}
 		: {
-				top: y > window.innerHeight - 150 ? y - 120 : y + 5,
-				left: x + 5,
+				top:
+					y + TOOLTIP_H + margin > window.innerHeight
+						? Math.max(8, y - TOOLTIP_H - margin)
+						: y + margin,
+				left:
+					x + TOOLTIP_W + margin > window.innerWidth
+						? Math.max(8, x - TOOLTIP_W - margin)
+						: x + margin,
+				borderLeftColor: color,
 			};
 
 	return (
-		<div
-			className={hoverBox}
-			style={tooltipStyle}
-			onMouseEnter={e => e.preventDefault()}
-			onMouseLeave={e => e.preventDefault()}
-		>
+		<div className={hoverBox} style={tooltipStyle}>
+			{expansion && expansion.key !== '' && (
+				<div className={hoverBoxExpansion} title={expansion.name}>
+					{expansion.icon ? (
+						<span
+							className={hoverBoxExpansionIcon}
+							style={{ backgroundImage: `url(${expansion.icon})` }}
+						/>
+					) : (
+						expansion.shortName
+					)}
+				</div>
+			)}
 			<div className={hoverBoxTitle}>{item.name}</div>
-			<div className={hoverBoxDescription}>{item.description}</div>
+			<div className={hoverBoxDescription}>
+				{renderDescription(item.description)}
+			</div>
+			{item.reason && <div className={hoverBoxReason}>{item.reason}</div>}
 		</div>
 	);
 }
@@ -118,12 +177,10 @@ function RarityPage() {
 	const { rarity } = Route.useParams();
 	const navigate = useNavigate();
 	const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null);
-	const [enabledExpansions, setEnabledExpansions] = useState<ExpansionState>({
-		base: true,
-		'Survivors of the Void': true,
-		'Seekers of the Storm': true,
-		'Alloyed Collective': true,
-	});
+	const [enabledExpansions, setEnabledExpansions] =
+		useState<ExpansionState>(defaultExpansionState);
+	const [mobileTab, setMobileTab] = useState<'items' | 'builds'>('items');
+	const [drawerOpen, setDrawerOpen] = useState(false);
 
 	useEffect(() => {
 		const handleClickOutside = (e: TouchEvent) => {
@@ -170,35 +227,89 @@ function RarityPage() {
 
 	return (
 		<div className={`${homeStyles.container} ${container}`}>
+			{/* Mobile-only tab + filters bar */}
+			<div className={layout.mobileBar}>
+				<div className={layout.tabSwitch}>
+					<button
+						type="button"
+						className={`${layout.tabButton} ${mobileTab === 'items' ? layout.tabButtonActive : ''}`}
+						aria-pressed={mobileTab === 'items'}
+						onClick={() => {
+							setMobileTab('items');
+							setDrawerOpen(false);
+						}}
+					>
+						Items
+					</button>
+					<button
+						type="button"
+						className={`${layout.tabButton} ${mobileTab === 'builds' ? layout.tabButtonActive : ''}`}
+						aria-pressed={mobileTab === 'builds'}
+						onClick={() => {
+							setMobileTab('builds');
+							setDrawerOpen(false);
+						}}
+					>
+						Builds
+					</button>
+				</div>
+				{mobileTab === 'items' && (
+					<button
+						type="button"
+						className={layout.filtersButton}
+						onClick={() => setDrawerOpen(true)}
+					>
+						Filters
+					</button>
+				)}
+			</div>
+
+			{drawerOpen && (
+				// biome-ignore lint/a11y/useKeyWithClickEvents: backdrop dismiss
+				<div
+					className={layout.drawerBackdrop}
+					onClick={() => setDrawerOpen(false)}
+				/>
+			)}
+
+			{/* Rarities + Expansions: inline header on desktop, off-canvas drawer on mobile */}
 			<div
-				className={flex}
-				style={{
-					justifyContent: 'space-between',
-					alignItems: 'flex-start',
-					width: '100%',
-					marginBottom: '20px',
-				}}
+				className={`${layout.controlsBar} ${drawerOpen ? layout.controlsBarOpen : ''}`}
 			>
-				<div className={flex}>
-					{VALID_RARITIES.map(r => (
-						<RarityBox key={r} rarity={r} active={rarity} />
-					))}
+				<button
+					type="button"
+					className={layout.drawerClose}
+					aria-label="Close filters"
+					onClick={() => setDrawerOpen(false)}
+				>
+					×
+				</button>
+				<div
+					className={flexColumn}
+					style={{ alignItems: 'flex-start', gap: '6px' }}
+				>
+					<span className={groupLabel}>Rarities</span>
+					<div className={flex} style={{ flexWrap: 'wrap', gap: '6px' }}>
+						{VALID_RARITIES.map(r => (
+							<RarityBox key={r} rarity={r} active={rarity} />
+						))}
+					</div>
 				</div>
 				<div>
 					<ExpansionToggle onExpansionChange={setEnabledExpansions} />
 				</div>
 			</div>
-			<div className={flexSpaceAround}>
+
+			{/* Rendered at the top level so it shows on either mobile tab — inside a
+			    panel it would be hidden when that panel's tab is inactive. */}
+			<HoverBox item={hoveredItem} />
+
+			<div className={layout.mainArea}>
+				<div className={layout.desktopSpacer} />
 				<div
-					className={flexColumn}
-					style={{
-						alignContent: 'center',
-						width: 'min-content',
-						justifyContent: 'space-around',
-					}}
+					className={`${layout.gridPanel} ${mobileTab !== 'items' ? layout.mobileHidden : ''}`}
 				>
 					<h1 className={heading}>What is your Command?</h1>
-					<HoverBox item={hoveredItem} />
 					<div>
 						<ItemList
 							rarity={rarity as NavigableRarity}
@@ -206,6 +317,11 @@ function RarityPage() {
 							enabledExpansions={enabledExpansions}
 						/>
 					</div>
+				</div>
+				<div
+					className={`${layout.buildCol} ${mobileTab !== 'builds' ? layout.mobileHidden : ''}`}
+				>
+					<BuildSidebar setHoveredItem={setHoveredItem} />
 				</div>
 			</div>
 			<div className={flexSpaceAround}>

@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { isExpansionActive } from '~/expansions';
-import items, { type Item as ItemData, type Rarity } from '~/items';
+import items, {
+	isCommandable,
+	type Item as ItemData,
+	type Rarity,
+} from '~/items';
 import type { ExpansionState } from './ExpansionToggle';
 import Item, { type HoveredItem } from './Item';
 import ItemGrid from './ItemGrid';
@@ -44,6 +48,8 @@ export function ItemList({
 			<Item
 				key={i}
 				name={item.name}
+				rarity={item.rarity}
+				expansion={item.expansion}
 				image={
 					item.image
 						? item.image
@@ -64,6 +70,7 @@ export function ItemList({
 		item =>
 			item.rarity === rarity &&
 			item.hide !== true &&
+			isCommandable(item) &&
 			isExpansionActive(item.expansion),
 	);
 	const sortedItems = [...rarityList].sort((a, b) => a.position - b.position);

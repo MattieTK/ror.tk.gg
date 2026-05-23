@@ -70,3 +70,12 @@ export const link = style({
   color: 'inherit',
   textDecoration: 'underline',
 });
+
+// Small muted heading for a control group (e.g. "Rarities", "Expansions").
+export const groupLabel = style({
+  fontFamily: vars.fonts.heading,
+  fontSize: 'clamp(10px, 1.3vw, 12px)',
+  textTransform: 'uppercase',
+  letterSpacing: '1.5px',
+  opacity: 0.6,
+});

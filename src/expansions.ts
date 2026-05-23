@@ -40,7 +40,7 @@ export const EXPANSIONS: ExpansionConfig[] = [
 		name: 'Alloyed Collective',
 		shortName: 'AC',
 		icon: '/images/AC_Icon.png',
-		active: false,
+		active: true,
 	},
 ];
 

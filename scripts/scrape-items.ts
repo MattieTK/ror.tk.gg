@@ -32,6 +32,7 @@ interface ScrapedItem {
 	name: string;
 	expansion: string;
 	rarity: string;
+	rawRarity: string;
 	category: string[];
 	rawCategory: string;
 	rawId: string;
@@ -203,6 +204,20 @@ function textWithSpaces($: cheerio.CheerioAPI, el: cheerio.Cheerio<any>): string
 		.trim();
 }
 
+// Collapse a wiki rarity label to one of the app's navigable rarity tabs. The
+// original label is kept separately in rawRarity. Tabs are: Common, Uncommon,
+// Legendary, Boss, Lunar, Equipment, Void, Meal.
+//   - "Lunar Equipment"       -> Lunar
+//   - "Elite Equipment"       -> Equipment   (matches existing aspect items)
+//   - "Boss (Solus Wing)" etc -> Boss        (boss sub-types share one tab)
+//   - "Meal"                  -> Meal         (its own tab)
+function normaliseRarity(rarity: string): string {
+	if (rarity === 'Lunar Equipment') return 'Lunar';
+	if (rarity === 'Elite Equipment') return 'Equipment';
+	if (rarity.startsWith('Boss')) return 'Boss';
+	return rarity;
+}
+
 function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
 	const $ = cheerio.load(html);
 	const infobox = $('.portable-infobox').first();
@@ -261,8 +276,10 @@ function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
 		}
 	});
 
-	// Normalise Lunar Equipment → Lunar per project convention
-	if (rarity === 'Lunar Equipment') rarity = 'Lunar';
+	// Preserve the source rarity label, then collapse it to one of the app's
+	// navigable rarity tabs (see normaliseRarity).
+	const rawRarity = rarity;
+	rarity = normaliseRarity(rarity);
 
 	// Classify as equipment via the Cooldown row or the rarity string itself.
 	// Applies to both true Equipment and Lunar Equipment items.
@@ -272,6 +289,7 @@ function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
 		name,
 		expansion,
 		rarity,
+		rawRarity,
 		category: categories,
 		rawCategory,
 		rawId,
@@ -307,6 +325,9 @@ function formatAsTs(items: ScrapedItem[]): string {
 		lines.push('\t{');
 		lines.push(`\t\tname: ${JSON.stringify(item.name)},`);
 		lines.push(`\t\trarity: ${JSON.stringify(item.rarity)},`);
+		if (item.rawRarity !== item.rarity) {
+			lines.push(`\t\trawRarity: ${JSON.stringify(item.rawRarity)},`);
+		}
 		lines.push(`\t\texpansion: ${JSON.stringify(item.expansion)},`);
 		lines.push(`\t\tcategory: ${JSON.stringify(item.category)},`);
 		lines.push(`\t\trawCategory: ${JSON.stringify(item.rawCategory)},`);
@@ -358,6 +379,14 @@ async function cmdList(
 	}
 }
 
+// Wiki pages that category discovery misses because they're filed only under
+// Category:Equipment, not their expansion's category. Passing item names
+// explicitly already works; this folds them into no-name discovery scrapes too,
+// so a full re-scrape of the expansion stays complete.
+const KNOWN_EXTRAS: Record<string, string[]> = {
+	'Alloyed Collective': ['Deus Ex Machina'],
+};
+
 async function cmdScrape(
 	expansion: string,
 	itemNames: string[],
@@ -376,6 +405,15 @@ async function cmdScrape(
 			`No items specified; discovering from Category:${expansion}...\n`,
 		);
 		names = await filterItemPages(allPages);
+		const extras = (KNOWN_EXTRAS[expansion] ?? []).filter(
+			e => !names.includes(e),
+		);
+		if (extras.length > 0) {
+			names.push(...extras);
+			process.stderr.write(
+				`Added ${extras.length} known extra(s): ${extras.join(', ')}\n`,
+			);
+		}
 		process.stderr.write(`Found ${names.length} item pages.\n`);
 	}
 

@@ -5,18 +5,26 @@ import {
 	itemDisabled,
 	itemEnabled,
 	itemInaccessible,
+	positionBadge,
 } from './Item.css';
 
 export interface HoveredItem {
 	name: string;
 	description: string;
 	image: string;
+	rarity: string;
+	expansion: string;
+	// Survivor-specific "why it fits" note, shown when hovering a build pick.
+	reason?: string;
 }
 
 interface ItemProps {
 	image: string;
 	name: string;
 	description: string;
+	rarity: string;
+	expansion: string;
+	reason?: string;
 	position?: number;
 	accessible?: boolean;
 	highlight?: boolean;
@@ -27,6 +35,10 @@ export function Item({
 	image,
 	name,
 	description,
+	rarity,
+	expansion,
+	reason,
+	position,
 	setHoveredItem,
 	accessible = true,
 	highlight = true,
@@ -40,7 +52,7 @@ export function Item({
 
 	const showTooltip = () => {
 		if (accessible) {
-			setHoveredItem({ name, description, image });
+			setHoveredItem({ name, description, image, rarity, expansion, reason });
 		}
 	};
 
@@ -72,7 +84,11 @@ export function Item({
 			onMouseLeave={hideTooltip}
 			onClick={handleClick}
 			onTouchStart={handleClick}
-		/>
+		>
+			{import.meta.env.DEV && position !== undefined && (
+				<span className={positionBadge}>{position}</span>
+			)}
+		</div>
 	);
 }
 
