@@ -13,6 +13,7 @@ export function SearchField({ value, onChange }: SearchFieldProps) {
 			value={value}
 			onChange={e => onChange(e.target.value)}
 			placeholder="Search items..."
+			aria-label="Search items"
 		/>
 	);
 }

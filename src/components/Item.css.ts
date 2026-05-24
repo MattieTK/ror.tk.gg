@@ -11,6 +11,13 @@ export const itemBox = style({
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
   boxSizing: 'border-box',
+  // Keyboard focus ring. Mouse/touch focus doesn't match :focus-visible, so
+  // this only shows when tabbing through the grid.
+  ':focus-visible': {
+    outline: '2px solid #c9d8db',
+    outlineOffset: '2px',
+    zIndex: 1,
+  },
 });
 
 export const itemAccessible = style({

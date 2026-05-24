@@ -101,9 +101,11 @@ function renderDescription(text: string): React.ReactNode {
 function HoverBox({ item }: { item: HoveredItem | null }) {
 	const isMobile = useIsTouchDevice();
 	const [isClient, setIsClient] = useState(false);
-	// Only track the cursor while a desktop tooltip is on screen, so idle mouse
+	// Track the cursor only for a mouse-driven desktop tooltip — not when it's
+	// pinned to a keyboard-focused tile (anchor) or on mobile — so idle mouse
 	// movement over the grid doesn't re-render on every frame.
-	const { x, y } = useMousePosition(!!item && !isMobile);
+	const followsCursor = !!item && !isMobile && !item.anchor;
+	const { x, y } = useMousePosition(followsCursor);
 
 	useEffect(() => {
 		setIsClient(true);
@@ -112,9 +114,9 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 	if (!item || !isClient) {
 		return null;
 	}
-	// The desktop panel is positioned at the cursor, so it needs coordinates;
-	// the mobile panel is pinned and renders without them.
-	if (!isMobile && (x === null || y === null)) {
+	// A cursor-following desktop panel needs coordinates; the mobile and
+	// anchored panels are pinned and render without them.
+	if (followsCursor && (x === null || y === null)) {
 		return null;
 	}
 
@@ -127,10 +129,10 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 	const TOOLTIP_H = 180;
 	const margin = 12;
 
-	// Guaranteed non-null on the desktop path by the guard above; the mobile
-	// panel is pinned and ignores these.
-	const cursorX = x ?? 0;
-	const cursorY = y ?? 0;
+	// Pin to the focused tile when keyboard-anchored, otherwise follow the
+	// cursor (guaranteed non-null on that path by the guard above).
+	const anchorX = item.anchor ? item.anchor.x : (x ?? 0);
+	const anchorY = item.anchor ? item.anchor.y : (y ?? 0);
 
 	const tooltipStyle: React.CSSProperties = isMobile
 		? {
@@ -144,13 +146,13 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 			}
 		: {
 				top:
-					cursorY + TOOLTIP_H + margin > window.innerHeight
-						? Math.max(8, cursorY - TOOLTIP_H - margin)
-						: cursorY + margin,
+					anchorY + TOOLTIP_H + margin > window.innerHeight
+						? Math.max(8, anchorY - TOOLTIP_H - margin)
+						: anchorY + margin,
 				left:
-					cursorX + TOOLTIP_W + margin > window.innerWidth
-						? Math.max(8, cursorX - TOOLTIP_W - margin)
-						: cursorX + margin,
+					anchorX + TOOLTIP_W + margin > window.innerWidth
+						? Math.max(8, anchorX - TOOLTIP_W - margin)
+						: anchorX + margin,
 				borderLeftColor: color,
 			};
 
