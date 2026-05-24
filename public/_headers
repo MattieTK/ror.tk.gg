@@ -1,0 +1,7 @@
+# Cloudflare Workers Assets header rules.
+# Item/survivor images have stable names and effectively never change, so cache
+# them hard. Without this they default to `max-age=0, must-revalidate`, which
+# makes the browser revalidate every image on each reload (visible flicker).
+# Note: updating an image in place needs a new filename to bust this cache.
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
