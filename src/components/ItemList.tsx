@@ -17,6 +17,8 @@ interface ItemListProps {
 	enabledExpansions: ExpansionState;
 	searchTerm: string;
 	onSearchChange: (value: string) => void;
+	// Name of the item to pulse, set after jumping from a build pick.
+	flashItem?: string | null;
 }
 
 export function matchesSearch(item: ItemData, searchTerm: string): boolean {
@@ -36,6 +38,7 @@ export function ItemList({
 	enabledExpansions,
 	searchTerm,
 	onSearchChange,
+	flashItem,
 }: ItemListProps) {
 	const isItemAccessible = (item: ItemData) => {
 		if (item.expansion === '') {
@@ -58,6 +61,7 @@ export function ItemList({
 				position={item.position}
 				accessible={accessible}
 				highlight={matchesSearch(item, searchTerm)}
+				flash={item.name === flashItem}
 			/>
 		);
 	};

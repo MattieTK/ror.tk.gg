@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { keyframes, style } from '@vanilla-extract/css';
 
 export const itemBox = style({
   position: 'relative',
@@ -52,4 +52,25 @@ export const itemEnabled = style({
 
 export const itemDisabled = style({
   opacity: 0.2,
+});
+
+// Border + glow pulse in the item's rarity colour (supplied at runtime via the
+// `--flash-color` custom property), echoing the glow on the active rarity pill.
+// Used to draw the eye after jumping to a build pick.
+const flashPulse = keyframes({
+  '0%, 100%': {
+    borderColor: '#7e7f7f',
+    boxShadow: '0 0 0 0 transparent',
+  },
+  '50%': {
+    borderColor: 'var(--flash-color, #c9d8db)',
+    boxShadow: '0 0 12px 2px var(--flash-color, #c9d8db)',
+  },
+});
+
+export const itemFlash = style({
+  animation: `${flashPulse} 0.8s ease-in-out 2`,
+  // Lift above neighbours so the glow isn't clipped by adjacent tiles.
+  position: 'relative',
+  zIndex: 2,
 });

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
 	createFileRoute,
 	redirect,
@@ -218,6 +218,29 @@ function RarityPage() {
 		});
 	};
 
+	// Jumping to a build pick: clear any search, switch to its rarity (and the
+	// items tab on mobile), then pulse the tile. The flash auto-clears so the
+	// same pick can be triggered again later.
+	const [flashItem, setFlashItem] = useState<string | null>(null);
+	const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	useEffect(() => () => {
+		if (flashTimer.current) clearTimeout(flashTimer.current);
+	}, []);
+
+	const goToBuildItem = (name: string, itemRarity: string) => {
+		setSearchTerm('');
+		setMobileTab('items');
+		navigate({
+			to: '/items/$rarity',
+			params: { rarity: itemRarity },
+			search: {},
+		});
+		setFlashItem(name);
+		if (flashTimer.current) clearTimeout(flashTimer.current);
+		flashTimer.current = setTimeout(() => setFlashItem(null), 1800);
+	};
+
 	// Per-rarity match counts shown on the pills while a search is active. null
 	// when there's no search, so the count slots stay collapsed.
 	const searchCounts = useMemo(() => {
@@ -387,6 +410,7 @@ function RarityPage() {
 								enabledExpansions={enabledExpansions}
 								searchTerm={searchTerm}
 								onSearchChange={updateSearch}
+								flashItem={flashItem}
 							/>
 						</div>
 					</div>
@@ -395,7 +419,10 @@ function RarityPage() {
 				<div
 					className={`${layout.buildCol} ${mobileTab !== 'builds' ? layout.mobileHidden : ''}`}
 				>
-					<BuildSidebar setHoveredItem={setHoveredItem} />
+					<BuildSidebar
+						setHoveredItem={setHoveredItem}
+						onSelectItem={goToBuildItem}
+					/>
 				</div>
 			</div>
 			<footer className={layout.footer}>

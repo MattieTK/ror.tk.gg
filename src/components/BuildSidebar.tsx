@@ -15,9 +15,14 @@ const itemsByName = new Map<string, ItemData>(items.map(i => [i.name, i]));
 
 interface BuildSidebarProps {
 	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
+	// Jump to a pick in the main grid (clears search, switches rarity, flashes).
+	onSelectItem: (name: string, rarity: string) => void;
 }
 
-export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {
+export function BuildSidebar({
+	setHoveredItem,
+	onSelectItem,
+}: BuildSidebarProps) {
 	// No survivor selected by default — show onboarding copy until one is picked.
 	const [survivor, setSurvivor] = useState<string | null>(null);
 
@@ -78,6 +83,9 @@ export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {
 												description={String(item.rawDescription ?? '')}
 												reason={reason}
 												setHoveredItem={setHoveredItem}
+												onActivate={() =>
+													onSelectItem(item.name, item.rarity)
+												}
 											/>
 										</div>
 									))}
