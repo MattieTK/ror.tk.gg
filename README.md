@@ -2,7 +2,7 @@
 
 A reference for the _Artifact of Command_ item picker in _Risk of Rain 2_. Browse every item by rarity, filter by expansion, and look up per-survivor build recommendations.
 
-![image](https://user-images.githubusercontent.com/125273/195466306-c8726952-b4e5-4824-b2fc-d5716ddf94c4.png)
+<img width="2329" height="1261" alt="image" src="https://github.com/user-attachments/assets/c7c6f732-543b-4dae-8ece-ff4e1861edf0" />
 
 ## Stack
 
