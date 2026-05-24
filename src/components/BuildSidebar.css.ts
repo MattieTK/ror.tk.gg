@@ -21,6 +21,13 @@ export const identity = style({
   lineHeight: 1.4,
 });
 
+export const onboarding = style({
+  margin: 0,
+  fontSize: '13px',
+  opacity: 0.6,
+  lineHeight: 1.5,
+});
+
 export const group = style({
   display: 'flex',
   flexDirection: 'column',

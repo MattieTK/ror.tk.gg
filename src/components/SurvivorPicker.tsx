@@ -13,7 +13,7 @@ interface SurvivorGroup {
 }
 
 interface SurvivorPickerProps {
-	survivor: string;
+	survivor: string | null;
 	groups: SurvivorGroup[];
 	onSelect: (survivor: string) => void;
 }
@@ -53,11 +53,13 @@ export function SurvivorPicker({
 				aria-haspopup="listbox"
 				aria-expanded={open}
 			>
-				<span
-					className={css.icon}
-					style={{ backgroundImage: `url(${iconSrc(survivor)})` }}
-				/>
-				<span className={css.name}>{survivor}</span>
+				{survivor ? (
+					<span
+						className={css.icon}
+						style={{ backgroundImage: `url(${iconSrc(survivor)})` }}
+					/>
+				) : null}
+				<span className={css.name}>{survivor ?? 'Select a Survivor'}</span>
 				<span className={css.caret} aria-hidden="true">
 					▾
 				</span>

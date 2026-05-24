@@ -24,11 +24,14 @@ interface BuildSidebarProps {
 }
 
 export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {
-	const [survivor, setSurvivor] = useState(BUILDS[0].survivor);
+	// No survivor selected by default — show onboarding copy until one is picked.
+	const [survivor, setSurvivor] = useState<string | null>(null);
 
-	const build = BUILDS.find(b => b.survivor === survivor) ?? BUILDS[0];
+	const build = survivor
+		? (BUILDS.find(b => b.survivor === survivor) ?? null)
+		: null;
 
-	// Group the picker's survivors by expansion for <optgroup> labels.
+	// Group the picker's survivors by expansion for the dropdown's group labels.
 	const groups = useMemo(
 		() =>
 			EXPANSIONS.map(exp => ({
@@ -40,12 +43,14 @@ export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {
 		[],
 	);
 
-	const picks = build.items
-		.map(bi => {
-			const item = itemsByName.get(bi.name);
-			return item ? { item, reason: bi.reason } : null;
-		})
-		.filter((p): p is { item: ItemData; reason: string } => p !== null);
+	const picks = build
+		? build.items
+				.map(bi => {
+					const item = itemsByName.get(bi.name);
+					return item ? { item, reason: bi.reason } : null;
+				})
+				.filter((p): p is { item: ItemData; reason: string } => p !== null)
+		: [];
 
 	return (
 		<div className={css.sidebar}>
@@ -55,35 +60,45 @@ export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {
 				groups={groups}
 				onSelect={setSurvivor}
 			/>
-			<p className={css.identity}>{build.identity}</p>
 
-			{RARITY_ORDER.map(rarity => {
-				const inGroup = picks.filter(p => p.item.rarity === rarity);
-				if (inGroup.length === 0) return null;
-				const color = (rarityColors as Record<string, string>)[rarity];
-				return (
-					<div key={rarity} className={css.group}>
-						<span className={css.groupHeading} style={{ color }}>
-							{rarity}
-						</span>
-						<div className={css.row}>
-							{inGroup.map(({ item, reason }) => (
-								<div key={item.name} className={css.tile}>
-									<Item
-										name={item.name}
-										rarity={item.rarity}
-										expansion={item.expansion}
-										image={resolveImage(item)}
-										description={String(item.rawDescription ?? '')}
-										reason={reason}
-										setHoveredItem={setHoveredItem}
-									/>
+			{build ? (
+				<>
+					<p className={css.identity}>{build.identity}</p>
+					{RARITY_ORDER.map(rarity => {
+						const inGroup = picks.filter(p => p.item.rarity === rarity);
+						if (inGroup.length === 0) return null;
+						const color = (rarityColors as Record<string, string>)[rarity];
+						return (
+							<div key={rarity} className={css.group}>
+								<span className={css.groupHeading} style={{ color }}>
+									{rarity}
+								</span>
+								<div className={css.row}>
+									{inGroup.map(({ item, reason }) => (
+										<div key={item.name} className={css.tile}>
+											<Item
+												name={item.name}
+												rarity={item.rarity}
+												expansion={item.expansion}
+												image={resolveImage(item)}
+												description={String(item.rawDescription ?? '')}
+												reason={reason}
+												setHoveredItem={setHoveredItem}
+											/>
+										</div>
+									))}
 								</div>
-							))}
-						</div>
-					</div>
-				);
-			})}
+							</div>
+						);
+					})}
+				</>
+			) : (
+				<p className={css.onboarding}>
+					Pick a survivor to see a recommended starter set — the items that
+					pair best with their kit, grouped by rarity. Hover any pick to read
+					why it fits.
+				</p>
+			)}
 		</div>
 	);
 }
