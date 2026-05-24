@@ -40,6 +40,31 @@ export const rarityPillInner = style({
   transform: UNSKEW,
 });
 
+// Search match count that slides out of the pill's right edge as a continuous
+// part of the (skewed) button. Collapsed to zero width when no search is
+// active; the left border becomes the slanted divider when open. Rapid linear
+// slide.
+export const rarityCount = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  overflow: 'hidden',
+  maxWidth: 0,
+  opacity: 0,
+  marginLeft: 0,
+  paddingLeft: 0,
+  borderLeft: '1px solid transparent',
+  transition:
+    'max-width 0.12s linear, opacity 0.12s linear, margin-left 0.12s linear, padding-left 0.12s linear',
+});
+
+export const rarityCountOpen = style({
+  maxWidth: '44px',
+  opacity: 1,
+  marginLeft: '8px',
+  paddingLeft: '8px',
+  borderLeftColor: 'rgba(255, 255, 255, 0.4)',
+});
+
 export const rarityColors = {
   Common: '#c3c7ca',
   Uncommon: '#77c842',

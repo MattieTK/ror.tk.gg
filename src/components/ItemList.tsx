@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { isExpansionActive } from '~/expansions';
 import items, {
 	isCommandable,
@@ -15,9 +15,11 @@ interface ItemListProps {
 	rarity: Rarity;
 	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
 	enabledExpansions: ExpansionState;
+	searchTerm: string;
+	onSearchChange: (value: string) => void;
 }
 
-function matchesSearch(item: ItemData, searchTerm: string): boolean {
+export function matchesSearch(item: ItemData, searchTerm: string): boolean {
 	const term = searchTerm.toLowerCase();
 	if (term === '') return true;
 	if (item.name.toLowerCase().includes(term)) return true;
@@ -32,9 +34,9 @@ export function ItemList({
 	rarity,
 	setHoveredItem,
 	enabledExpansions,
+	searchTerm,
+	onSearchChange,
 }: ItemListProps) {
-	const [searchTerm, setSearchTerm] = useState('');
-
 	const isItemAccessible = (item: ItemData) => {
 		if (item.expansion === '') {
 			return enabledExpansions.base;
@@ -74,7 +76,7 @@ export function ItemList({
 	if (rarity === 'Void') {
 		return (
 			<div className={container}>
-				<SearchField value={searchTerm} onChange={setSearchTerm} />
+				<SearchField value={searchTerm} onChange={onSearchChange} />
 				<h2 className={heading}>Tier 1</h2>
 				<ItemGrid>
 					{sortedItems
@@ -100,7 +102,7 @@ export function ItemList({
 	if (rarity === 'Lunar') {
 		return (
 			<div className={container}>
-				<SearchField value={searchTerm} onChange={setSearchTerm} />
+				<SearchField value={searchTerm} onChange={onSearchChange} />
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.type !== 'Equipment')
@@ -118,7 +120,7 @@ export function ItemList({
 
 	return (
 		<div className={container}>
-			<SearchField value={searchTerm} onChange={setSearchTerm} />
+			<SearchField value={searchTerm} onChange={onSearchChange} />
 			<ItemGrid>{sortedItems.map((item, i) => buildItem(item, i))}</ItemGrid>
 		</div>
 	);

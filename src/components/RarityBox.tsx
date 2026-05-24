@@ -1,16 +1,26 @@
 import { Link } from '@tanstack/react-router';
-import { rarityColors, rarityPill, rarityPillInner } from './RarityBox.css';
+import {
+	rarityColors,
+	rarityCount,
+	rarityCountOpen,
+	rarityPill,
+	rarityPillInner,
+} from './RarityBox.css';
 
 export type NavigableRarity = keyof typeof rarityColors;
 
 interface RarityBoxProps {
 	rarity: NavigableRarity;
 	active?: string;
+	// Number of search matches in this rarity. undefined = no active search, so
+	// the count slot stays collapsed.
+	count?: number;
 }
 
-export function RarityBox({ rarity, active }: RarityBoxProps) {
+export function RarityBox({ rarity, active, count }: RarityBoxProps) {
 	const isActive = active === rarity;
 	const color = rarityColors[rarity];
+	const showCount = count !== undefined;
 
 	// Inactive pills carry the rarity colour only on their slanted leading edge.
 	// The active pill fills with a translucent tint, takes a full coloured
@@ -33,6 +43,12 @@ export function RarityBox({ rarity, active }: RarityBoxProps) {
 			aria-current={isActive ? 'page' : undefined}
 		>
 			<span className={rarityPillInner}>{rarity}</span>
+			<span
+				className={`${rarityCount} ${showCount ? rarityCountOpen : ''}`}
+				aria-hidden={!showCount}
+			>
+				<span className={rarityPillInner}>{count}</span>
+			</span>
 		</Link>
 	);
 }

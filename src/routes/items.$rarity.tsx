@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
 	createFileRoute,
 	redirect,
@@ -9,10 +9,11 @@ import ExpansionToggle, {
 	defaultExpansionState,
 	type ExpansionState,
 } from '~/components/ExpansionToggle';
-import { EXPANSIONS } from '~/expansions';
+import { EXPANSIONS, isExpansionActive } from '~/expansions';
+import items, { isCommandable } from '~/items';
 import BuildSidebar from '~/components/BuildSidebar';
 import type { HoveredItem } from '~/components/Item';
-import ItemList from '~/components/ItemList';
+import ItemList, { matchesSearch } from '~/components/ItemList';
 import { type NavigableRarity, RarityBox } from '~/components/RarityBox';
 import * as layout from '~/styles/layout.css';
 import useMousePosition from '~/lib/useMousePosition';
@@ -175,6 +176,26 @@ function RarityPage() {
 		useState<ExpansionState>(defaultExpansionState);
 	const [mobileTab, setMobileTab] = useState<'items' | 'builds'>('items');
 	const [drawerOpen, setDrawerOpen] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
+
+	// Per-rarity match counts shown on the pills while a search is active. null
+	// when there's no search, so the count slots stay collapsed.
+	const searchCounts = useMemo(() => {
+		const term = searchTerm.trim();
+		if (term === '') return null;
+		const counts = {} as Record<NavigableRarity, number>;
+		for (const r of VALID_RARITIES) {
+			counts[r] = items.filter(
+				it =>
+					it.rarity === r &&
+					it.hide !== true &&
+					isCommandable(it) &&
+					isExpansionActive(it.expansion) &&
+					matchesSearch(it, term),
+			).length;
+		}
+		return counts;
+	}, [searchTerm]);
 
 	useEffect(() => {
 		const handleClickOutside = (e: TouchEvent) => {
@@ -292,7 +313,12 @@ function RarityPage() {
 						<span className={groupLabel}>Rarities</span>
 						<div className={layout.raritiesStack}>
 							{VALID_RARITIES.map(r => (
-								<RarityBox key={r} rarity={r} active={rarity} />
+								<RarityBox
+									key={r}
+									rarity={r}
+									active={rarity}
+									count={searchCounts ? searchCounts[r] : undefined}
+								/>
 							))}
 						</div>
 					</div>
@@ -313,6 +339,8 @@ function RarityPage() {
 								rarity={rarity as NavigableRarity}
 								setHoveredItem={setHoveredItem}
 								enabledExpansions={enabledExpansions}
+								searchTerm={searchTerm}
+								onSearchChange={setSearchTerm}
 							/>
 						</div>
 					</div>
