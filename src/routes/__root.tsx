@@ -11,6 +11,7 @@ export const Route = createRootRoute({
 		meta: [
 			{ charSet: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{ name: 'theme-color', content: '#161d1d' },
 			{ title: 'Risk of Rain 2 Items - ror.tk.gg' },
 			{
 				name: 'description',

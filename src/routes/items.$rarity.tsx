@@ -67,15 +67,20 @@ export const Route = createFileRoute('/items/$rarity')({
 		const rarity = params.rarity;
 		const title = `${rarity} Items - Risk of Rain 2 | ror.tk.gg`;
 		const description = `A complete list of all ${rarity} items in Risk of Rain 2. Find all ${rarity} items and view their stats and effects.`;
+		const url = `https://ror.tk.gg/items/${rarity}`;
 		return {
 			meta: [
 				{ title },
 				{ name: 'description', content: description },
 				{ property: 'og:title', content: title },
 				{ property: 'og:description', content: description },
+				{ property: 'og:url', content: url },
 				{ name: 'twitter:title', content: title },
 				{ name: 'twitter:description', content: description },
 			],
+			// Per-rarity canonical so each tab is its own indexable page rather than
+			// collapsing onto the site root.
+			links: [{ rel: 'canonical', href: url }],
 		};
 	},
 	component: RarityPage,
