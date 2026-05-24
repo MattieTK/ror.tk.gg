@@ -211,3 +211,68 @@ export const commandTitle = style({
   fontSize: 'clamp(28px, 5vw, 44px)',
   WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.5)',
 });
+
+// --- Footer --------------------------------------------------------------
+
+export const footer = style({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '14px',
+  width: '100%',
+  maxWidth: '440px',
+  margin: '36px auto 24px',
+  paddingTop: '20px',
+  borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+});
+
+export const credit = style({
+  margin: 0,
+  fontSize: '13px',
+  letterSpacing: '0.5px',
+  opacity: 0.65,
+  textAlign: 'center',
+});
+
+export const creditLink = style({
+  color: '#9fd0a0',
+  textDecoration: 'none',
+  selectors: {
+    '&:hover': { textDecoration: 'underline' },
+  },
+});
+
+// Custom GitHub star button — a skewed parallelogram matching the controls,
+// replacing the react-github-btn iframe widget.
+export const starButton = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  padding: '6px 16px',
+  border: '1px solid rgba(255, 255, 255, 0.2)',
+  color: 'inherit',
+  textDecoration: 'none',
+  fontFamily: vars.fonts.heading,
+  fontSize: '14px',
+  letterSpacing: '1px',
+  textTransform: 'uppercase',
+  transform: 'skewX(-10deg)',
+  transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
+  selectors: {
+    '&:hover': {
+      borderColor: '#e8c66b',
+      boxShadow: '0 0 10px rgba(232, 198, 107, 0.35)',
+    },
+  },
+});
+
+export const starButtonInner = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '7px',
+  transform: 'skewX(10deg)',
+});
+
+export const star = style({
+  color: '#e8c66b',
+  fontSize: '15px',
+});

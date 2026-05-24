@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import GitHubButton from 'react-github-btn';
 import {
 	createFileRoute,
 	redirect,
@@ -32,11 +31,8 @@ import {
 	container,
 	flex,
 	flexColumn,
-	flexSpaceAround,
 	groupLabel,
 	heading,
-	link,
-	paragraph,
 } from '~/styles/theme.css';
 
 const VALID_RARITIES: NavigableRarity[] = [
@@ -226,7 +222,10 @@ function RarityPage() {
 	}, [rarity, navigate]);
 
 	return (
-		<div className={`${homeStyles.container} ${container}`}>
+		<div
+			className={`${homeStyles.container} ${container}`}
+			style={{ paddingTop: 'clamp(20px, 4vh, 48px)' }}
+		>
 			{/* Mobile-only tab + filters bar */}
 			<div className={layout.mobileBar}>
 				<div className={layout.tabSwitch}>
@@ -328,27 +327,38 @@ function RarityPage() {
 					<BuildSidebar setHoveredItem={setHoveredItem} />
 				</div>
 			</div>
-			<div className={flexSpaceAround}>
-				<div style={{ padding: '4px', textAlign: 'center' }}>
-					<p className={paragraph} style={{ marginBottom: '10px' }}>
-						By{' '}
-						<a href="https://bsky.app/profile/tk.gg" className={link}>
-							@MattieTK
-						</a>{' '}
-						and{' '}
-						<a href="https://bsky.app/profile/hutch.tf" className={link}>
-							@chrishutchinson
-						</a>
-					</p>
-					<GitHubButton
-						href="https://github.com/MattieTK/ror.tk.gg"
-						data-icon="octicon-star"
-						aria-label="Star MattieTK/ror.tk.gg on GitHub"
+			<footer className={layout.footer}>
+				<p className={layout.credit}>
+					By{' '}
+					<a
+						href="https://bsky.app/profile/tk.gg"
+						className={layout.creditLink}
 					>
-						Star
-					</GitHubButton>
-				</div>
-			</div>
+						@MattieTK
+					</a>{' '}
+					and{' '}
+					<a
+						href="https://bsky.app/profile/hutch.tf"
+						className={layout.creditLink}
+					>
+						@chrishutchinson
+					</a>
+				</p>
+				<a
+					className={layout.starButton}
+					href="https://github.com/MattieTK/ror.tk.gg"
+					target="_blank"
+					rel="noreferrer"
+					aria-label="Star MattieTK/ror.tk.gg on GitHub"
+				>
+					<span className={layout.starButtonInner}>
+						<span className={layout.star} aria-hidden="true">
+							★
+						</span>
+						Star on GitHub
+					</span>
+				</a>
+			</footer>
 		</div>
 	);
 }

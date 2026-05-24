@@ -16,8 +16,7 @@
 		"@tanstack/react-router": "^1.95.0",
 		"@tanstack/react-start": "^1.95.0",
 		"react": "^19.1.0",
-		"react-dom": "^19.1.0",
-		"react-github-btn": "^1.4.0"
+		"react-dom": "^19.1.0"
 	},
 	"devDependencies": {
 		"@cloudflare/vite-plugin": "^1.0.0",
