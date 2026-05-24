@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 import { BUILDS } from '~/builds';
 import { EXPANSIONS } from '~/expansions';
 import items, { type Item as ItemData } from '~/items';
@@ -20,7 +20,7 @@ function resolveImage(item: ItemData): string {
 }
 
 interface BuildSidebarProps {
-	setHoveredItem: (item: HoveredItem | null) => void;
+	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
 }
 
 export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {

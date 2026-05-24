@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import {
 	itemAccessible,
 	itemBox,
@@ -28,7 +28,7 @@ interface ItemProps {
 	position?: number;
 	accessible?: boolean;
 	highlight?: boolean;
-	setHoveredItem: (item: HoveredItem | null) => void;
+	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
 }
 
 export function Item({
@@ -43,7 +43,15 @@ export function Item({
 	accessible = true,
 	highlight = true,
 }: ItemProps) {
-	const [tapped, setTapped] = useState(false);
+	// On touch devices, hover is replaced by tap-to-toggle (see below). Detected
+	// after mount so it matches the server-rendered markup during hydration.
+	const [isTouch, setIsTouch] = useState(false);
+	useEffect(() => {
+		setIsTouch(
+			'ontouchstart' in window &&
+				window.matchMedia('(pointer: coarse)').matches,
+		);
+	}, []);
 
 	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible} ${highlight ? itemEnabled : itemDisabled}`;
 	// Quote the URL so literal apostrophes/special chars in filenames are valid
@@ -52,26 +60,26 @@ export function Item({
 		? `url("/images/${image}")`
 		: `url("/images/Locked_Item.png")`;
 
-	const showTooltip = () => {
-		if (accessible) {
-			setHoveredItem({ name, description, image, rarity, expansion, reason });
-		}
+	const hovered: HoveredItem = {
+		name,
+		description,
+		image,
+		rarity,
+		expansion,
+		reason,
 	};
 
-	const hideTooltip = () => {
-		setTapped(false);
-		setHoveredItem(null);
+	const show = () => {
+		if (accessible) setHoveredItem(hovered);
 	};
+	const hide = () => setHoveredItem(null);
 
-	const handleClick = (e: React.MouseEvent | React.TouchEvent) => {
-		e.preventDefault();
+	// Tap behaviour for touch: show this item; tap it again to dismiss; tap a
+	// different item to replace it. Decided against the currently-shown item so
+	// the three items don't need to coordinate local state.
+	const toggle = () => {
 		if (!accessible) return;
-		if (tapped) {
-			hideTooltip();
-		} else {
-			setTapped(true);
-			showTooltip();
-		}
+		setHoveredItem(prev => (prev && prev.name === name ? null : hovered));
 	};
 
 	return (
@@ -82,10 +90,9 @@ export function Item({
 			data-name={name}
 			data-description={description}
 			data-item-container
-			onMouseEnter={showTooltip}
-			onMouseLeave={hideTooltip}
-			onClick={handleClick}
-			onTouchStart={handleClick}
+			onMouseEnter={isTouch ? undefined : show}
+			onMouseLeave={isTouch ? undefined : hide}
+			onClick={isTouch ? toggle : undefined}
 		>
 			{import.meta.env.DEV && position !== undefined && (
 				<span className={positionBadge}>{position}</span>

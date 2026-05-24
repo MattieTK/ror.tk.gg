@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { type Dispatch, type SetStateAction, useState } from 'react';
 import { isExpansionActive } from '~/expansions';
 import items, {
 	isCommandable,
@@ -13,7 +13,7 @@ import SearchField from './SearchField';
 
 interface ItemListProps {
 	rarity: Rarity;
-	setHoveredItem: (item: HoveredItem | null) => void;
+	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
 	enabledExpansions: ExpansionState;
 }
 
