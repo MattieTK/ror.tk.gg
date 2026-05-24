@@ -51,11 +51,7 @@ export function ItemList({
 				rarity={item.rarity}
 				expansion={item.expansion}
 				image={
-					item.image
-						? item.image
-						: `${encodeURI(
-								item.name.replace(/ /g, '_').replace(/'/g, '%27'),
-							)}.webp`
+					item.image ? item.image : `${item.name.replace(/ /g, '_')}.webp`
 				}
 				description={String(item.rawDescription ?? '')}
 				setHoveredItem={setHoveredItem}

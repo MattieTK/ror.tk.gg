@@ -35,7 +35,7 @@ export const scrapedItems: Item[] = [
         rawId: 'SpeedOnPickup',
         rawDescription:
             'Picking up an item or other collectible increases all stats by +3% for 20 seconds, up to 3 (+2 per stack) times. Barrels grant minor pickups.',
-        image: 'Collector%27s_Compulsion.png',
+        image: "Collector's_Compulsion.png",
         position: 235,
     },
     {
@@ -159,7 +159,7 @@ export const scrapedItems: Item[] = [
         rawId: 'CritAtLowerElevation',
         rawDescription:
             'Striking enemies from a higher elevation grants +1% (+1% per stack) critical strike chance and critical strike damage, up to 10 times. Lasts 10 seconds.',
-        image: 'Hiker%27s_Boots.png',
+        image: "Hiker's_Boots.png",
         position: 65,
     },
     {
@@ -277,7 +277,7 @@ export const scrapedItems: Item[] = [
         rawId: 'WyrmOnHit',
         rawDescription:
             'On hit, 10% chance to summon a spectral wyrm that seeks out and damages and ignites enemies for 500% (+500% per stack) TOTAL damage per second for 10 seconds.',
-        image: 'Saut%C3%A9ed_Worms.png',
+        image: 'Sautéed_Worms.png',
         position: 1170,
     },
     {

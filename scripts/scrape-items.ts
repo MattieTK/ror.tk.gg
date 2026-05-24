@@ -271,7 +271,11 @@ function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
 		const dfw = parseInt($(el).attr('data-file-width') ?? '0', 10);
 		const dfh = parseInt($(el).attr('data-file-height') ?? '0', 10);
 		if (dfw === 128 && dfh === 128 && !src.includes('/thumb/')) {
-			imageFilename = src.split('/').pop()?.split('?')[0] ?? null;
+			const raw = src.split('/').pop()?.split('?')[0];
+			// Store the decoded name (e.g. Hiker's_Boots.png), not the wiki's
+			// percent-encoded one, so static hosts that decode request paths can
+			// serve it.
+			imageFilename = raw ? decodeURIComponent(raw) : null;
 			return false;
 		}
 	});
@@ -301,10 +305,19 @@ function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
 	};
 }
 
+// Re-encode a decoded filename to the wiki's URL form for fetching (encodes the
+// chars encodeURIComponent leaves, e.g. ' -> %27, ( -> %28).
+function wikiEncode(name: string): string {
+	return encodeURIComponent(name).replace(
+		/[!'()*]/g,
+		c => `%${c.charCodeAt(0).toString(16).toUpperCase()}`,
+	);
+}
+
 async function downloadImage(filename: string): Promise<'downloaded' | 'exists'> {
 	const outPath = path.join(PUBLIC_IMAGES_DIR, filename);
 	if (existsSync(outPath)) return 'exists';
-	const url = `${WIKI_BASE}/images/${filename}`;
+	const url = `${WIKI_BASE}/images/${wikiEncode(filename)}`;
 	const res = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
 	if (!res.ok) {
 		throw new Error(`Image fetch ${res.status} for ${url}`);

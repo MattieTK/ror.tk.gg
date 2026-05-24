@@ -46,9 +46,11 @@ export function Item({
 	const [tapped, setTapped] = useState(false);
 
 	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible} ${highlight ? itemEnabled : itemDisabled}`;
+	// Quote the URL so literal apostrophes/special chars in filenames are valid
+	// in the CSS value.
 	const backgroundImage = accessible
-		? `url(/images/${image})`
-		: `url(/images/Locked_Item.png)`;
+		? `url("/images/${image}")`
+		: `url("/images/Locked_Item.png")`;
 
 	const showTooltip = () => {
 		if (accessible) {

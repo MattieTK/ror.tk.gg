@@ -14,11 +14,9 @@ const RARITY_ORDER = ['Common', 'Uncommon', 'Boss', 'Legendary'] as const;
 const itemsByName = new Map<string, ItemData>(items.map(i => [i.name, i]));
 
 // Mirror ItemList's image resolution: explicit image, else derive the webp name
-// from the item name (apostrophes percent-encoded).
+// from the item name (spaces to underscores; special chars kept literal).
 function resolveImage(item: ItemData): string {
-	return item.image
-		? item.image
-		: `${encodeURI(item.name.replace(/ /g, '_').replace(/'/g, '%27'))}.webp`;
+	return item.image ? item.image : `${item.name.replace(/ /g, '_')}.webp`;
 }
 
 interface BuildSidebarProps {

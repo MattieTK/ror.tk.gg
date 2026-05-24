@@ -47,4 +47,4 @@ See `scripts/scrape-items.ts` for the full options. Generated output is reviewed
 
 ## Images
 
-Item and survivor images are stored in `public/images/` (survivor portraits under `public/images/survivors/`), using the wiki's percent-encoded filenames.
+Item and survivor images are stored in `public/images/` (survivor portraits under `public/images/survivors/`), under their decoded names (e.g. `Hiker's_Boots.png`) so static hosts that decode request paths serve them correctly.
