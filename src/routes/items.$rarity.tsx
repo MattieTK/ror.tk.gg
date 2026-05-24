@@ -422,6 +422,7 @@ function RarityPage() {
 					<BuildSidebar
 						setHoveredItem={setHoveredItem}
 						onSelectItem={goToBuildItem}
+						enabledExpansions={enabledExpansions}
 					/>
 				</div>
 			</div>

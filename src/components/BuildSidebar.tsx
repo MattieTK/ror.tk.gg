@@ -4,6 +4,7 @@ import { EXPANSIONS } from '~/expansions';
 import items, { type Item as ItemData, resolveItemImage } from '~/items';
 import { groupLabel } from '~/styles/theme.css';
 import * as css from './BuildSidebar.css';
+import type { ExpansionState } from './ExpansionToggle';
 import Item, { type HoveredItem } from './Item';
 import { rarityColors } from './RarityBox.css';
 import SurvivorPicker from './SurvivorPicker';
@@ -17,11 +18,13 @@ interface BuildSidebarProps {
 	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
 	// Jump to a pick in the main grid (clears search, switches rarity, flashes).
 	onSelectItem: (name: string, rarity: string) => void;
+	enabledExpansions: ExpansionState;
 }
 
 export function BuildSidebar({
 	setHoveredItem,
 	onSelectItem,
+	enabledExpansions,
 }: BuildSidebarProps) {
 	// No survivor selected by default — show onboarding copy until one is picked.
 	const [survivor, setSurvivor] = useState<string | null>(null);
@@ -42,11 +45,18 @@ export function BuildSidebar({
 		[],
 	);
 
+	// Mirror ItemList's accessibility rule: only show picks from expansions the
+	// user currently has enabled (base game keyed separately).
+	const isEnabled = (item: ItemData): boolean => {
+		if (item.expansion === '') return enabledExpansions.base;
+		return enabledExpansions[item.expansion];
+	};
+
 	const picks = build
 		? build.items
 				.map(bi => {
 					const item = itemsByName.get(bi.name);
-					return item ? { item, reason: bi.reason } : null;
+					return item && isEnabled(item) ? { item, reason: bi.reason } : null;
 				})
 				.filter((p): p is { item: ItemData; reason: string } => p !== null)
 		: [];
@@ -60,7 +70,12 @@ export function BuildSidebar({
 				onSelect={setSurvivor}
 			/>
 
-			{build ? (
+			{build && picks.length === 0 ? (
+				<p className={css.onboarding}>
+					None of {survivor}'s recommended items are in the expansions you
+					have enabled. Enable more expansions to see this build.
+				</p>
+			) : build ? (
 				<>
 					<p className={css.identity}>{build.identity}</p>
 					{RARITY_ORDER.map(rarity => {
