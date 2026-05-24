@@ -176,3 +176,38 @@ export const mobileHidden = style({
     },
   },
 });
+
+// --- Command well --------------------------------------------------------
+// Frames the "What is your Command?" grid as a recessed well sunk into the
+// page, like the in-game menu: a muted grey rim with cut corners, wrapping a
+// vignetted dark interior with an inset shadow for depth. Deliberately neutral
+// — no per-rarity colour on the frame.
+
+const CUT = '16px';
+const INNER_CUT = '14px';
+const cutCorners = (size: string) =>
+  `polygon(${size} 0, 100% 0, 100% calc(100% - ${size}), calc(100% - ${size}) 100%, 0 100%, 0 ${size})`;
+
+export const commandFrame = style({
+  position: 'relative',
+  padding: '2px', // thickness of the grey rim revealed around the inner
+  clipPath: cutCorners(CUT),
+  // Soft beveled grey rim (lighter top-left to darker bottom-right).
+  background:
+    'linear-gradient(150deg, rgba(176, 182, 182, 0.5), rgba(86, 92, 92, 0.5))',
+});
+
+export const commandInner = style({
+  padding: 'clamp(16px, 3vw, 32px)',
+  clipPath: cutCorners(INNER_CUT),
+  // Lighter centre to darker edge = vignette; strong inset shadow sinks it into
+  // the page like a well.
+  background:
+    'radial-gradient(ellipse at center, #1b2424 0%, #0f1414 60%, #070a0a 100%)',
+  boxShadow: 'inset 0 0 70px rgba(0, 0, 0, 0.85)',
+});
+
+export const commandTitle = style({
+  fontSize: 'clamp(28px, 5vw, 44px)',
+  WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.5)',
+});

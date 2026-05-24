@@ -309,13 +309,17 @@ function RarityPage() {
 				<div
 					className={`${layout.gridPanel} ${mobileTab !== 'items' ? layout.mobileHidden : ''}`}
 				>
-					<h1 className={heading}>What is your Command?</h1>
-					<div>
-						<ItemList
-							rarity={rarity as NavigableRarity}
-							setHoveredItem={setHoveredItem}
-							enabledExpansions={enabledExpansions}
-						/>
+					<div className={layout.commandFrame}>
+						<div className={layout.commandInner}>
+							<h1 className={`${heading} ${layout.commandTitle}`}>
+								What is your Command?
+							</h1>
+							<ItemList
+								rarity={rarity as NavigableRarity}
+								setHoveredItem={setHoveredItem}
+								enabledExpansions={enabledExpansions}
+							/>
+						</div>
 					</div>
 				</div>
 				<div

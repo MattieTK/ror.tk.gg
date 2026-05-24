@@ -23,6 +23,10 @@ export const vars = {
 
 export const container = style({
   backgroundColor: vars.colors.background,
+  // Subtle page vignette: a touch of light toward the top-centre fading to
+  // darker edges, so the framed command well reads as the lit focal point.
+  backgroundImage: `radial-gradient(ellipse at 50% 25%, #1c2525 0%, ${vars.colors.background} 55%, #0d1111 100%)`,
+  backgroundAttachment: 'fixed',
   color: vars.colors.text,
   minHeight: '100vh',
   fontFamily: vars.fonts.body,
