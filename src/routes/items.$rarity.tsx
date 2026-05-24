@@ -9,8 +9,8 @@ import ExpansionToggle, {
 	defaultExpansionState,
 	type ExpansionState,
 } from '~/components/ExpansionToggle';
-import { EXPANSIONS, isExpansionActive } from '~/expansions';
-import items, { isCommandable } from '~/items';
+import { EXPANSIONS } from '~/expansions';
+import items, { isDisplayable } from '~/items';
 import BuildSidebar from '~/components/BuildSidebar';
 import type { HoveredItem } from '~/components/Item';
 import ItemList, { matchesSearch } from '~/components/ItemList';
@@ -187,11 +187,7 @@ function RarityPage() {
 		for (const r of VALID_RARITIES) {
 			counts[r] = items.filter(
 				it =>
-					it.rarity === r &&
-					it.hide !== true &&
-					isCommandable(it) &&
-					isExpansionActive(it.expansion) &&
-					matchesSearch(it, term),
+					it.rarity === r && isDisplayable(it) && matchesSearch(it, term),
 			).length;
 		}
 		return counts;

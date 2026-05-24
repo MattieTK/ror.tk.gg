@@ -2,6 +2,7 @@
 // Spread into the items array below so it flows through the same rarity tabs,
 // search, and expansion toggles as the hand-curated base-game data.
 import { scrapedItems } from '../scripts/alloyed-collective';
+import { isExpansionActive } from './expansions';
 
 export type Rarity =
     | 'Common'
@@ -61,6 +62,26 @@ export function isCommandable(item: Item): boolean {
     // off the source rarity.
     if (item.rawRarity === 'Elite Equipment') return false;
     return !item.category.some((c) => NON_COMMANDABLE_CATEGORIES.includes(c));
+}
+
+// Resolve the image filename for an item: an explicit `image` wins, otherwise
+// derive the wiki webp name from the display name (spaces become underscores,
+// special characters kept literal). The grid and the build sidebar share this
+// so both resolve names identically.
+export function resolveItemImage(item: Item): string {
+    return item.image ? item.image : `${item.name.replace(/ /g, '_')}.webp`;
+}
+
+// Whether an item should appear anywhere in the picker UI: it must be a
+// commandable drop, not explicitly hidden, and belong to an active expansion.
+// Centralised so the rarity grid and the per-rarity search counts can't drift
+// apart on what counts as a visible item.
+export function isDisplayable(item: Item): boolean {
+    return (
+        item.hide !== true &&
+        isCommandable(item) &&
+        isExpansionActive(item.expansion)
+    );
 }
 
 const items: Item[] = [

@@ -1,9 +1,9 @@
-import type { Dispatch, SetStateAction } from 'react';
-import { isExpansionActive } from '~/expansions';
+import { type Dispatch, type SetStateAction, useMemo } from 'react';
 import items, {
-	isCommandable,
+	isDisplayable,
 	type Item as ItemData,
 	type Rarity,
+	resolveItemImage,
 } from '~/items';
 import type { ExpansionState } from './ExpansionToggle';
 import Item, { type HoveredItem } from './Item';
@@ -44,17 +44,15 @@ export function ItemList({
 		return enabledExpansions[item.expansion];
 	};
 
-	const buildItem = (item: ItemData, i: number) => {
+	const buildItem = (item: ItemData) => {
 		const accessible = isItemAccessible(item);
 		return (
 			<Item
-				key={i}
+				key={item.name}
 				name={item.name}
 				rarity={item.rarity}
 				expansion={item.expansion}
-				image={
-					item.image ? item.image : `${item.name.replace(/ /g, '_')}.webp`
-				}
+				image={resolveItemImage(item)}
 				description={String(item.rawDescription ?? '')}
 				setHoveredItem={setHoveredItem}
 				position={item.position}
@@ -64,14 +62,16 @@ export function ItemList({
 		);
 	};
 
-	const rarityList = items.filter(
-		item =>
-			item.rarity === rarity &&
-			item.hide !== true &&
-			isCommandable(item) &&
-			isExpansionActive(item.expansion),
+	// Filtering the full item list and sorting it depends only on the selected
+	// rarity, but hovering any tile re-renders this component (the hovered item
+	// lives in the parent route). Memoising keeps that work off the hover path.
+	const sortedItems = useMemo(
+		() =>
+			items
+				.filter(item => item.rarity === rarity && isDisplayable(item))
+				.sort((a, b) => a.position - b.position),
+		[rarity],
 	);
-	const sortedItems = [...rarityList].sort((a, b) => a.position - b.position);
 
 	if (rarity === 'Void') {
 		return (
@@ -81,19 +81,19 @@ export function ItemList({
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.voidTier === 1)
-						.map((item, i) => buildItem(item, i))}
+						.map(buildItem)}
 				</ItemGrid>
 				<h2 className={heading}>Tier 2</h2>
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.voidTier === 2)
-						.map((item, i) => buildItem(item, i))}
+						.map(buildItem)}
 				</ItemGrid>
 				<h2 className={tierHeading}>Tier 3</h2>
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.voidTier === 3)
-						.map((item, i) => buildItem(item, i))}
+						.map(buildItem)}
 				</ItemGrid>
 			</div>
 		);
@@ -106,13 +106,13 @@ export function ItemList({
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.type !== 'Equipment')
-						.map((item, i) => buildItem(item, i))}
+						.map(buildItem)}
 				</ItemGrid>
 				<h2 className={heading}>Equipment</h2>
 				<ItemGrid>
 					{sortedItems
 						.filter(item => item.type === 'Equipment')
-						.map((item, i) => buildItem(item, i))}
+						.map(buildItem)}
 				</ItemGrid>
 			</div>
 		);
@@ -121,7 +121,7 @@ export function ItemList({
 	return (
 		<div className={container}>
 			<SearchField value={searchTerm} onChange={onSearchChange} />
-			<ItemGrid>{sortedItems.map((item, i) => buildItem(item, i))}</ItemGrid>
+			<ItemGrid>{sortedItems.map(buildItem)}</ItemGrid>
 		</div>
 	);
 }

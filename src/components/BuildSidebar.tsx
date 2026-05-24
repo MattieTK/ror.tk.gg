@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 import { BUILDS } from '~/builds';
 import { EXPANSIONS } from '~/expansions';
-import items, { type Item as ItemData } from '~/items';
+import items, { type Item as ItemData, resolveItemImage } from '~/items';
 import { groupLabel } from '~/styles/theme.css';
 import * as css from './BuildSidebar.css';
 import Item, { type HoveredItem } from './Item';
@@ -12,12 +12,6 @@ import SurvivorPicker from './SurvivorPicker';
 const RARITY_ORDER = ['Common', 'Uncommon', 'Boss', 'Legendary'] as const;
 
 const itemsByName = new Map<string, ItemData>(items.map(i => [i.name, i]));
-
-// Mirror ItemList's image resolution: explicit image, else derive the webp name
-// from the item name (spaces to underscores; special chars kept literal).
-function resolveImage(item: ItemData): string {
-	return item.image ? item.image : `${item.name.replace(/ /g, '_')}.webp`;
-}
 
 interface BuildSidebarProps {
 	setHoveredItem: Dispatch<SetStateAction<HoveredItem | null>>;
@@ -80,7 +74,7 @@ export function BuildSidebar({ setHoveredItem }: BuildSidebarProps) {
 												name={item.name}
 												rarity={item.rarity}
 												expansion={item.expansion}
-												image={resolveImage(item)}
+												image={resolveItemImage(item)}
 												description={String(item.rawDescription ?? '')}
 												reason={reason}
 												setHoveredItem={setHoveredItem}
