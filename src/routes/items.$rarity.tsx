@@ -50,6 +50,11 @@ function isNavigableRarity(value: string): value is NavigableRarity {
 }
 
 export const Route = createFileRoute('/items/$rarity')({
+	// `?q=` holds the active search so it survives a refresh and can be shared.
+	validateSearch: (search: Record<string, unknown>): { q?: string } => {
+		const q = typeof search.q === 'string' ? search.q : undefined;
+		return q ? { q } : {};
+	},
 	beforeLoad: ({ params }) => {
 		if (!isNavigableRarity(params.rarity)) {
 			throw redirect({
@@ -181,13 +186,32 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 
 function RarityPage() {
 	const { rarity } = Route.useParams();
+	const { q } = Route.useSearch();
 	const navigate = useNavigate();
 	const [hoveredItem, setHoveredItem] = useState<HoveredItem | null>(null);
 	const [enabledExpansions, setEnabledExpansions] =
 		useState<ExpansionState>(defaultExpansionState);
 	const [mobileTab, setMobileTab] = useState<'items' | 'builds'>('items');
 	const [drawerOpen, setDrawerOpen] = useState(false);
-	const [searchTerm, setSearchTerm] = useState('');
+	// The URL's `q` is the source of truth; this local mirror keeps typing snappy
+	// without waiting on each navigation to commit.
+	const [searchTerm, setSearchTerm] = useState(q ?? '');
+
+	// Re-sync when `q` changes from outside typing — a shared link, a refresh, or
+	// the browser back/forward buttons.
+	useEffect(() => {
+		setSearchTerm(q ?? '');
+	}, [q]);
+
+	const updateSearch = (value: string) => {
+		setSearchTerm(value);
+		navigate({
+			to: '/items/$rarity',
+			params: { rarity },
+			search: value ? { q: value } : {},
+			replace: true,
+		});
+	};
 
 	// Per-rarity match counts shown on the pills while a search is active. null
 	// when there's no search, so the count slots stay collapsed.
@@ -236,10 +260,20 @@ function RarityPage() {
 
 			if (e.key === 'ArrowRight') {
 				const next = VALID_RARITIES[currentIndex + 1];
-				if (next) navigate({ to: '/items/$rarity', params: { rarity: next } });
+				if (next)
+					navigate({
+						to: '/items/$rarity',
+						params: { rarity: next },
+						search: prev => prev,
+					});
 			} else if (e.key === 'ArrowLeft') {
 				const prev = VALID_RARITIES[currentIndex - 1];
-				if (prev) navigate({ to: '/items/$rarity', params: { rarity: prev } });
+				if (prev)
+					navigate({
+						to: '/items/$rarity',
+						params: { rarity: prev },
+						search: prevSearch => prevSearch,
+					});
 			}
 		};
 
@@ -347,7 +381,7 @@ function RarityPage() {
 								setHoveredItem={setHoveredItem}
 								enabledExpansions={enabledExpansions}
 								searchTerm={searchTerm}
-								onSearchChange={setSearchTerm}
+								onSearchChange={updateSearch}
 							/>
 						</div>
 					</div>

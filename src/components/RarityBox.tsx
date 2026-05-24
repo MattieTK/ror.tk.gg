@@ -37,6 +37,8 @@ export function RarityBox({ rarity, active, count }: RarityBoxProps) {
 		<Link
 			to="/items/$rarity"
 			params={{ rarity }}
+			// Carry the active search (?q=) across rarity changes.
+			search={prev => prev}
 			className={rarityPill}
 			style={pillStyle}
 			title={rarity}
