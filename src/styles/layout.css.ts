@@ -43,29 +43,23 @@ export const tabButtonActive = style({
 
 export const filtersButton = style(barButton);
 
-// Rarities + Expansions live here. On desktop it's the inline header row; on
-// mobile it becomes an off-canvas drawer toggled by controlsBarOpen.
-export const controlsBar = style({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'flex-start',
-  width: '100%',
-  marginBottom: '20px',
-  flexWrap: 'wrap',
-  gap: '12px',
+// Wraps Rarities + Expansions. On desktop it's `display: contents` so the two
+// drop straight into the layout grid as separate cells (left and right of the
+// command well). On mobile it becomes the off-canvas filters drawer holding
+// both, toggled by filtersOpen.
+export const filters = style({
+  display: 'contents',
   '@media': {
     [MOBILE]: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '24px',
       position: 'fixed',
       top: 0,
       left: 0,
       bottom: 0,
       width: '80%',
       maxWidth: '320px',
-      flexDirection: 'column',
-      flexWrap: 'nowrap',
-      gap: '24px',
-      margin: 0,
       padding: '20px',
       backgroundColor: '#0f1414',
       borderRight: '1px solid rgba(255, 255, 255, 0.15)',
@@ -78,7 +72,7 @@ export const controlsBar = style({
   },
 });
 
-export const controlsBarOpen = style({
+export const filtersOpen = style({
   '@media': {
     [MOBILE]: {
       transform: 'translateX(0)',
@@ -117,33 +111,52 @@ export const drawerClose = style({
   },
 });
 
-// Three-column band: an empty left spacer and the right build column both take
-// equal flexible width, so the centre grid stays visually centred in the
-// viewport while the build column right-aligns under the Expansions controls.
-export const mainArea = style({
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'flex-start',
-  gap: '24px',
+// Desktop: a centred three-column grid. The outer columns are equal (1fr) so
+// the auto-sized command well stays viewport-centred; Rarities hugs it from the
+// left, Expansions (row 1) and Build (row 2) hug it from the right. Mobile: a
+// plain block — the filters drawer is fixed (out of flow) and the command/build
+// panels stack, shown one at a time by tab.
+export const layoutGrid = style({
+  display: 'grid',
+  width: '100%',
+  gridTemplateColumns: 'minmax(0, 1fr) auto minmax(0, 1fr)',
+  gridTemplateRows: 'auto 1fr',
+  gridTemplateAreas: '"rarities command expansions" "rarities command build"',
+  columnGap: 'clamp(12px, 2.5vw, 40px)',
+  rowGap: '14px',
+  alignItems: 'start',
   '@media': {
     [MOBILE]: {
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      gap: 0,
+      display: 'block',
     },
   },
 });
 
-// Balances the right build column so the grid centres. Desktop only.
-export const desktopSpacer = style({
-  flex: 1,
-  '@media': {
-    [MOBILE]: { display: 'none' },
-  },
+export const raritiesCol = style({
+  gridArea: 'rarities',
+  justifySelf: 'end',
+  alignSelf: 'start',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '6px',
+});
+
+// Vertical stack of rarity pills.
+export const raritiesStack = style({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '6px',
+  alignItems: 'flex-start',
+});
+
+export const expansionsCol = style({
+  gridArea: 'expansions',
+  justifySelf: 'start',
+  alignSelf: 'start',
 });
 
 export const gridPanel = style({
+  gridArea: 'command',
   display: 'flex',
   flexDirection: 'column',
   alignContent: 'center',
@@ -157,12 +170,11 @@ export const gridPanel = style({
 });
 
 export const buildCol = style({
-  flex: 1,
-  display: 'flex',
-  justifyContent: 'flex-end',
+  gridArea: 'build',
+  justifySelf: 'start',
+  alignSelf: 'start',
   '@media': {
     [MOBILE]: {
-      flexGrow: 0,
       width: '100%',
     },
   },

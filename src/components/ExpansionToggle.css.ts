@@ -8,7 +8,7 @@ const UNSKEW = 'skewX(10deg)';
 export const container = style({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-end',
+  alignItems: 'flex-start',
   gap: '6px',
 });
 

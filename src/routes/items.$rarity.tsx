@@ -29,8 +29,6 @@ import {
 } from '~/styles/HoverBox.css';
 import {
 	container,
-	flex,
-	flexColumn,
 	groupLabel,
 	heading,
 } from '~/styles/theme.css';
@@ -271,40 +269,38 @@ function RarityPage() {
 				/>
 			)}
 
-			{/* Rarities + Expansions: inline header on desktop, off-canvas drawer on mobile */}
-			<div
-				className={`${layout.controlsBar} ${drawerOpen ? layout.controlsBarOpen : ''}`}
-			>
-				<button
-					type="button"
-					className={layout.drawerClose}
-					aria-label="Close filters"
-					onClick={() => setDrawerOpen(false)}
-				>
-					×
-				</button>
-				<div
-					className={flexColumn}
-					style={{ alignItems: 'flex-start', gap: '6px' }}
-				>
-					<span className={groupLabel}>Rarities</span>
-					<div className={flex} style={{ flexWrap: 'wrap', gap: '6px' }}>
-						{VALID_RARITIES.map(r => (
-							<RarityBox key={r} rarity={r} active={rarity} />
-						))}
-					</div>
-				</div>
-				<div>
-					<ExpansionToggle onExpansionChange={setEnabledExpansions} />
-				</div>
-			</div>
-
 			{/* Rendered at the top level so it shows on either mobile tab — inside a
 			    panel it would be hidden when that panel's tab is inactive. */}
 			<HoverBox item={hoveredItem} />
 
-			<div className={layout.mainArea}>
-				<div className={layout.desktopSpacer} />
+			<div className={layout.layoutGrid}>
+				{/* Rarities + Expansions: split into the left/right grid cells on
+				    desktop (filters is display:contents), grouped into the off-canvas
+				    drawer on mobile. */}
+				<div
+					className={`${layout.filters} ${drawerOpen ? layout.filtersOpen : ''}`}
+				>
+					<button
+						type="button"
+						className={layout.drawerClose}
+						aria-label="Close filters"
+						onClick={() => setDrawerOpen(false)}
+					>
+						×
+					</button>
+					<div className={layout.raritiesCol}>
+						<span className={groupLabel}>Rarities</span>
+						<div className={layout.raritiesStack}>
+							{VALID_RARITIES.map(r => (
+								<RarityBox key={r} rarity={r} active={rarity} />
+							))}
+						</div>
+					</div>
+					<div className={layout.expansionsCol}>
+						<ExpansionToggle onExpansionChange={setEnabledExpansions} />
+					</div>
+				</div>
+
 				<div
 					className={`${layout.gridPanel} ${mobileTab !== 'items' ? layout.mobileHidden : ''}`}
 				>
@@ -321,6 +317,7 @@ function RarityPage() {
 						</div>
 					</div>
 				</div>
+
 				<div
 					className={`${layout.buildCol} ${mobileTab !== 'builds' ? layout.mobileHidden : ''}`}
 				>
