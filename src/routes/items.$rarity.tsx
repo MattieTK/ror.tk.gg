@@ -16,6 +16,7 @@ import type { HoveredItem } from '~/components/Item';
 import ItemList, { matchesSearch } from '~/components/ItemList';
 import { type NavigableRarity, RarityBox } from '~/components/RarityBox';
 import * as layout from '~/styles/layout.css';
+import useIsTouchDevice from '~/lib/useIsTouchDevice';
 import useMousePosition from '~/lib/useMousePosition';
 import homeStyles from '~/styles/Home.module.css';
 import { rarityColors } from '~/components/RarityBox.css';
@@ -98,19 +99,22 @@ function renderDescription(text: string): React.ReactNode {
 }
 
 function HoverBox({ item }: { item: HoveredItem | null }) {
-	const { x, y } = useMousePosition();
+	const isMobile = useIsTouchDevice();
 	const [isClient, setIsClient] = useState(false);
-	const [isMobile, setIsMobile] = useState(false);
+	// Only track the cursor while a desktop tooltip is on screen, so idle mouse
+	// movement over the grid doesn't re-render on every frame.
+	const { x, y } = useMousePosition(!!item && !isMobile);
 
 	useEffect(() => {
 		setIsClient(true);
-		const isTouchDevice =
-			'ontouchstart' in window &&
-			window.matchMedia('(pointer: coarse)').matches;
-		setIsMobile(isTouchDevice);
 	}, []);
 
-	if (!item || !isClient || x === null || y === null) {
+	if (!item || !isClient) {
+		return null;
+	}
+	// The desktop panel is positioned at the cursor, so it needs coordinates;
+	// the mobile panel is pinned and renders without them.
+	if (!isMobile && (x === null || y === null)) {
 		return null;
 	}
 
@@ -122,6 +126,11 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 	const TOOLTIP_W = 340;
 	const TOOLTIP_H = 180;
 	const margin = 12;
+
+	// Guaranteed non-null on the desktop path by the guard above; the mobile
+	// panel is pinned and ignores these.
+	const cursorX = x ?? 0;
+	const cursorY = y ?? 0;
 
 	const tooltipStyle: React.CSSProperties = isMobile
 		? {
@@ -135,13 +144,13 @@ function HoverBox({ item }: { item: HoveredItem | null }) {
 			}
 		: {
 				top:
-					y + TOOLTIP_H + margin > window.innerHeight
-						? Math.max(8, y - TOOLTIP_H - margin)
-						: y + margin,
+					cursorY + TOOLTIP_H + margin > window.innerHeight
+						? Math.max(8, cursorY - TOOLTIP_H - margin)
+						: cursorY + margin,
 				left:
-					x + TOOLTIP_W + margin > window.innerWidth
-						? Math.max(8, x - TOOLTIP_W - margin)
-						: x + margin,
+					cursorX + TOOLTIP_W + margin > window.innerWidth
+						? Math.max(8, cursorX - TOOLTIP_W - margin)
+						: cursorX + margin,
 				borderLeftColor: color,
 			};
 

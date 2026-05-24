@@ -1,4 +1,5 @@
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import useIsTouchDevice from '~/lib/useIsTouchDevice';
 import {
 	itemAccessible,
 	itemBox,
@@ -43,15 +44,8 @@ export function Item({
 	accessible = true,
 	highlight = true,
 }: ItemProps) {
-	// On touch devices, hover is replaced by tap-to-toggle (see below). Detected
-	// after mount so it matches the server-rendered markup during hydration.
-	const [isTouch, setIsTouch] = useState(false);
-	useEffect(() => {
-		setIsTouch(
-			'ontouchstart' in window &&
-				window.matchMedia('(pointer: coarse)').matches,
-		);
-	}, []);
+	// On touch devices, hover is replaced by tap-to-toggle (see below).
+	const isTouch = useIsTouchDevice();
 
 	const itemClassName = `${itemBox} ${accessible ? itemAccessible : itemInaccessible} ${highlight ? itemEnabled : itemDisabled}`;
 	// Quote the URL so literal apostrophes/special chars in filenames are valid
