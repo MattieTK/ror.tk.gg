@@ -1,0 +1,18 @@
+# Prettier already honours .gitignore, which covers dist/, .output/, .tanstack/,
+# .wrangler/, src/routeTree.gen.ts and worker-configuration.d.ts. They are repeated
+# here so the ignore set holds if those entries ever leave .gitignore.
+dist/
+.output/
+.tanstack/
+.wrangler/
+src/routeTree.gen.ts
+worker-configuration.d.ts
+
+# Lockfile — owned by pnpm, not a hand-edited source file.
+pnpm-lock.yaml
+
+# Static assets served verbatim, including percent-encoded image filenames.
+public/
+
+# Local editor/agent settings, ignored outside this repo's .gitignore.
+.claude/
