@@ -357,13 +357,13 @@ function RarityPage() {
       )}
 
       {/* Rendered at the top level so it shows on either mobile tab — inside a
-			    panel it would be hidden when that panel's tab is inactive. */}
+          panel it would be hidden when that panel's tab is inactive. */}
       <HoverBox item={hoveredItem} />
 
       <div className={layout.layoutGrid}>
         {/* Rarities + Expansions: split into the left/right grid cells on
-				    desktop (filters is display:contents), grouped into the off-canvas
-				    drawer on mobile. */}
+            desktop (filters is display:contents), grouped into the off-canvas
+            drawer on mobile. */}
         <div
           className={`${layout.filters} ${drawerOpen ? layout.filtersOpen : ''}`}
         >
