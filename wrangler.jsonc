@@ -1,16 +1,16 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "ror-tk-gg",
-	"compatibility_date": "2026-04-21",
-	"compatibility_flags": ["nodejs_compat"],
-	"main": "@tanstack/react-start/server-entry",
-	"observability": {
-		"enabled": true,
-	},
-	"routes": [
-		{
-			"custom_domain": true,
-			"pattern": "ror.tk.gg",
-		},
-	],
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ror-tk-gg",
+  "compatibility_date": "2026-04-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true,
+  },
+  "routes": [
+    {
+      "custom_domain": true,
+      "pattern": "ror.tk.gg",
+    },
+  ],
 }

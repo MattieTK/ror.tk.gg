@@ -15,6 +15,9 @@ export const heading = style({
   marginBottom: vars.space.sm,
 });
 
-export const tierHeading = style([heading, {
-  marginTop: vars.space.lg,
-}]);
+export const tierHeading = style([
+  heading,
+  {
+    marginTop: vars.space.lg,
+  },
+]);
