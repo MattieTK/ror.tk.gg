@@ -13,28 +13,28 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 // transformed all .css.ts files to class-name objects, so clearing the list
 // is safe.
 const clearSsrExternal: Plugin = {
-	name: 'clear-cloudflare-ssr-external',
-	configResolved: {
-		order: 'pre',
-		handler(config) {
-			const ssrEnv = config.environments?.ssr;
-			if (ssrEnv?.resolve) {
-				(ssrEnv.resolve as { external: string[] }).external = [];
-			}
-		},
-	},
+  name: 'clear-cloudflare-ssr-external',
+  configResolved: {
+    order: 'pre',
+    handler(config) {
+      const ssrEnv = config.environments?.ssr;
+      if (ssrEnv?.resolve) {
+        (ssrEnv.resolve as { external: string[] }).external = [];
+      }
+    },
+  },
 };
 
 export default defineConfig({
-	server: { port: 3000 },
-	resolve: {
-		tsconfigPaths: true,
-	},
-	plugins: [
-		clearSsrExternal,
-		cloudflare({ viteEnvironment: { name: 'ssr' } }),
-		tanstackStart(),
-		viteReact(),
-		vanillaExtractPlugin(),
-	],
+  server: { port: 3000 },
+  resolve: {
+    tsconfigPaths: true,
+  },
+  plugins: [
+    clearSsrExternal,
+    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+    tanstackStart(),
+    viteReact(),
+    vanillaExtractPlugin(),
+  ],
 });

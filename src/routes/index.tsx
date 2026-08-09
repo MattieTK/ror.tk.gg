@@ -1,10 +1,10 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
-	beforeLoad: () => {
-		throw redirect({
-			to: '/items/$rarity',
-			params: { rarity: 'Common' },
-		});
-	},
+  beforeLoad: () => {
+    throw redirect({
+      to: '/items/$rarity',
+      params: { rarity: 'Common' },
+    });
+  },
 });

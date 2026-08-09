@@ -9,7 +9,8 @@ export const container = style({
 export const grid = style({
   display: 'grid',
   gap: 'clamp(2px, 0.5vw, 8px)',
-  gridTemplateColumns: 'repeat(5, clamp(35px, calc(((100vw - 60px) / 5) * 0.75), 90px))',
+  gridTemplateColumns:
+    'repeat(5, clamp(35px, calc(((100vw - 60px) / 5) * 0.75), 90px))',
   maxWidth: '75vw',
   width: 'auto',
   // Transparent so the command well's vignette is the single continuous
