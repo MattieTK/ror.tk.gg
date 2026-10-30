@@ -42,6 +42,13 @@ export const EXPANSIONS: ExpansionConfig[] = [
     icon: '/images/AC_Icon.png',
     active: true,
   },
+  {
+    key: 'Hallowed Concepts',
+    name: 'Hallowed Concepts',
+    shortName: 'HC',
+    icon: '/images/HC_Icon.png',
+    active: true,
+  },
 ];
 
 export const ACTIVE_EXPANSIONS = EXPANSIONS.filter((e) => e.active);

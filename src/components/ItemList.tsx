@@ -117,6 +117,16 @@ export function ItemList({
     );
   }
 
+  if (rarity === 'Page') {
+    return (
+      <div className={container}>
+        <SearchField value={searchTerm} onChange={onSearchChange} />
+        <h2 className={heading}>Pages of the N'tormat</h2>
+        <ItemGrid>{sortedItems.map(buildItem)}</ItemGrid>
+      </div>
+    );
+  }
+
   return (
     <div className={container}>
       <SearchField value={searchTerm} onChange={onSearchChange} />

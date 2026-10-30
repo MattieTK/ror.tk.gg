@@ -10,7 +10,11 @@ import items, { isDisplayable } from '~/items';
 import BuildSidebar from '~/components/BuildSidebar';
 import type { HoveredItem } from '~/components/Item';
 import ItemList, { matchesSearch } from '~/components/ItemList';
-import { type NavigableRarity, RarityBox } from '~/components/RarityBox';
+import {
+  type NavigableRarity,
+  RarityBox,
+  rarityLabel,
+} from '~/components/RarityBox';
 import * as layout from '~/styles/layout.css';
 import useIsTouchDevice from '~/lib/useIsTouchDevice';
 import useMousePosition from '~/lib/useMousePosition';
@@ -35,7 +39,15 @@ const VALID_RARITIES: NavigableRarity[] = [
   'Lunar',
   'Equipment',
   'Void',
+  'Hallowed',
+  'Hex',
+  'Page',
 ];
+
+const PAGE_NOUNS: Record<string, string> = {
+  Hex: 'Hexes',
+  Page: "N'tormat Pages",
+};
 
 function isNavigableRarity(value: string): value is NavigableRarity {
   return (VALID_RARITIES as string[]).includes(value);
@@ -57,8 +69,11 @@ export const Route = createFileRoute('/items/$rarity')({
   },
   head: ({ params }) => {
     const rarity = params.rarity;
-    const title = `${rarity} Items - Risk of Rain 2 | ror.tk.gg`;
-    const description = `A complete list of all ${rarity} items in Risk of Rain 2. Find all ${rarity} items and view their stats and effects.`;
+    const label = isNavigableRarity(rarity) ? rarityLabel(rarity) : rarity;
+    // Tiers whose items aren't called "items" in-game get their own noun.
+    const noun = PAGE_NOUNS[rarity] ?? `${label} Items`;
+    const title = `${noun} - Risk of Rain 2 | ror.tk.gg`;
+    const description = `A complete list of all ${noun} in Risk of Rain 2. Find all ${noun} and view their stats and effects.`;
     const url = `https://ror.tk.gg/items/${rarity}`;
     return {
       meta: [

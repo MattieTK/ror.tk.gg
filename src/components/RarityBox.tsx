@@ -9,6 +9,17 @@ import {
 
 export type NavigableRarity = keyof typeof rarityColors;
 
+// Display names for tabs whose rarity key isn't the label shown in-game. The
+// key stays the URL segment (/items/Page).
+const RARITY_LABELS: Partial<Record<NavigableRarity, string>> = {
+  Hex: 'Hexes',
+  Page: "N'tormat",
+};
+
+export function rarityLabel(rarity: NavigableRarity): string {
+  return RARITY_LABELS[rarity] ?? rarity;
+}
+
 interface RarityBoxProps {
   rarity: NavigableRarity;
   active?: string;
@@ -21,6 +32,7 @@ export function RarityBox({ rarity, active, count }: RarityBoxProps) {
   const isActive = active === rarity;
   const color = rarityColors[rarity];
   const showCount = count !== undefined;
+  const label = rarityLabel(rarity);
 
   // Inactive pills carry the rarity colour only on their slanted leading edge.
   // The active pill fills with a translucent tint, takes a full coloured
@@ -41,10 +53,10 @@ export function RarityBox({ rarity, active, count }: RarityBoxProps) {
       search={(prev) => prev}
       className={rarityPill}
       style={pillStyle}
-      title={rarity}
+      title={label}
       aria-current={isActive ? 'page' : undefined}
     >
-      <span className={rarityPillInner}>{rarity}</span>
+      <span className={rarityPillInner}>{label}</span>
       <span
         className={`${rarityCount} ${showCount ? rarityCountOpen : ''}`}
         aria-hidden={!showCount}

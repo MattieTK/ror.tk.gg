@@ -1,7 +1,8 @@
 // Generated expansion data, produced by `pnpm scrape scrape "<expansion>"`.
 // Spread into the items array below so it flows through the same rarity tabs,
 // search, and expansion toggles as the hand-curated base-game data.
-import { scrapedItems } from '../scripts/alloyed-collective';
+import { scrapedItems as alloyedCollectiveItems } from '../scripts/alloyed-collective';
+import { scrapedItems as hallowedConceptsItems } from '../scripts/hallowed-concepts';
 import { isExpansionActive } from './expansions';
 
 export type Rarity =
@@ -13,13 +14,17 @@ export type Rarity =
   | 'Lunar Equipment'
   | 'Equipment'
   | 'Void'
-  | 'Meal';
+  | 'Meal'
+  | 'Hallowed'
+  | 'Hex'
+  | 'Page';
 
 export type Expansion =
   | ''
   | 'Survivors of the Void'
   | 'Seekers of the Storm'
-  | 'Alloyed Collective';
+  | 'Alloyed Collective'
+  | 'Hallowed Concepts';
 
 // The source data is hand-curated and loose in places (numeric raw IDs,
 // object-form permanent effects, null images). Most fields are typed but
@@ -1941,7 +1946,7 @@ const items: Item[] = [
     rarity: 'Lunar',
     expansion: '',
     name: 'Glowing Meteorite',
-    position: 1000,
+    position: 1030,
     type: 'Equipment',
   },
   {
@@ -1955,7 +1960,7 @@ const items: Item[] = [
     rarity: 'Lunar',
     expansion: '',
     name: 'Effigy of Grief',
-    position: 1000,
+    position: 1020,
     type: 'Equipment',
   },
   {
@@ -1970,7 +1975,7 @@ const items: Item[] = [
     rarity: 'Lunar',
     expansion: '',
     name: 'Helfire Tincture',
-    position: 1000,
+    position: 1010,
     type: 'Equipment',
   },
   {
@@ -2071,7 +2076,7 @@ const items: Item[] = [
     rarity: 'Lunar',
     expansion: '',
     name: 'Spinel Tonic',
-    position: 1000,
+    position: 1050,
     type: 'Equipment',
   },
   {
@@ -2544,7 +2549,8 @@ const items: Item[] = [
     position: 145,
     type: 'Equipment',
   },
-  ...scrapedItems,
+  ...alloyedCollectiveItems,
+  ...hallowedConceptsItems,
 ];
 
 export default items;
