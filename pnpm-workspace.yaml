@@ -1,4 +1,0 @@
-minimumReleaseAgeExclude:
-  - '@cloudflare/vite-plugin@1.66.0'
-  - miniflare@5.20261023.2-beta
-  - wrangler@4.155.0
