@@ -209,11 +209,12 @@ function textWithSpaces(
 
 // Collapse a wiki rarity label to one of the app's navigable rarity tabs. The
 // original label is kept separately in rawRarity. Tabs are: Common, Uncommon,
-// Legendary, Boss, Lunar, Equipment, Void, Meal.
+// Legendary, Boss, Lunar, Equipment, Void, Meal, Hallowed, Hex, Page.
 //   - "Lunar Equipment"       -> Lunar
 //   - "Elite Equipment"       -> Equipment   (matches existing aspect items)
 //   - "Boss (Solus Wing)" etc -> Boss        (boss sub-types share one tab)
 //   - "Meal"                  -> Meal         (its own tab)
+//   - "Hallowed", "Hex", "Page" pass through as their own tabs
 function normaliseRarity(rarity: string): string {
   if (rarity === 'Lunar Equipment') return 'Lunar';
   if (rarity === 'Elite Equipment') return 'Equipment';
@@ -264,15 +265,17 @@ function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
     .first();
   const expansion = (expansionLink.attr('title') ?? '').trim();
 
-  // Main image: the standard item sprite is 128×128 and rendered full-size
+  // Main image: the standard item sprite is rendered at 128×128 and full-size
   // (not through /thumb/) in one of the infobox rows. The same image also
-  // appears as a thumbnail in the header — filter that out.
+  // appears as a thumbnail in the header — filter that out. Most sprites are
+  // natively 128×128, but some (the N'tormat Pages) are smaller files shown
+  // at 128, so match on the rendered size.
   let imageFilename: string | null = null;
   infobox.find('img').each((_, el) => {
     const src = $(el).attr('src') ?? '';
-    const dfw = parseInt($(el).attr('data-file-width') ?? '0', 10);
-    const dfh = parseInt($(el).attr('data-file-height') ?? '0', 10);
-    if (dfw === 128 && dfh === 128 && !src.includes('/thumb/')) {
+    const w = parseInt($(el).attr('width') ?? '0', 10);
+    const h = parseInt($(el).attr('height') ?? '0', 10);
+    if (w === 128 && h === 128 && !src.includes('/thumb/')) {
       const raw = src.split('/').pop()?.split('?')[0];
       // Store the decoded name (e.g. Hiker's_Boots.png), not the wiki's
       // percent-encoded one, so static hosts that decode request paths can
@@ -288,8 +291,10 @@ function parseItemPage(html: string, pageTitle: string): ScrapedItem | null {
   rarity = normaliseRarity(rarity);
 
   // Classify as equipment via the Cooldown row or the rarity string itself.
-  // Applies to both true Equipment and Lunar Equipment items.
-  const type = cooldown !== null || rarity === 'Equipment' ? 'Equipment' : null;
+  // Applies to both true Equipment and Lunar Equipment items — the latter
+  // checked on the source label, since it normalises to Lunar above.
+  const type =
+    cooldown !== null || rawRarity.includes('Equipment') ? 'Equipment' : null;
 
   return {
     name,
