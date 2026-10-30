@@ -1,7 +1,11 @@
 import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
-import { BUILDS } from '~/builds';
+import { BUILD_SLOTS, BUILDS } from '~/builds';
 import { EXPANSIONS } from '~/expansions';
-import items, { type Item as ItemData, resolveItemImage } from '~/items';
+import items, {
+  isDisplayable,
+  type Item as ItemData,
+  resolveItemImage,
+} from '~/items';
 import { groupLabel } from '~/styles/theme.css';
 import * as css from './BuildSidebar.css';
 import type { ExpansionState } from './ExpansionToggle';
@@ -10,7 +14,13 @@ import { rarityColors } from './RarityBox.css';
 import SurvivorPicker from './SurvivorPicker';
 
 // Display order for the rarity groups within a build.
-const RARITY_ORDER = ['Common', 'Uncommon', 'Boss', 'Legendary'] as const;
+const RARITY_ORDER = [
+  'Common',
+  'Uncommon',
+  'Boss',
+  'Legendary',
+  'Hallowed',
+] as const;
 
 const itemsByName = new Map<string, ItemData>(items.map((i) => [i.name, i]));
 
@@ -29,21 +39,31 @@ export function BuildSidebar({
   // No survivor selected by default — show onboarding copy until one is picked.
   const [survivor, setSurvivor] = useState<string | null>(null);
 
-  const build = survivor
-    ? (BUILDS.find((b) => b.survivor === survivor) ?? null)
-    : null;
-
   // Group the picker's survivors by expansion for the dropdown's group labels.
+  // A DLC's survivors are only offered while that expansion is active and
+  // enabled; base-game survivors are always available.
   const groups = useMemo(
     () =>
-      EXPANSIONS.map((exp) => ({
-        label: exp.name,
-        survivors: BUILDS.filter((b) => b.expansion === exp.key).map(
-          (b) => b.survivor,
-        ),
-      })).filter((g) => g.survivors.length > 0),
-    [],
+      EXPANSIONS.filter(
+        (exp) => exp.active && (exp.key === '' || enabledExpansions[exp.key]),
+      )
+        .map((exp) => ({
+          label: exp.name,
+          survivors: BUILDS.filter((b) => b.expansion === exp.key).map(
+            (b) => b.survivor,
+          ),
+        }))
+        .filter((g) => g.survivors.length > 0),
+    [enabledExpansions],
   );
+
+  // Disabling a survivor's expansion drops them from the picker, so fall back
+  // to the onboarding copy rather than showing a build that can't be played.
+  const selectable =
+    survivor !== null && groups.some((g) => g.survivors.includes(survivor));
+  const build = selectable
+    ? (BUILDS.find((b) => b.survivor === survivor) ?? null)
+    : null;
 
   // Mirror ItemList's accessibility rule: only show picks from expansions the
   // user currently has enabled (base game keyed separately).
@@ -52,28 +72,39 @@ export function BuildSidebar({
     return enabledExpansions[item.expansion];
   };
 
+  // Build picks are ranked within each rarity, so take the first enabled ones
+  // up to that rarity's slot count. Disabling an expansion backfills its picks
+  // with the next-best ones rather than leaving the group short.
   const picks = build
-    ? build.items
-        .map((bi) => {
-          const item = itemsByName.get(bi.name);
-          return item && isEnabled(item) ? { item, reason: bi.reason } : null;
-        })
-        .filter((p): p is { item: ItemData; reason: string } => p !== null)
+    ? RARITY_ORDER.flatMap((rarity) =>
+        build.items
+          .map((bi) => {
+            const item = itemsByName.get(bi.name);
+            return item &&
+              item.rarity === rarity &&
+              isDisplayable(item) &&
+              isEnabled(item)
+              ? { item, reason: bi.reason }
+              : null;
+          })
+          .filter((p): p is { item: ItemData; reason: string } => p !== null)
+          .slice(0, BUILD_SLOTS[rarity] ?? 0),
+      )
     : [];
 
   return (
     <div className={css.sidebar}>
       <span className={groupLabel}>Build</span>
       <SurvivorPicker
-        survivor={survivor}
+        survivor={build ? survivor : null}
         groups={groups}
         onSelect={setSurvivor}
       />
 
       {build && picks.length === 0 ? (
         <p className={css.onboarding}>
-          None of {survivor}'s recommended items are in the expansions you have
-          enabled. Enable more expansions to see this build.
+          None of {build.survivor}'s recommended items are in the expansions you
+          have enabled. Enable more expansions to see this build.
         </p>
       ) : build ? (
         <>

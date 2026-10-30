@@ -73,4 +73,10 @@ export const rarityColors = {
   Boss: '#b5cf29',
   Lunar: '#0066FF',
   Void: '#c267a9',
+  // Hallowed Concepts tiers. Hallowed and Page use the wiki's tier colours;
+  // Hex takes the neon green of the hex icons' outlines, as the wiki's
+  // yellow-green reads too close to Boss.
+  Hallowed: '#9368f9',
+  Hex: '#9cf01c',
+  Page: '#2387ff',
 };

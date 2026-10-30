@@ -1,10 +1,15 @@
-import type { Expansion } from './items';
+import type { Expansion, Rarity } from './items';
 
 // Recommended item sets per survivor, curated from community build guides and
-// validated against items.ts (every name resolves to a real, commandable item
-// of the stated rarity). Each build is 4 Common / 4 Uncommon / 3 Boss / 3
-// Legendary; the sidebar groups picks by their actual rarity. Each item carries
-// a survivor-specific reason shown in the hover.
+// the wiki's skill notes, and validated against items.ts (every name resolves
+// to a real, commandable item of the stated rarity).
+//
+// Picks are ranked: within each rarity the list runs best-first, and the
+// sidebar shows the first BUILD_SLOTS[rarity] picks whose expansion is enabled.
+// Strong DLC picks sit near the top and base-game fallbacks follow, so turning
+// an expansion off swaps its picks for the next-best ones instead of leaving
+// gaps. Every build keeps enough base-game picks to fill each base rarity on
+// its own. Each item carries a survivor-specific reason shown in the hover.
 export interface BuildItem {
   name: string;
   reason: string;
@@ -19,6 +24,15 @@ export interface Build {
   items: BuildItem[];
 }
 
+// How many picks the sidebar shows per rarity, in display order.
+export const BUILD_SLOTS: Partial<Record<Rarity, number>> = {
+  Common: 4,
+  Uncommon: 4,
+  Boss: 3,
+  Legendary: 3,
+  Hallowed: 2,
+};
+
 export const BUILDS: Build[] = [
   {
     survivor: 'Commando',
@@ -26,10 +40,16 @@ export const BUILDS: Build[] = [
     identity:
       'On-hit proc machine — attack speed turns every bullet into a trigger.',
     items: [
+      // Common
       {
         name: "Soldier's Syringe",
         reason:
           'More attack speed boosts his rapid double-tap and reload-cancel proc spam.',
+      },
+      {
+        name: "Lens-Maker's Glasses",
+        reason:
+          'Crits on every bullet feed Shatterspleen and Predatory Instincts.',
       },
       {
         name: 'Tri-Tip Dagger',
@@ -37,15 +57,21 @@ export const BUILDS: Build[] = [
           'Bleed stacks well on his fast, low-damage individual bullet hits.',
       },
       {
+        name: 'Bolstering Lantern',
+        reason:
+          'Mid-range gunfights keep enemies close enough for the attack speed.',
+      },
+      {
         name: 'Crowbar',
         reason:
-          'Phase Round and FMJ burst gain big damage against full-health targets.',
+          'Phase Round and Sabotage open on full-health targets for bonus burst.',
       },
       {
         name: 'Backup Magazine',
         reason:
           'Extra Phase Round charges mean more frequent piercing burst windows.',
       },
+      // Uncommon
       {
         name: 'Ukulele',
         reason:
@@ -57,6 +83,11 @@ export const BUILDS: Build[] = [
           'Frequent low-damage shots reliably proc missiles for extra burst.',
       },
       {
+        name: 'Luminous Shot',
+        reason:
+          'Phase Round charges turn his Double Tap into lightning strikes.',
+      },
+      {
         name: "Kjaro's Band",
         reason: 'High proc-count fire bullets trigger the fire tornado often.',
       },
@@ -65,13 +96,19 @@ export const BUILDS: Build[] = [
         reason: 'Same frequent procs apply the slowing ice blast reliably.',
       },
       {
+        name: 'Predatory Instincts',
+        reason: 'Crit bullets stack attack speed, compounding his proc rate.',
+      },
+      // Boss
+      {
         name: 'Shatterspleen',
         reason:
           'His high attack speed bleeds enemies, triggering explosive crit bursts.',
       },
       {
-        name: 'Molten Perforator',
-        reason: 'Many hits proc the lava meteors for strong area damage.',
+        name: 'Faulty Conductor',
+        reason:
+          'Energized pulses make Ukulele and Charged Perforator always crit.',
       },
       {
         name: 'Charged Perforator',
@@ -79,16 +116,36 @@ export const BUILDS: Build[] = [
           'Frequent procs call lightning bolts adding free single-target damage.',
       },
       {
-        name: 'Sentient Meat Hook',
-        reason: 'Rapid fire pulls and chains hits across grouped enemies.',
+        name: 'Molten Perforator',
+        reason: 'Many hits proc the lava meteors for strong area damage.',
       },
+      // Legendary
       {
         name: '57 Leaf Clover',
         reason: 'High proc count means many luck rerolls land favourably.',
       },
       {
+        name: 'Sentient Meat Hook',
+        reason: 'Rapid fire pulls and chains hits across grouped enemies.',
+      },
+      {
+        name: 'Electric Boomerang',
+        reason: 'Constant bullet procs throw stunning boomerangs into packs.',
+      },
+      {
         name: 'Resonance Disc',
         reason: 'Constant hits charge the disc quickly for big area nukes.',
+      },
+      // Hallowed
+      {
+        name: 'Infernal Mark',
+        reason:
+          'Ten skill hits arrive in a second of Double Tap, branding targets fast.',
+      },
+      {
+        name: 'Nightmare Demon',
+        reason:
+          'A 20% on-hit chance lands demons constantly off his bullet stream.',
       },
     ],
   },
@@ -96,8 +153,9 @@ export const BUILDS: Build[] = [
     survivor: 'Huntress',
     expansion: '',
     identity:
-      'Auto-aim proc chain — the bouncing glaive fires on-hit items across a room.',
+      'Auto-aim proc chain — glaive bounces and Laser Cyclone ticks fire on-hit items across a room.',
     items: [
+      // Common
       {
         name: "Lens-Maker's Glasses",
         reason: 'Crit chance scales her seeking glaive and arrow damage well.',
@@ -108,6 +166,11 @@ export const BUILDS: Build[] = [
           'Attack speed boosts her glaive throws and auto-targeting arrows.',
       },
       {
+        name: "Hiker's Boots",
+        reason:
+          'She shoots from ledges and mid-Blink, stacking crit from above.',
+      },
+      {
         name: 'Crowbar',
         reason:
           'Mobile hit-and-run lets her open fights with bonus burst damage.',
@@ -116,6 +179,7 @@ export const BUILDS: Build[] = [
         name: 'Tri-Tip Dagger',
         reason: 'Glaive bounces apply bleed across multiple chained targets.',
       },
+      // Uncommon
       {
         name: 'Ukulele',
         reason:
@@ -131,33 +195,58 @@ export const BUILDS: Build[] = [
           'Constant auto-aim attacks proc missiles while she kites freely.',
       },
       {
+        name: "Hunter's Harpoon",
+        reason: 'Kill bursts of speed keep her kiting ahead of every pack.',
+      },
+      {
         name: "Kjaro's Band",
         reason: 'High-proc glaive bounces ignite enemies with fire tornadoes.',
       },
+      // Boss
       {
         name: 'Shatterspleen',
         reason:
           'Crit-focused build bleeds enemies for explosive guaranteed bursts.',
       },
       {
-        name: 'Charged Perforator',
-        reason: 'Frequent crits proc lightning for added ranged damage.',
+        name: 'Whispering Fragment',
+        reason:
+          'Her steady kill rate keeps an orbiting spirit firing alongside her.',
       },
       {
-        name: "Queen's Gland",
-        reason: 'Beetle guard tanks for the fragile, low-health Huntress.',
+        name: 'Charged Perforator',
+        reason: 'Frequent arrow procs call lightning on single targets.',
+      },
+      {
+        name: 'Little Disciple',
+        reason: 'She is always sprinting, so the wisps fire constantly.',
+      },
+      // Legendary
+      {
+        name: 'Laser Scope',
+        reason: 'A crit-stacked Huntress turns every crit into double damage.',
       },
       {
         name: 'Brilliant Behemoth',
-        reason: 'Adds explosive splash to her glaive and arrows for clearing.',
+        reason: 'Every arrow and cyclone tick becomes an area explosion.',
       },
       {
         name: '57 Leaf Clover',
-        reason: 'Crit-heavy kit benefits massively from luck rerolls.',
+        reason: 'Rerolls her many proc chances toward success.',
       },
       {
         name: 'H3AD-5T v2',
-        reason: 'Boosts her already-strong mobility with damaging slam jumps.',
+        reason: 'Extra jump height and slams suit her aerial repositioning.',
+      },
+      // Hallowed
+      {
+        name: 'Ritual Helmet',
+        reason:
+          'Constant sprinting keeps it charged and her speed powers the skull.',
+      },
+      {
+        name: 'Infernal Mark',
+        reason: 'Laser Cyclone ticks five times a second, branding quickly.',
       },
     ],
   },
@@ -167,64 +256,88 @@ export const BUILDS: Build[] = [
     identity:
       'Backstab-crit assassin — stack debuffs and chain executes for cooldown resets.',
     items: [
+      // Common
       {
         name: "Lens-Maker's Glasses",
-        reason: 'Crits amplify his burst and feed Backstab one-shot potential.',
-      },
-      {
-        name: 'Tri-Tip Dagger',
-        reason: 'Bleed stacks reset Lights Out cooldown faster on kills.',
+        reason: 'Crits outside backstabs keep his shotgun damage reliable.',
       },
       {
         name: 'Crowbar',
-        reason:
-          'Burst-fire Lights Out hits full-health targets for execute damage.',
+        reason: 'Opening Lights Out on full-health targets secures the kill.',
+      },
+      {
+        name: 'Tri-Tip Dagger',
+        reason: 'Shotgun pellets each roll bleed, stacking debuffs fast.',
       },
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed speeds his Burst pistol and Blast reloads.',
+        reason: 'Faster reloads keep the shotgun pellets and procs flowing.',
       },
       {
-        name: 'Predatory Instincts',
+        name: 'Backup Magazine',
+        reason: 'Extra Serrated Shiv charges add more bleed and burst.',
+      },
+      // Uncommon
+      {
+        name: 'Noxious Thorn',
         reason:
-          'Backstab crits ramp attack speed for faster Lights Out resets.',
+          'Kills spread his bleed and Hemorrhage stacks onto the next target.',
       },
       {
         name: 'Death Mark',
-        reason: 'His many debuffs trigger bonus damage on marked enemies.',
+        reason: 'Bleed, Hemorrhage and smoke debuffs easily reach the cap.',
+      },
+      {
+        name: 'Predatory Instincts',
+        reason: 'Backstab crits stack attack speed for faster shotgun fire.',
       },
       {
         name: 'Old Guillotine',
-        reason:
-          'Lights Out execute synergises with elite-killing cooldown resets.',
+        reason: 'Executes low-health elites to chain Lights Out resets.',
       },
       {
-        name: "Kjaro's Band",
-        reason: 'Burst shots proc fire tornadoes for extra debuff stacks.',
+        name: "Harvester's Scythe",
+        reason: 'Backstab crits heal him while he fights at close range.',
       },
+      // Boss
       {
         name: 'Shatterspleen',
-        reason: 'Crit bleed bursts pile debuffs onto Death Mark targets.',
+        reason: 'Guaranteed backstab crits bleed and explode enemies.',
       },
       {
         name: 'Charged Perforator',
-        reason: 'Frequent crits add lightning procs to his burst.',
+        reason: 'Pellet procs call lightning for extra single-target damage.',
       },
       {
         name: 'Genesis Loop',
-        reason: 'On low health, the nova rewards his risky melee positioning.',
+        reason: 'A panic button nova when an ambush goes wrong.',
+      },
+      // Legendary
+      {
+        name: 'Laser Scope',
+        reason: 'Backstabs always crit, so every one deals double damage.',
       },
       {
         name: 'Shattering Justice',
-        reason: 'Armour shred and a damage debuff feed his Death Mark synergy.',
-      },
-      {
-        name: '57 Leaf Clover',
-        reason: 'Crit-reliant Backstab build loves the luck rerolls.',
+        reason: 'Armor shred amplifies Lights Out and Desperado stacks.',
       },
       {
         name: 'Ceremonial Dagger',
-        reason: 'Lights Out kills launch homing daggers for chain clears.',
+        reason: 'Every reset kill releases homing daggers into the pack.',
+      },
+      {
+        name: '57 Leaf Clover',
+        reason: 'Rerolls his bleed and proc chances toward success.',
+      },
+      // Hallowed
+      {
+        name: 'Sanguine Chalice',
+        reason: 'His constant bleeds and Hemorrhage turn into self-healing.',
+      },
+      {
+        name: 'Totem of Avarice',
+        reason:
+          'Lights Out clears 400% easily, freezing nearby enemies in gold.',
       },
     ],
   },
@@ -233,127 +346,177 @@ export const BUILDS: Build[] = [
     expansion: '',
     identity: 'Two-weapon bruiser — Nailgun proc spam or Rebar per-shot burst.',
     items: [
+      // Common
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed boosts both Nailgun spray and Scrap rebar.',
+        reason: 'Nailgun fire rate scales directly with attack speed.',
       },
       {
-        name: 'Crowbar',
-        reason: 'Rebar Puncher full-health hits gain large bonus burst damage.',
-      },
-      {
-        name: 'Backup Magazine',
-        reason: 'More Power Mode rebar shots before reloading the cannon.',
+        name: 'Bolstering Lantern',
+        reason: 'A frontline tank always has enemies within 20m for the buff.',
       },
       {
         name: 'Tri-Tip Dagger',
-        reason: "Nailgun's many pellets apply bleed reliably across targets.",
+        reason: 'Every nail rolls bleed, stacking it rapidly on targets.',
       },
       {
+        name: 'Crowbar',
+        reason: 'Rebar and Scrap Launcher open fights with heavy burst.',
+      },
+      {
+        name: 'Backup Magazine',
+        reason: 'An extra Blast Canister charge for more stunning bomblets.',
+      },
+      // Uncommon
+      {
         name: 'Ukulele',
-        reason:
-          "Nailgun's many pellets chain lightning across grouped enemies.",
+        reason: 'Nail spam chains lightning through crowds constantly.',
       },
       {
         name: 'AtG Missile Mk. 1',
-        reason: 'High-volume Nailgun fire procs missiles almost constantly.',
-      },
-      {
-        name: 'Bandolier',
-        reason: 'Frequent kills drop ammo packs resetting his cooldowns.',
+        reason: 'Thousands of nails reliably proc missile volleys.',
       },
       {
         name: "Kjaro's Band",
-        reason: 'Heavy-proc Nailgun output triggers fire tornadoes often.',
+        reason: 'Big Rebar shots trigger the fire tornado on demand.',
+      },
+      {
+        name: 'Bandolier',
+        reason: 'Ammo packs reset his cooldowns mid-fight.',
+      },
+      {
+        name: 'Fuel Cell',
+        reason: 'Retool doubles equipment slots, so charges go twice as far.',
+      },
+      // Boss
+      {
+        name: 'Shatterspleen',
+        reason: 'Fast nail crits bleed and explode packs on death.',
       },
       {
         name: 'Titanic Knurl',
-        reason: 'Bonus health and regen suit his durable two-weapon frontline.',
-      },
-      {
-        name: 'Shatterspleen',
-        reason: 'Nailgun bleed triggers explosive crit bursts on enemies.',
+        reason: 'Bonus health and regen suit a frontline tank.',
       },
       {
         name: 'Molten Perforator',
-        reason: 'Spray hits frequently proc lava meteors for area damage.',
+        reason: 'Many nail hits proc lava meteors for area damage.',
+      },
+      // Legendary
+      {
+        name: 'Brilliant Behemoth',
+        reason: 'Every nail becomes an explosion, turning him into area clear.',
       },
       {
         name: 'Sentient Meat Hook',
-        reason: 'Nailgun multi-hits pull and chain across enemy groups.',
+        reason: 'Nail spam drags whole groups into his firing line.',
       },
       {
-        name: 'Brilliant Behemoth',
-        reason: 'Adds explosive splash to his rebar and nail spray.',
+        name: 'Bottled Chaos',
+        reason: 'Retool lets him fire two equipments, each triggering chaos.',
       },
       {
         name: '57 Leaf Clover',
-        reason: 'High proc volume makes luck rerolls land often.',
+        reason: 'Rerolls his many proc chances toward success.',
+      },
+      // Hallowed
+      {
+        name: 'Vile Censer',
+        reason:
+          'Transport Mode stuns, then nails chain smoke through the pack.',
+      },
+      {
+        name: 'Nightmare Demon',
+        reason: 'Nail spam lands demons fast and bursts them just as quickly.',
       },
     ],
   },
   {
     survivor: 'Engineer',
     expansion: '',
-    identity: 'Turrets inherit everything — a passive proc and DoT platform.',
+    identity:
+      'Turrets inherit everything — a passive proc and DoT platform, now with a ramping Laser Cutter.',
     items: [
-      {
-        name: 'Tri-Tip Dagger',
-        reason:
-          'Turrets inherit bleed, applying it across many automated hits.',
-      },
+      // Common
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed carries to turrets for faster sustained fire.',
+        reason: 'Turrets and Laser Cutter both fire faster with attack speed.',
       },
       {
-        name: 'Crowbar',
-        reason: 'Turrets and mines hit full-health targets for bonus burst.',
+        name: 'Tri-Tip Dagger',
+        reason: 'Turret fire rolls bleed constantly, doubled by inheritance.',
+      },
+      {
+        name: 'Bolstering Lantern',
+        reason: 'Turrets parked together count each other as nearby allies.',
+      },
+      {
+        name: "Lens-Maker's Glasses",
+        reason:
+          'Laser Cutter rolls crit on every one of its nine hits a second.',
       },
       {
         name: 'Backup Magazine',
-        reason: 'More grenade charges before reloading his primary launcher.',
+        reason: 'Extra mine charges for more burst while turrets hold.',
+      },
+      // Uncommon
+      {
+        name: 'Ukulele',
+        reason: 'Turret fire chains lightning through crowds hands-free.',
       },
       {
         name: 'AtG Missile Mk. 1',
-        reason: 'Turrets inherit missiles, firing them constantly at enemies.',
-      },
-      {
-        name: 'Bandolier',
-        reason: 'Mine and turret kills drop ammo resetting his cooldowns.',
-      },
-      {
-        name: 'Ukulele',
-        reason: 'Turret hits chain lightning across clustered enemy groups.',
+        reason: 'Turrets proc missiles constantly with zero effort.',
       },
       {
         name: "Kjaro's Band",
-        reason: 'Turrets inherit and proc fire tornadoes frequently.',
+        reason: 'Turret hits trigger fire tornadoes on big targets.',
       },
       {
+        name: "Harvester's Scythe",
+        reason: 'Turret crits heal the turrets themselves.',
+      },
+      {
+        name: 'Bandolier',
+        reason: 'Ammo drops refill mines and turret placements faster.',
+      },
+      // Boss
+      {
         name: 'Titanic Knurl',
-        reason:
-          'Bonus health protects his stationary, vulnerable turret playstyle.',
+        reason: 'Turrets inherit the health and regen to stay standing.',
       },
       {
         name: 'Shatterspleen',
-        reason: 'Turrets inherit crit bleed for explosive burst damage.',
+        reason: 'Turret crits bleed and chain death explosions.',
       },
       {
         name: "Queen's Gland",
-        reason: 'Beetle guard adds another stationary defender beside turrets.',
+        reason: 'Each turret summons its own Beetle Guards.',
       },
-      {
-        name: "N'kuhana's Opinion",
-        reason: 'Bubble shield healing fuels constant skull projectile damage.',
-      },
+      // Legendary
       {
         name: 'Brilliant Behemoth',
-        reason: 'Turrets and grenades gain explosive splash for clearing.',
+        reason: 'Turret bullets become explosions for hands-free area clear.',
       },
       {
         name: 'Spare Drone Parts',
-        reason: 'Drones gain a powerful auto-firing weapon alongside turrets.',
+        reason: 'Turrets gain attack speed and a bouncing chain gun.',
+      },
+      {
+        name: "N'kuhana's Opinion",
+        reason: 'Turret regen fuels skulls that fire automatically.',
+      },
+      {
+        name: 'Sentient Meat Hook',
+        reason: 'Turret fire hooks enemies into the kill zone.',
+      },
+      // Hallowed
+      {
+        name: 'Infernal Mark',
+        reason: 'Laser Cutter racks up ten skill hits in about a second.',
+      },
+      {
+        name: 'Nightmare Demon',
+        reason: 'Turret fire charges demons he detonates with a skill.',
       },
     ],
   },
@@ -363,63 +526,88 @@ export const BUILDS: Build[] = [
     identity:
       'Cooldown burst caster — wants charges and on-kill AoE over on-hit.',
     items: [
+      // Common
       {
         name: 'Backup Magazine',
-        reason: 'Extra charges on Flamethrower, Nano-Bomb, and ice abilities.',
+        reason: 'Extra Nano-Bomb or Nano-Spear charges for more burst.',
+      },
+      {
+        name: 'Eclipse Lite',
+        reason: 'Her skill-heavy rotation grants barrier as each comes back.',
       },
       {
         name: 'Gasoline',
-        reason: 'Her fire-heavy kit ignites enemies, chaining burn explosions.',
-      },
-      {
-        name: 'Crowbar',
-        reason: 'Charged Nano-Bomb and bolts hit full-health targets harder.',
+        reason: 'On-kill fire spreads her damage through packs.',
       },
       {
         name: "Lens-Maker's Glasses",
-        reason: 'Crits amplify her high-damage burst ability hits.',
+        reason: 'Crits on big spells mean huge burst spikes.',
       },
       {
-        name: "Harvester's Scythe",
-        reason:
-          'Crit-boosted big hits heal her through risky cooldown windows.',
+        name: 'Crowbar',
+        reason: 'Nano-Bomb and Flamethrower open with bonus damage.',
       },
+      // Uncommon
       {
         name: "Kjaro's Band",
-        reason: 'Heavy single-hit abilities proc strong fire tornadoes.',
+        reason: 'Big spell hits trigger the fire tornado reliably.',
       },
       {
-        name: 'Fuel Cell',
-        reason:
-          'Extra ability charges and faster recharge for her cooldown-gated kit.',
+        name: 'Ignition Tank',
+        reason: 'Flamethrower and Gasoline burns deal far more damage.',
+      },
+      {
+        name: 'Luminous Shot',
+        reason: 'Secondary charges turn Flame Bolts into lightning strikes.',
       },
       {
         name: "Runald's Band",
-        reason: 'Big ability hits proc the slowing ice blast reliably.',
+        reason: 'Paired with Kjaro for back-to-back burst procs.',
       },
       {
+        name: "Harvester's Scythe",
+        reason: 'Big crits heal her, covering a fragile caster.',
+      },
+      {
+        name: 'Fuel Cell',
+        reason: 'More equipment charges for extra burst options.',
+      },
+      // Boss
+      {
         name: 'Little Disciple',
-        reason: 'Casting abilities fires homing tracers adding free damage.',
+        reason: 'Sprinting between casts fires free homing wisps.',
       },
       {
         name: 'Molten Perforator',
-        reason: 'Her large hits proc lava meteors for extra area damage.',
+        reason: 'Spell hits proc lava meteors on top of her burst.',
       },
       {
         name: 'Genesis Loop',
-        reason: 'Low-health nova suits her squishy long-range positioning.',
+        reason: 'A defensive nova when enemies get too close.',
       },
+      // Legendary
       {
         name: 'Alien Head',
-        reason: 'Cooldown reduction lets her cast abilities far more often.',
+        reason: 'Lower cooldowns mean more spells cast per fight.',
       },
       {
         name: 'Hardlight Afterburner',
-        reason: 'Extra Nano-Bomb and dash charges with faster recharge.',
+        reason:
+          'More Ion Surge or Tectonic Blast charges for mobility and oil.',
       },
       {
         name: 'Brilliant Behemoth',
-        reason: 'Adds explosive splash to her bolts and bombs.',
+        reason: 'Flame Bolts explode on hit for consistent area damage.',
+      },
+      // Hallowed
+      {
+        name: 'Totem of Avarice',
+        reason:
+          'Nano-Bomb and Ion Surge hits clear 400%, turning foes to gold.',
+      },
+      {
+        name: 'Earthbound Vessel',
+        reason: 'Extra jumps keep her airborne between hovering casts.',
       },
     ],
   },
@@ -429,74 +617,86 @@ export const BUILDS: Build[] = [
     identity:
       'Crit melee assassin — attack speed and crit keep him airborne and safe.',
     items: [
+      // Common
       {
-        name: "Soldier's Syringe",
-        reason:
-          'Faster attacks chain his melee combos and reset dash i-frames sooner.',
+        name: "Lens-Maker's Glasses",
+        reason: 'Crits fuel his lifesteal and attack-speed ramp.',
       },
       {
-        name: 'Crowbar',
-        reason:
-          'Burst damage rewards his dive-in openers on full-health priority targets.',
+        name: "Soldier's Syringe",
+        reason: 'Faster swings mean more hits and more procs.',
+      },
+      {
+        name: "Hiker's Boots",
+        reason: 'Rising Thunder and aerial combos strike from above.',
       },
       {
         name: 'Focus Crystal',
-        reason:
-          'Whirlwind and Eviscerate land point-blank, inside the close-range bonus.',
+        reason: 'He is always in melee range for the bonus damage.',
       },
       {
-        name: "Lens-Maker's Glasses",
-        reason:
-          'Multi-hit melee combos convert flat crit into constant extra damage.',
+        name: 'Crowbar',
+        reason: 'Opening dashes on fresh targets hit harder.',
       },
+      // Uncommon
       {
         name: 'Predatory Instincts',
-        reason:
-          'Rapid melee hits stack attack speed for relentless combo uptime.',
-      },
-      {
-        name: "Berzerker's Pauldron",
-        reason:
-          'Killing clusters mid-combo grants movement and attack speed he abuses.',
+        reason: 'Crits ramp attack speed for faster combos.',
       },
       {
         name: "Harvester's Scythe",
-        reason: 'Crit-heavy melee triggers reliable lifesteal between dashes.',
+        reason: 'Crit lifesteal keeps a melee fighter alive.',
+      },
+      {
+        name: 'Breaching Fin',
+        reason: 'Launches enemies into the air to keep his juggles going.',
+      },
+      {
+        name: "Berzerker's Pauldron",
+        reason: 'Multi-kills from Eviscerate trigger frequent warcries.',
       },
       {
         name: 'Hopoo Feather',
-        reason:
-          'Extra jumps extend Eviscerate repositioning and aerial dive engagements.',
+        reason: 'Extra jumps extend his airborne invulnerability tricks.',
+      },
+      // Boss
+      {
+        name: 'Shatterspleen',
+        reason: 'Crit bleed explodes enemies he cuts down.',
       },
       {
         name: 'Little Disciple',
-        reason:
-          'Constant sprinting between targets spawns homing wisps for free poke.',
-      },
-      {
-        name: 'Shatterspleen',
-        reason:
-          'Crit-based kit detonates guaranteed bleed explosions on packed enemies.',
+        reason: 'Constant sprinting fires homing wisps between dashes.',
       },
       {
         name: 'Genesis Loop',
-        reason:
-          'Diving low into melee triggers the nova to clear surrounding adds.',
+        reason: 'A nova escape when surrounded in melee.',
+      },
+      // Legendary
+      {
+        name: 'Hardlight Afterburner',
+        reason: 'More Blinding Assault dashes for chained engagements.',
+      },
+      {
+        name: 'Laser Scope',
+        reason: 'His crit-stacked build doubles every critical swing.',
       },
       {
         name: 'Brilliant Behemoth',
-        reason:
-          'Melee swings gain explosive AoE, clearing crowds he fights inside.',
+        reason: 'Sword swings explode for area clear.',
       },
       {
         name: 'Wake of Vultures',
-        reason:
-          'Killing elites mid-dash steals their affixes for combat power.',
+        reason: 'Stolen elite aspects stack on a melee killer.',
+      },
+      // Hallowed
+      {
+        name: 'Ritual Helmet',
+        reason: 'Sprinting between fights charges the skull for his openers.',
       },
       {
-        name: 'Hardlight Afterburner',
-        reason:
-          'Extra Blinding Assault charges multiply his mobility and i-frames.',
+        name: 'Infernal Mark',
+        reason: 'Fast multi-hit combos brand targets almost instantly.',
       },
     ],
   },
@@ -506,69 +706,80 @@ export const BUILDS: Build[] = [
     identity:
       'HP-cost sustain caster — healing and max HP to spam its skills safely.',
     items: [
-      {
-        name: 'Tougher Times',
-        reason: 'Block chance offsets the self-damage cost of his abilities.',
-      },
+      // Common
       {
         name: 'Topaz Brooch',
-        reason:
-          'Frequent kills with seeds and mines grant survivable temporary barrier.',
-      },
-      {
-        name: 'Cautious Slug',
-        reason:
-          'Out-of-combat regen counters his HP-draining primary and special.',
+        reason: 'Kills grant barrier that soaks its health costs.',
       },
       {
         name: 'Bustling Fungus',
+        reason: 'Rooted fights let it stand still and heal.',
+      },
+      {
+        name: 'Cautious Slug',
+        reason: 'Out-of-combat regen recovers spent health between fights.',
+      },
+      {
+        name: 'Tougher Times',
+        reason: 'Blocked hits matter more when it runs low on purpose.',
+      },
+      {
+        name: 'Medkit',
+        reason: 'Heals back each chunk of health it spends.',
+      },
+      // Uncommon
+      {
+        name: 'Leeching Seed',
         reason:
-          'Stationary watering and channeling builds a healing zone around him.',
+          'Every hit heals, paying back Seed Barrage and Bramble Volley costs.',
       },
       {
         name: "Harvester's Scythe",
-        reason:
-          'Crit healing tops off the health his abilities constantly spend.',
+        reason: 'Crit healing tops up health after each cast.',
       },
       {
-        name: 'Leeching Seed',
-        reason: 'Drains life on every weak hit to recover ability self-damage.',
-      },
-      {
-        name: "Ghor's Tome",
-        reason: 'Repeated kills drop treasure, funding his item-hungry build.',
+        name: 'Infusion',
+        reason: 'Permanent max health makes each percentage cost go further.',
       },
       {
         name: 'AtG Missile Mk. 1',
-        reason: 'High base damage on DoT primaries reliably procs missiles.',
+        reason: 'Bramble Volley and syringes proc missiles for extra damage.',
       },
+      // Boss
       {
         name: 'Titanic Knurl',
-        reason:
-          'Extra max HP and regen offset his health-fuelled ability spam.',
+        reason: 'Health and regen directly fuel its skill costs.',
       },
       {
         name: 'Planula',
-        reason: 'Heals back the chunk damage Tonic and abilities cost him.',
+        reason: 'Flat heal on every hit taken offsets self-damage.',
       },
       {
         name: 'Genesis Loop',
-        reason:
-          'Dropping low from self-damage triggers a screen-clearing nova.',
+        reason: 'It spends time at low health, so the nova fires often.',
       },
+      // Legendary
       {
-        name: 'Soulbound Catalyst',
-        reason: 'Frequent kills slash his long ability cooldowns dramatically.',
+        name: 'Rejuvenation Rack',
+        reason: 'Doubles all its healing, turning costs into a non-issue.',
       },
       {
         name: "N'kuhana's Opinion",
-        reason:
-          'Stacked overheal from sustain launches damaging skulls at enemies.',
+        reason: 'Its constant healing becomes homing skulls.',
       },
       {
-        name: 'Rejuvenation Rack',
+        name: 'Aegis',
+        reason: 'Overhealing turns into barrier that absorbs costs.',
+      },
+      // Hallowed
+      {
+        name: 'Stained Scimitar',
         reason:
-          'Doubles all healing, multiplying his strong self-sustain loop.',
+          'Big DIRECTIVE: Harvest heals spawn blades it fires with its secondary.',
+      },
+      {
+        name: 'Vengeful Spirit',
+        reason: 'The spirit soaks half the damage while it sits low on health.',
       },
     ],
   },
@@ -577,72 +788,91 @@ export const BUILDS: Build[] = [
     expansion: '',
     identity: 'Velocity bruiser — movement speed scales her gauntlet damage.',
     items: [
-      {
-        name: 'Crowbar',
-        reason:
-          'Massive grapple-punch burst exploits the full-health damage bonus.',
-      },
+      // Common
       {
         name: "Paul's Goat Hoof",
-        reason: 'Speed boosts her swing momentum and grapple travel velocity.',
+        reason: 'More speed means harder-hitting charged punches.',
+      },
+      {
+        name: 'Elusive Antlers',
+        reason: 'Stacking speed orbs feed straight into punch damage.',
+      },
+      {
+        name: 'Crowbar',
+        reason: 'Charged punches open on full-health targets for huge hits.',
       },
       {
         name: 'Personal Shield Generator',
-        reason:
-          'Regenerating shield rewards her dive-in, dive-out swing playstyle.',
+        reason: 'Shield stacks with her passive barrier for a sturdy brawler.',
       },
       {
         name: 'Repulsion Armor Plate',
-        reason:
-          'Heavy armour flattens chip damage during reckless grapple dives.',
+        reason: 'Flat damage reduction against swarms of small hits.',
       },
+      // Uncommon
       {
-        name: "Berzerker's Pauldron",
-        reason:
-          'Punching through grouped enemies grants speed for the next swing.',
+        name: 'Faraday Spur',
+        reason: 'Up to +160% speed from moving, then jumps that explode.',
       },
       {
         name: 'Wax Quail',
-        reason:
-          'Sprinting into a jump after grapple flings her huge distances.',
+        reason: 'Sprint-jump bursts launch her into grapple combos.',
       },
       {
         name: 'Hopoo Feather',
-        reason: 'Extra jumps stack with grapple for longer momentum swings.',
+        reason: 'Extra jumps keep her momentum between grapples.',
+      },
+      {
+        name: "Berzerker's Pauldron",
+        reason: 'Multi-kills from punches grant speed and attack speed.',
       },
       {
         name: "Kjaro's Band",
-        reason:
-          'Her high-damage charged punches easily clear the proc threshold.',
+        reason: 'Huge punch hits trigger the fire tornado.',
+      },
+      // Boss
+      {
+        name: 'Mycelium Cap',
+        reason: 'High-speed landings and Thunderslam drops leave spore clouds.',
       },
       {
         name: 'Titanic Knurl',
-        reason:
-          'Bonus HP and regen reinforce her tanky melee bruiser identity.',
+        reason: 'Health and regen for a frontline brawler.',
       },
       {
         name: 'Charged Perforator',
-        reason:
-          'Hard-hitting punches roll lightning that smashes flyers downward.',
+        reason: 'Big punches proc lightning strikes.',
       },
       {
         name: 'Shatterspleen',
-        reason:
-          'Heavy single hits detonate bleed bursts across packed enemies.',
+        reason: 'Crit punches bleed and explode enemies.',
+      },
+      // Legendary
+      {
+        name: 'H3AD-5T v2',
+        reason: 'Downward slams from height pair with her momentum.',
       },
       {
         name: 'Hardlight Afterburner',
-        reason: 'Extra grapple charges multiply her mobility and swing setups.',
+        reason: 'More gauntlet charges for back-to-back charged punches.',
+      },
+      {
+        name: 'Orphaned Core',
+        reason:
+          'The Solus unit inherits her speed items and hits harder for it.',
       },
       {
         name: 'Brilliant Behemoth',
-        reason:
-          'Punches gain explosive radius, clearing crowds she pile-drives into.',
+        reason: 'Punch impacts explode across groups.',
+      },
+      // Hallowed
+      {
+        name: 'Ritual Helmet',
+        reason: 'Her top speed makes the sprinting skull hit enormously hard.',
       },
       {
-        name: 'H3AD-5T v2',
-        reason:
-          'Falling from grapple height delivers a devastating ground-slam crater.',
+        name: 'Totem of Avarice',
+        reason: 'Charged punches easily clear 400%, turning packs to gold.',
       },
     ],
   },
@@ -652,70 +882,87 @@ export const BUILDS: Build[] = [
     identity:
       'DoT bruiser — stack debuffs and lifesteal while poison does the work.',
     items: [
+      // Common
       {
         name: 'Tri-Tip Dagger',
-        reason:
-          'Bites apply extra bleed, stacking with his poison damage-over-time.',
+        reason: 'Bleed adds another debuff alongside poison or blight.',
       },
       {
         name: "Soldier's Syringe",
-        reason:
-          'Faster bites and claws spread poison and ramp Festering Wounds.',
+        reason: 'Faster slashes apply more debuffs and procs.',
       },
       {
         name: 'Bustling Fungus',
         reason:
-          'Standing in melee range builds a healing zone while he brawls.',
+          'Holding ground beside Cloying Breath clouds lets the fungus heal.',
       },
       {
         name: 'Medkit',
-        reason:
-          'Reliable burst heal sustains his low-range, high-commitment engagements.',
+        reason: 'Heals after taking hits in close-range brawls.',
+      },
+      {
+        name: 'Monster Tooth',
+        reason: 'Poison kills drop healing orbs around him.',
+      },
+      // Uncommon
+      {
+        name: 'Noxious Thorn',
+        reason: 'Kills hand poison and blight stacks to the next enemy.',
       },
       {
         name: 'Death Mark',
-        reason: 'His many DoTs quickly hit four debuffs for 50% bonus damage.',
+        reason: 'Poison, bleed and blight quickly hit the debuff count.',
       },
       {
         name: 'Leeching Seed',
-        reason:
-          'Constant poison ticks sustain him through extended melee trades.',
-      },
-      {
-        name: 'Kinetic Dampener',
-        reason:
-          'Reduced incoming damage helps his close-range diving brawler kit.',
+        reason: 'Every slash and bite heals in melee.',
       },
       {
         name: 'Predatory Instincts',
-        reason:
-          'Rapid claw and bite hits stack attack speed for poison uptime.',
+        reason: 'Crits ramp attack speed for more debuff applications.',
       },
       {
+        name: "Harvester's Scythe",
+        reason: 'Crit bites heal him mid-brawl.',
+      },
+      // Boss
+      {
         name: 'Shatterspleen',
-        reason:
-          'Bleed bursts compound with his stacked poison and blight ticks.',
+        reason: 'Crits add bleed and death explosions to his DoTs.',
       },
       {
         name: 'Planula',
-        reason: 'Heals the chunk damage he eats diving into melee range.',
+        reason: 'Flat healing on every hit taken in melee range.',
       },
       {
         name: 'Titanic Knurl',
-        reason:
-          'Extra HP and regen reinforce his durable poison-bruiser sustain.',
+        reason: 'Health and regen for a frontline poisoner.',
       },
+      // Legendary
       {
         name: 'Sentient Meat Hook',
-        reason: 'Multi-hit bites pull crowds together for spreading poison.',
+        reason: 'Pulls fleeing enemies back into his poison.',
+      },
+      {
+        name: 'Symbiotic Scorpion',
+        reason: 'Fast slashes permanently shred armor on tanky targets.',
       },
       {
         name: "N'kuhana's Opinion",
-        reason: 'His heavy lifesteal overheal converts into damaging skulls.',
+        reason: 'His regen and lifesteal fire homing skulls.',
       },
       {
         name: 'Wake of Vultures',
-        reason: 'Killing elites in melee steals affixes to layer onto poison.',
+        reason: 'Poisoned elites drop aspects to stack.',
+      },
+      // Hallowed
+      {
+        name: 'Corpse Lily',
+        reason: 'Its teleporter Blight cloud stacks with his own blight build.',
+      },
+      {
+        name: 'Sanguine Chalice',
+        reason: 'Tri-Tip and Chalice bleeds turn into steady healing.',
       },
     ],
   },
@@ -725,71 +972,82 @@ export const BUILDS: Build[] = [
     identity:
       'On-hit support — proc items and bleed explosions off the shotgun blast.',
     items: [
+      // Common
       {
         name: 'Tri-Tip Dagger',
-        reason: 'Shotgun pellets each roll bleed for heavy multi-hit stacking.',
-      },
-      {
-        name: "Soldier's Syringe",
-        reason:
-          'Faster Vulcan Shotgun fire raises overall pellet damage output.',
-      },
-      {
-        name: 'Backup Magazine',
-        reason:
-          'Extra Vulcan Shotgun charges sustain his burst between reloads.',
+        reason: 'Every shotgun pellet rolls bleed.',
       },
       {
         name: "Lens-Maker's Glasses",
-        reason: 'Many pellets per shot give crit frequent chances to land.',
+        reason: 'Pellet crits feed Shatterspleen bursts.',
+      },
+      {
+        name: "Soldier's Syringe",
+        reason: 'Faster shotgun charge and more pellets per second.',
+      },
+      {
+        name: 'Backup Magazine',
+        reason: 'Extra Power Tazer charges for more stuns.',
+      },
+      {
+        name: 'Crowbar',
+        reason: 'Full-charge blasts open on fresh targets.',
+      },
+      // Uncommon
+      {
+        name: 'Ukulele',
+        reason: 'Pellet spreads chain lightning through groups.',
       },
       {
         name: 'AtG Missile Mk. 1',
-        reason:
-          'Multi-pellet shotgun blasts proc missiles on nearly every shot.',
+        reason: 'Many pellets per shot proc missiles reliably.',
       },
       {
         name: "Kjaro's Band",
-        reason:
-          'High-damage point-blank shotgun hits reliably trigger fire tornadoes.',
-      },
-      {
-        name: 'Ukulele',
-        reason:
-          'Pellet spread chains lightning bounces across grouped enemies.',
+        reason: 'Big shotgun blasts trigger fire tornadoes.',
       },
       {
         name: 'Squid Polyp',
-        reason: 'Beacons stand still, so turrets add steady covering fire.',
+        reason: 'Beacons and interactables summon extra squid turrets.',
       },
+      // Boss
       {
         name: 'Shatterspleen',
-        reason:
-          'Crit shotgun blasts detonate bleed across whole enemy clusters.',
+        reason: 'Pellet crits bleed and explode packs on death.',
       },
       {
         name: 'Charged Perforator',
-        reason: 'Frequent pellet hits proc lightning to punish flying enemies.',
+        reason: 'Shotgun procs call lightning on single targets.',
       },
       {
         name: 'Defense Nucleus',
-        reason:
-          'Orbital-strike elite kills spawn Alpha Construct allies for support.',
+        reason: 'Elite kills build an army of constructs around him.',
       },
       {
+        name: 'Molten Perforator',
+        reason: 'Pellet procs rain lava meteors.',
+      },
+      // Legendary
+      {
         name: 'Sentient Meat Hook',
-        reason:
-          'Multi-pellet shots reliably trigger hooks pulling enemies together.',
+        reason: 'Pellet spreads hook groups together.',
       },
       {
         name: '57 Leaf Clover',
-        reason:
-          'Pellet-heavy attacks reroll countless luck checks across his items.',
+        reason: 'Rerolls his many proc chances toward success.',
       },
       {
         name: 'Resonance Disc',
-        reason:
-          "High hit-count shotgun fire charges the disc's AoE laser fast.",
+        reason: 'Kills charge the disc for big area nukes.',
+      },
+      // Hallowed
+      {
+        name: 'Vile Censer',
+        reason: 'Power Tazer stuns, then pellets chain smoke between enemies.',
+      },
+      {
+        name: 'Infernal Mark',
+        reason: 'A full shotgun blast lands ten skill hits at once.',
       },
     ],
   },
@@ -798,73 +1056,82 @@ export const BUILDS: Build[] = [
     expansion: 'Survivors of the Void',
     identity: 'Per-hit crit sniper — multipliers to one-shot priority targets.',
     items: [
-      {
-        name: 'Crowbar',
-        reason:
-          'Bonus damage on full-HP enemies pairs with one-shot Supercharge shots.',
-      },
+      // Common
       {
         name: "Lens-Maker's Glasses",
-        reason:
-          'Flat crit chance boosts her already crit-focused precision shots.',
+        reason: 'Crits off-weak-point keep unscoped shots dangerous.',
       },
       {
-        name: 'Focus Crystal',
-        reason:
-          'Adds damage to nearby targets when enemies close the gap on her.',
+        name: 'Crowbar',
+        reason: 'Scoped shots on full-health targets get the bonus.',
       },
       {
-        name: 'Backup Magazine',
-        reason:
-          'Extra Supercharge charges mean more high-damage piercing shots.',
+        name: 'Armor-Piercing Rounds',
+        reason: 'Her slow, heavy shots are best spent on bosses.',
       },
+      {
+        name: 'Delicate Watch',
+        reason: 'She fights from range, so the damage bonus rarely breaks.',
+      },
+      {
+        name: "Soldier's Syringe",
+        reason: 'Attack speed shortens the gap between her heavy shots.',
+      },
+      // Uncommon
       {
         name: "Kjaro's Band",
-        reason:
-          'Big single-hit shots reliably proc the high-damage fire tornado.',
+        reason: 'Every big shot triggers the fire tornado.',
       },
       {
         name: "Runald's Band",
-        reason:
-          'Heavy-hit snipes trigger the slowing frost blast on tough targets.',
+        reason: 'Pairs with Kjaro for back-to-back burst.',
       },
       {
         name: 'Predatory Instincts',
-        reason:
-          'Repeated headshot kills stack attack speed for faster scope cycling.',
+        reason: 'Crits speed up her slow fire rate.',
       },
       {
         name: 'Death Mark',
-        reason:
-          'Her debuff-heavy hits set up the bonus-damage threshold easily.',
+        reason: 'Debuffed targets take more from her finishing shots.',
       },
+      // Boss
       {
         name: 'Shatterspleen',
-        reason: 'Guaranteed crit bleed on her high crit-rate piercing shots.',
+        reason: 'Big crits bleed and explode enemies.',
       },
       {
         name: 'Charged Perforator',
-        reason:
-          'Big-damage hits trigger lightning bolts that clear chip enemies.',
+        reason: 'Heavy hits call extra lightning.',
       },
       {
         name: 'Molten Perforator',
-        reason: 'Heavy snipes summon magma balls for extra area damage.',
+        reason: 'Big shots proc lava meteors.',
+      },
+      // Legendary
+      {
+        name: 'Laser Scope',
+        reason: 'Weak-point crits deal double, deleting priority targets.',
       },
       {
         name: 'Shattering Justice',
-        reason:
-          'Permanent armour break amplifies her enormous single-shot damage.',
+        reason: 'Armor shred amplifies every high-damage shot.',
+      },
+      {
+        name: 'Runic Lens',
+        reason: 'Meteor chance and damage scale with her huge per-shot damage.',
       },
       {
         name: '57 Leaf Clover',
-        reason:
-          'Rerolls her crit-heavy build for consistent fire/frost band procs.',
+        reason: 'Rerolls her few but critical proc chances.',
+      },
+      // Hallowed
+      {
+        name: 'Totem of Avarice',
+        reason: 'Every scoped shot clears 400%, golding enemies around it.',
       },
       {
-        name: 'H3AD-5T v2',
-        reason:
-          'Stomp closes gaps and repositions for clean long-range scope lines.',
+        name: 'Nightmare Demon',
+        reason: 'Huge shots fill the demon charge in one or two hits.',
       },
     ],
   },
@@ -874,68 +1141,74 @@ export const BUILDS: Build[] = [
     identity:
       'Corruption duality — crit and attack speed plus shields for sustain.',
     items: [
+      // Common
       {
         name: "Lens-Maker's Glasses",
-        reason:
-          'Crit chance scales both his corrupted and normal rapid-fire forms.',
+        reason: 'Crits boost both his corrupted and uncorrupted forms.',
       },
       {
         name: 'Topaz Brooch',
-        reason:
-          'Frequent kills grant barrier, sustaining his form-swapping survival.',
+        reason: 'Kills grant barrier during risky corruption phases.',
       },
       {
         name: "Soldier's Syringe",
-        reason:
-          'Attack speed boosts his Suppress spray and corrupted fire rate.',
+        reason: 'Faster Drown fire applies more procs.',
       },
       {
         name: 'Crowbar',
-        reason: 'Opens fights with extra damage before enemies are softened.',
+        reason: 'Corrupted bursts open on fresh targets.',
       },
+      // Uncommon
       {
         name: 'Predatory Instincts',
-        reason:
-          'Rapid-fire kills stack attack speed for denser bullet streams.',
+        reason: 'Crits ramp his attack speed in both forms.',
       },
       {
         name: "Harvester's Scythe",
-        reason:
-          'Crit lifesteal sustains him through aggressive corrupted bursts.',
+        reason: 'Crit healing sustains him while corrupted.',
       },
       {
         name: 'Leeching Seed',
-        reason:
-          'Sustained spray damage heals constantly during corruption windows.',
+        reason: 'Drown hits heal steadily.',
       },
       {
         name: 'Death Mark',
-        reason: 'His many debuffs trigger the bonus-damage threshold reliably.',
+        reason: 'Debuffed targets take extra damage from his beams.',
+      },
+      // Boss
+      {
+        name: 'Shatterspleen',
+        reason: 'Crit bleed explosions clear packs.',
       },
       {
         name: "Queen's Gland",
-        reason: 'Beetle guard adds pressure while he kites between forms.',
-      },
-      {
-        name: 'Shatterspleen',
-        reason: 'Crit bleed amplifies his high-fire-rate corrupted barrage.',
+        reason: 'Beetle guards draw aggro while he channels.',
       },
       {
         name: 'Planula',
-        reason:
-          'Soul damage taken returns healing, buffering his risky aggression.',
+        reason: 'Flat healing on hit taken during corruption.',
       },
+      // Legendary
       {
         name: 'Brilliant Behemoth',
-        reason: 'Splash on every shot turns his spray into area clear.',
+        reason: 'Drown hits explode for area damage.',
       },
       {
         name: "N'kuhana's Opinion",
-        reason: 'Heavy healing from lifesteal fires homing skulls passively.',
+        reason: 'His healing turns into homing skulls.',
       },
       {
-        name: 'Soulbound Catalyst',
-        reason: 'Frequent kills slash his corruption cooldowns dramatically.',
+        name: 'Alien Head',
+        reason: 'Faster Trespass and Suppress cooldowns between forms.',
+      },
+      // Hallowed
+      {
+        name: 'Stained Scimitar',
+        reason: 'Suppress heals in big chunks, summoning ghost blades.',
+      },
+      {
+        name: 'Vengeful Spirit',
+        reason: 'The spirit absorbs damage he takes while corrupted.',
       },
     ],
   },
@@ -943,127 +1216,157 @@ export const BUILDS: Build[] = [
     survivor: 'Seeker',
     expansion: 'Seekers of the Storm',
     identity:
-      'Burst multiplier — band procs and barrier sustain around Soul Spiral.',
+      'Burst multiplier — band procs and barrier sustain around Tranquility.',
     items: [
+      // Common
       {
         name: 'Crowbar',
-        reason:
-          'Burst damage on healthy enemies suits her Spiral Bomb openers.',
+        reason: 'Spirit Punch combos open with bonus damage.',
       },
       {
         name: 'Tri-Tip Dagger',
-        reason: 'Bleed stacks from her multi-hit Triple Wound attacks.',
+        reason: 'Fast punches stack bleed.',
       },
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed quickens her melee combo and Triple Wound.',
+        reason: 'Faster punches mean more procs per combo.',
       },
       {
         name: 'Bison Steak',
-        reason: 'Extra health helps her stay in melee range safely.',
+        reason: 'Max health scales Meditate healing and barrier.',
       },
+      // Uncommon
       {
         name: "Runald's Band",
-        reason: 'Hard-hitting Spiral Bombs trigger the frost slowing blast.',
-      },
-      {
-        name: 'Razorwire',
-        reason: 'Melee proximity punishes enemies whenever she takes hits.',
+        reason: 'Unseen Hand and punch hits trigger ice blasts.',
       },
       {
         name: "Harvester's Scythe",
-        reason: 'Crit lifesteal sustains her close-range aggressive playstyle.',
+        reason: 'Crit healing tops up her health.',
       },
       {
         name: 'Leeching Seed',
-        reason: 'Multi-hit attacks heal her constantly during melee brawls.',
+        reason: 'Every punch heals her.',
       },
       {
+        name: 'Razorwire',
+        reason: 'Punishes enemies that swarm her in melee.',
+      },
+      // Boss
+      {
         name: 'Shatterspleen',
-        reason: 'Bleed-on-crit synergises with her stacking wound damage.',
+        reason: 'Crit punches bleed and explode.',
       },
       {
         name: 'Titanic Knurl',
-        reason: 'Bonus health and regen reinforce her frontline melee role.',
+        reason: 'Max health scales Meditate healing.',
       },
       {
         name: 'Charged Perforator',
-        reason: 'Big bomb hits trigger lightning to clear surrounding adds.',
+        reason: 'Punch procs call lightning.',
       },
+      // Legendary
       {
         name: 'Sentient Meat Hook',
-        reason: 'Spiral Bomb hits chain to nearby grouped enemies.',
+        reason: 'Pulls groups into her punch range.',
       },
       {
         name: 'Rejuvenation Rack',
-        reason: 'Doubles her lifesteal and healing for melee sustain.',
+        reason: 'Doubles Unseen Hand and Meditate healing.',
       },
       {
         name: 'Hardlight Afterburner',
-        reason: 'Extra Spiral Bomb charges for sustained burst output.',
+        reason: 'More Sojourn charges for repositioning and stuns.',
+      },
+      // Hallowed
+      {
+        name: 'Stained Scimitar',
+        reason: 'Unseen Hand heals her in chunks, summoning ghost blades.',
+      },
+      {
+        name: 'Vengeful Spirit',
+        reason: 'Absorbs half the damage she takes in melee.',
       },
     ],
   },
   {
     survivor: 'CHEF',
     expansion: 'Seekers of the Storm',
-    identity: 'On-hit proc bruiser — double-hit cleavers love proc items.',
+    identity:
+      'On-hit proc bruiser — double-hit cleavers and oil-fed burns love proc items.',
     items: [
+      // Common
+      {
+        name: 'Gasoline',
+        reason: 'On-kill fire spreads alongside Sear burns.',
+      },
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed quickens his cleaver throws and dice flips.',
+        reason: 'Faster cleaver throws mean more hits.',
       },
       {
         name: "Lens-Maker's Glasses",
-        reason: 'Crit chance amplifies his sizzling multi-hit attacks.',
-      },
-      {
-        name: 'Gasoline',
-        reason: 'His Sear ignite synergises with on-kill fire explosions.',
+        reason: 'Cleavers hit twice, rolling crit each time.',
       },
       {
         name: 'Crowbar',
-        reason: 'Bonus damage suits his hard-hitting Boomerang cleaver.',
+        reason: 'Boosted skills open on fresh targets.',
+      },
+      // Uncommon
+      {
+        name: 'Ignition Tank',
+        reason: 'Sear on oiled targets burns far harder with this.',
       },
       {
         name: 'AtG Missile Mk. 1',
-        reason: 'Frequent cleaver hits proc reliable missile damage.',
+        reason: 'Double-hit cleavers proc missiles often.',
       },
       {
         name: 'Ukulele',
-        reason: 'Multi-target attacks chain lightning across grouped enemies.',
+        reason: 'Cleaver hits chain lightning through crowds.',
       },
       {
         name: "Kjaro's Band",
-        reason: 'Big cleaver hits trigger the high-damage fire tornado.',
+        reason: 'Boosted Dice hits trigger the fire tornado.',
       },
       {
-        name: 'Ignition Tank',
-        reason: 'Boosts his Sear burn damage on ignited enemies.',
+        name: "Runald's Band",
+        reason: 'Pairs with Kjaro on big boosted cleaver hits.',
       },
+      // Boss
       {
         name: 'Shatterspleen',
-        reason: 'Crit bleed compounds his sizzling sustained damage output.',
+        reason: 'Cleaver crits bleed and explode.',
       },
       {
         name: 'Molten Perforator',
-        reason: 'Heavy hits summon magma for extra ground area damage.',
+        reason: 'Many cleaver hits proc lava meteors.',
       },
       {
         name: 'Charged Perforator',
-        reason: 'Big cleaver throws proc lightning to clear adds.',
+        reason: 'Cleaver procs call lightning.',
+      },
+      // Legendary
+      {
+        name: 'Brilliant Behemoth',
+        reason: 'Every cleaver hit explodes.',
       },
       {
         name: 'Shattering Justice',
-        reason: 'Armour break amplifies his heavy cleaver and burn damage.',
-      },
-      {
-        name: 'Brilliant Behemoth',
-        reason: 'Splash turns his cleaver and dice into area damage.',
+        reason: 'Armor shred amplifies all cleaver hits.',
       },
       {
         name: 'Wake of Vultures',
-        reason: 'Killing elites grants their buffs to a frontline cook.',
+        reason: 'Elite kills stack aspects.',
+      },
+      // Hallowed
+      {
+        name: 'Infernal Mark',
+        reason: 'Double-hit cleavers rack up skill hits fast.',
+      },
+      {
+        name: 'Nightmare Demon',
+        reason: 'Sixteen-cleaver Boosted Dice charges and pops demons fast.',
       },
     ],
   },
@@ -1073,61 +1376,75 @@ export const BUILDS: Build[] = [
     identity:
       'HP-stacking tank — every health item feeds Growth in a feedback loop.',
     items: [
+      // Common
       {
         name: 'Bison Steak',
-        reason: 'Extra health supports his tanky melee Laser Sword brawling.',
+        reason: 'Flat max health feeds Growth directly.',
       },
       {
         name: 'Tri-Tip Dagger',
-        reason: 'Bleed adds chip from his sweeping sword strikes.',
+        reason: 'Lunar Spikes and club hits stack bleed.',
       },
       {
         name: "Paul's Goat Hoof",
-        reason: 'Movement speed helps him close gaps to enemies.',
+        reason: 'Speed for a slow, heavy bruiser.',
       },
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed speeds his heavy sword swing combos.',
+        reason: 'Faster club swings and laser ticks.',
       },
+      // Uncommon
       {
-        name: 'Chronobauble',
-        reason: 'Slow on hit keeps enemies pinned in melee range.',
-      },
-      {
-        name: 'Death Mark',
-        reason: 'Stacked debuffs from his kit trigger bonus damage.',
+        name: 'Infusion',
+        reason: 'Permanent max health from kills keeps raising Growth.',
       },
       {
         name: 'Leeching Seed',
-        reason: 'Sword hits heal him during sustained close combat.',
+        reason: 'Hits heal in long brawls.',
+      },
+      {
+        name: 'Death Mark',
+        reason: 'Lunar Ruin and bleed stack debuffs quickly.',
       },
       {
         name: 'Predatory Instincts',
-        reason: 'Melee kills stack attack speed for faster swings.',
+        reason: 'Crits speed up club swings.',
       },
+      // Boss
       {
         name: 'Titanic Knurl',
-        reason: 'Bonus health and regen reinforce his tanky brawler role.',
-      },
-      {
-        name: 'Charged Perforator',
-        reason: 'Heavy sword hits trigger lightning to clear groups.',
+        reason: 'Health and regen feed Growth.',
       },
       {
         name: 'Planula',
-        reason: 'Soul damage taken heals, buffering his frontline exposure.',
+        reason: 'Flat healing on every hit taken.',
       },
       {
+        name: 'Charged Perforator',
+        reason: 'Heavy club hits call lightning.',
+      },
+      // Legendary
+      {
         name: 'Sentient Meat Hook',
-        reason: 'Sword hits chain to pull and group nearby enemies.',
+        reason: 'Pulls groups into his club range.',
       },
       {
         name: 'Rejuvenation Rack',
-        reason: 'Doubles his healing and shrine sustain in melee.',
+        reason: 'Doubles healing for a huge health pool.',
       },
       {
         name: 'Wake of Vultures',
-        reason: 'Killing elites grants their abilities to a frontline fighter.',
+        reason: 'Elite aspects stack on a tank.',
+      },
+      // Hallowed
+      {
+        name: 'Totem of Avarice',
+        reason:
+          'Charged club slams clear 400%, turning nearby enemies to gold.',
+      },
+      {
+        name: 'Vengeful Spirit',
+        reason: 'Absorbs half the damage on a frontline tank.',
       },
     ],
   },
@@ -1135,129 +1452,373 @@ export const BUILDS: Build[] = [
     survivor: 'Operator',
     expansion: 'Alloyed Collective',
     identity:
-      'Drone commander — multiplies on-hit proc items across the fleet.',
+      "Drone commander — drones inherit Operator's items through ADMIN-OVERRIDE.",
     items: [
+      // Common
       {
         name: 'Crowbar',
         reason: 'Bonus opening damage stacks with focused drone-target fire.',
       },
       {
         name: 'Backup Magazine',
-        reason: 'Extra ability charges mean more commands issued to drones.',
+        reason: 'Extra secondary charges mean more commands issued to drones.',
       },
       {
-        name: 'Cautious Slug',
-        reason: 'Out-of-combat regen sustains a backline drone commander.',
+        name: 'Bolstering Lantern',
+        reason: 'A drone fleet nearby counts toward the attack speed buff.',
       },
       {
         name: 'Topaz Brooch',
-        reason: 'Drone-assisted kills grant barrier to keep him safe.',
+        reason: 'Drone-assisted kills grant barrier to keep Operator safe.',
+      },
+      {
+        name: 'Cautious Slug',
+        reason: 'Out-of-combat regen sustains a backline commander.',
+      },
+      // Uncommon
+      {
+        name: 'Box of Dynamite',
+        reason: 'Every drone drops stunning dynamite in combat.',
       },
       {
         name: 'AtG Missile Mk. 1',
         reason: 'Drone and personal hits proc reliable missile salvos.',
       },
       {
-        name: 'Box of Dynamite',
-        reason: 'Frequent kills from drone swarms chain explosive damage.',
-      },
-      {
         name: 'Squid Polyp',
-        reason: 'More allied turrets reinforce his summon-focused playstyle.',
+        reason: 'More allied turrets reinforce the summon-focused playstyle.',
       },
       {
         name: "Will-o'-the-wisp",
         reason: 'Drone-cleared kills detonate area explosions on packs.',
       },
+      // Boss
       {
-        name: 'Empathy Cores',
-        reason: 'Two combat drones directly amplify his commander identity.',
+        name: 'Faulty Conductor',
+        reason: 'Energize pulses speed up Operator and the whole drone fleet.',
       },
       {
-        name: "Queen's Gland",
-        reason: 'Beetle guard adds another autonomous minion to his army.',
+        name: 'Empathy Cores',
+        reason: 'Two combat drones directly amplify the commander identity.',
       },
       {
         name: 'Defense Nucleus',
-        reason: 'Elite kills spawn fighting drones, growing his swarm.',
+        reason: 'Elite kills spawn fighting constructs, growing the swarm.',
       },
       {
+        name: "Queen's Gland",
+        reason: 'Beetle guards add another autonomous minion to the army.',
+      },
+      // Legendary
+      {
         name: 'Spare Drone Parts',
-        reason: 'Buffs and heals every drone in his fleet.',
+        reason: 'Buffs and arms every drone in the fleet.',
       },
       {
         name: 'Brilliant Behemoth',
-        reason: "Splash extends his and the drones' attacks to areas.",
+        reason: "Splash extends Operator's and the drones' attacks to areas.",
       },
       {
         name: 'Resonance Disc',
         reason: 'Charges from kills then fires a heavy backline laser.',
+      },
+      {
+        name: 'Orphaned Core',
+        reason: 'Another autonomous Solus unit joins the fleet.',
+      },
+      // Hallowed
+      {
+        name: 'Corpse Lily',
+        reason: 'A teleporter Blight cloud while the drones hold the zone.',
+      },
+      {
+        name: 'Vengeful Spirit',
+        reason: 'Absorbs half the damage while the drones hold the line.',
       },
     ],
   },
   {
     survivor: 'Drifter',
     expansion: 'Alloyed Collective',
-    identity: 'Melee scavenger — attack speed feeds the Junk economy.',
+    identity:
+      'Melee scavenger — hits generate Junk, and scrap in her bag powers her stats.',
     items: [
+      // Common
       {
         name: "Soldier's Syringe",
-        reason: 'Attack speed boosts his scrappy multi-hit junk attacks.',
+        reason: 'Faster Blunt Force swings roll for Junk more often.',
       },
       {
         name: 'Crowbar',
-        reason: 'Bonus damage on his hard-hitting scavenged weapon swings.',
+        reason: 'Bonus damage on her heavy scavenged-weapon openers.',
       },
       {
         name: "Paul's Goat Hoof",
-        reason: 'Speed helps a mobile scavenger reposition between fights.',
+        reason: 'Speed helps her reposition between Repossess throws.',
       },
       {
         name: 'Bustling Fungus',
-        reason: 'Standing still heals while crafting from his junk pile.',
+        reason: 'Standing still heals while she works the junk pile.',
       },
+      // Uncommon
       {
         name: 'Predatory Instincts',
-        reason: 'Attack-speed stacks reward his rapid junk-flinging combos.',
+        reason: 'Crit stacks reward her rapid melee combos.',
       },
       {
         name: 'AtG Missile Mk. 1',
-        reason: 'Frequent attack-speed hits proc steady missile damage.',
+        reason: 'Frequent melee hits proc steady missile damage.',
       },
       {
         name: 'Bandolier',
-        reason: 'On-kill ammo pickups keep his abilities firing constantly.',
+        reason: 'Ammo pickups restore skill charges between fights.',
       },
       {
         name: "Harvester's Scythe",
-        reason: 'Crit lifesteal sustains his aggressive scrap brawling.',
+        reason: 'Crit lifesteal sustains her aggressive brawling.',
       },
+      // Boss
       {
         name: 'Shatterspleen',
-        reason: 'Crit bleed scales with his fast multi-hit attacks.',
+        reason: 'Crit bleed scales with her fast multi-hit attacks.',
       },
       {
         name: 'Titanic Knurl',
-        reason: 'Bonus health and regen support a scrappy frontline scavenger.',
+        reason: 'Bonus health and regen support a frontline scavenger.',
       },
       {
         name: 'Charged Perforator',
-        reason: 'Hard junk hits trigger lightning to clear surrounding foes.',
+        reason: 'Hard hits trigger lightning to clear surrounding foes.',
       },
+      // Legendary
       {
         name: '57 Leaf Clover',
-        reason: 'Rerolls his many on-hit effects toward favourable procs.',
+        reason: 'Rerolls her many on-hit effects toward favourable procs.',
       },
       {
         name: 'Brilliant Behemoth',
-        reason: 'Splash turns his junk attacks into area clear.',
+        reason: 'Splash turns her junk attacks into area clear.',
       },
       {
-        name: 'Soulbound Catalyst',
-        reason: 'Frequent kills cut his ability cooldowns sharply.',
+        name: 'Sentient Meat Hook',
+        reason: 'Drags packs into range of her swings and Junk Cubes.',
+      },
+      // Hallowed
+      {
+        name: 'Vile Censer',
+        reason: 'Cleanup junk balls stun, so follow-up hits chain smoke.',
+      },
+      {
+        name: 'Nightmare Demon',
+        reason: 'Fast melee charges demons that set off her on-kill effects.',
+      },
+    ],
+  },
+  {
+    survivor: 'Enforcer',
+    expansion: 'Hallowed Concepts',
+    identity:
+      'Shield-wall bruiser — barrier and shield fuel Surge Protection, cooldowns keep the stance cycling.',
+    items: [
+      // Common
+      {
+        name: 'Eclipse Lite',
+        reason:
+          'Each skill off cooldown adds barrier for Surge Protection to spend.',
+      },
+      {
+        name: 'Topaz Brooch',
+        reason:
+          'Kill barrier stacks up, then Surge Protection detonates it as damage.',
+      },
+      {
+        name: 'Personal Shield Generator',
+        reason: 'Surge Protection consumes shield too, adding flat damage.',
+      },
+      {
+        name: 'Bolstering Lantern',
+        reason: 'Holding a shield wall means enemies are always within 20m.',
+      },
+      {
+        name: "Lens-Maker's Glasses",
+        reason: 'Parry reflections and Big Man slams can crit too.',
+      },
+      {
+        name: 'Backup Magazine',
+        reason: 'A second stance charge lets him re-shield right after a bash.',
+      },
+      // Uncommon
+      {
+        name: 'Kinetic Dampener',
+        reason:
+          'Shield and armor for a tank, and its break pulse stuns the line.',
+      },
+      {
+        name: 'Ukulele',
+        reason: 'Defensive Stance pellets pierce, chaining lightning widely.',
+      },
+      {
+        name: "Harvester's Scythe",
+        reason: 'Tracer guarantees a crit every magazine, healing him.',
+      },
+      {
+        name: 'AtG Missile Mk. 1',
+        reason: 'Six pellets per stance shot proc missiles reliably.',
+      },
+      {
+        name: "Berzerker's Pauldron",
+        reason: 'Rally Point slams and pellet sprays chain multi-kills.',
+      },
+      // Boss
+      {
+        name: 'Mycelium Cap',
+        reason: 'Big Man and Crash Point landings leave damaging spore clouds.',
+      },
+      {
+        name: 'Titanic Knurl',
+        reason: 'Health and regen for a fortress that stands in the open.',
+      },
+      {
+        name: 'Genesis Loop',
+        reason: 'A stunning nova when the shield wall gets flanked.',
+      },
+      {
+        name: 'Charged Perforator',
+        reason: 'Slug hits call lightning on targets behind the line.',
+      },
+      // Legendary
+      {
+        name: 'Aegis',
+        reason: 'Overhealing becomes barrier for Surge Protection to cash in.',
+      },
+      {
+        name: 'Alien Head',
+        reason: 'He plays around cooldowns, cycling stance and Rally Point.',
+      },
+      {
+        name: 'Hardlight Afterburner',
+        reason: 'Extra Shield Tackle charges extend each held dash.',
+      },
+      {
+        name: 'Brilliant Behemoth',
+        reason: 'Pellets and slugs explode on impact for area control.',
+      },
+      // Hallowed
+      {
+        name: 'Vile Censer',
+        reason:
+          'His bash, tackle and slams all stun, so his next hit chains smoke.',
+      },
+      {
+        name: 'Totem of Avarice',
+        reason: 'Parry reflections and Crash Point clear 400% with ease.',
+      },
+      {
+        name: 'Vengeful Spirit',
+        reason: 'An extra layer of damage absorption behind the shield.',
+      },
+    ],
+  },
+  {
+    survivor: 'Acolyte',
+    expansion: 'Hallowed Concepts',
+    identity:
+      'Soul-reaping duelist — healing turns into attack speed, and Sacrifice feeds the Litany.',
+    items: [
+      // Common
+      {
+        name: "Soldier's Syringe",
+        reason: 'Attack speed adds hits to every quickstrike, up to nine.',
+      },
+      {
+        name: 'Bolstering Lantern',
+        reason: 'She fights inside packs, so the attack speed is always up.',
+      },
+      {
+        name: 'Monster Tooth',
+        reason: "Heal orbs become attack speed through her N'kuhana passives.",
+      },
+      {
+        name: "Lens-Maker's Glasses",
+        reason: 'Multi-hit quickstrikes roll crit on every hit.',
+      },
+      {
+        name: 'Tri-Tip Dagger',
+        reason: 'Quickstrikes land several hits, stacking bleed quickly.',
+      },
+      {
+        name: 'Crowbar',
+        reason: 'Sacrifice opens on fresh targets for even more damage.',
+      },
+      // Uncommon
+      {
+        name: 'Leeching Seed',
+        reason:
+          'Every hit is a heal, and every heal adds attack speed for her.',
+      },
+      {
+        name: 'Noxious Thorn',
+        reason: 'Spreads Soul Jar Haunt on kill, multiplying the wights.',
+      },
+      {
+        name: "Harvester's Scythe",
+        reason: 'Crit heals convert into more attack speed stacks.',
+      },
+      {
+        name: 'Predatory Instincts',
+        reason: 'Crits stack attack speed on top of her healing buffs.',
+      },
+      {
+        name: 'Ukulele',
+        reason: 'Sacrifice procs can kill with lightning for extra Conviction.',
+      },
+      // Boss
+      {
+        name: 'Whispering Fragment',
+        reason: 'Her kill rate keeps an orbiting spirit attacking with her.',
+      },
+      {
+        name: 'Titanic Knurl',
+        reason: 'Regen converts into permanent attack speed under her passive.',
+      },
+      {
+        name: 'Shatterspleen',
+        reason: 'Quickstrike crits bleed and explode packs on death.',
+      },
+      {
+        name: 'Charged Perforator',
+        reason: 'Sacrifice and quickstrike hits call extra lightning.',
+      },
+      // Legendary
+      {
+        name: 'Alien Head',
+        reason: 'Faster Sacrifice means Convictions and Litanies come sooner.',
+      },
+      {
+        name: 'Rejuvenation Rack',
+        reason: 'Doubled healing means far more attack speed from her passive.',
+      },
+      {
+        name: 'Hardlight Afterburner',
+        reason: 'Extra Javelin or Blade Sling charges for chained dashes.',
+      },
+      {
+        name: 'Brainstalks',
+        reason: 'Elite kills free Sacrifice to spam Convictions.',
+      },
+      // Hallowed
+      {
+        name: 'Vile Censer',
+        reason: 'Bola and Javelin stun, so her follow-ups chain smoke.',
+      },
+      {
+        name: 'Infernal Mark',
+        reason: 'Quickstrikes land up to nine hits, branding almost at once.',
+      },
+      {
+        name: 'Nightmare Demon',
+        reason: 'Multi-hit slashes charge demons that pop her on-kill effects.',
       },
     ],
   },
 ];
-
-export default BUILDS;
