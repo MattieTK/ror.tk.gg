@@ -7,6 +7,17 @@
   "observability": {
     "enabled": true,
   },
+  // Worker Previews (`pnpm run deploy:preview`). The ror.tk.gg custom domain
+  // below only targets production, so Previews are served from workers.dev
+  // Preview URLs instead (https://<preview>-ror-tk-gg.<subdomain>.workers.dev).
+  "preview_urls": true,
+  // Previews don't inherit production settings. The site has no vars or
+  // bindings, so only observability needs carrying over.
+  "previews": {
+    "observability": {
+      "enabled": true,
+    },
+  },
   "routes": [
     {
       "custom_domain": true,
