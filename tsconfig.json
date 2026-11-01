@@ -14,7 +14,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "types": ["@cloudflare/workers-types", "vite/client"],
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     }
